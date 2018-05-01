@@ -1,33 +1,21 @@
-// Libraries
-import React, {Component, PropTypes} from  'react';
-import {Route, Redirect} from 'react-router';
+import React, { Component, PropTypes } from  'react'
+import { Route, Switch, Redirect } from 'react-router'
 
-// Routes
-// For Development only
-import * as RouteMap from '../routes/static.js';
+import * as RouteMap from '../routes/static.js'
 
-// This is used in production for code splitting via `wepback.config.server.js`
-// import * as RouteMap from 'universal/routes/async.js';
+import AppLayout from 'universal/layouts/AppLayout'
 
-// Containers
-import AppContainer from 'universal/containers/App/AppContainer.js';
-// import PrivateRouteContainer from 'universal/containers/PrivateRoute/PrivateRouteContainer.js';
-
-class Routes extends Component {
+export default class Routes extends Component {
   render () {
-    const {
-      location
-    } = this.props;
-
+    const { location } = this.props
     return (
-      <AppContainer>
-        <div>
-          <Route exact location={location} path='/' component={RouteMap.Home} />
-          <Route exact location={location} path='/counter' component={RouteMap.Counter} />
-        </div>
-      </AppContainer>
-    );
+      <AppLayout>
+        <Switch>
+          <Route path='/user/:userId' component={RouteMap.ProfileLayout} />
+          <Route exact path='/404' component={RouteMap.NotFoundLayout} />
+          <Route path='/' component={RouteMap.SiteLayout} />
+        </Switch>
+      </AppLayout>
+    )
   }
 }
-
-export default Routes;

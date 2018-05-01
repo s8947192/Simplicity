@@ -72,7 +72,7 @@ export default {
       },
 
       // CSS
-      {test: /\.css$/,
+      {test: /\.(css|scss)$/,
        include: clientInclude,
        use: [
          {loader: 'style-loader'},
@@ -82,7 +82,8 @@ export default {
             modules: true,
             importLoaders: 1,
             localIdentName: '[name]_[local]_[hash:base64:5]'
-          }}
+          }},
+          { loader: 'sass-loader' }
        ]
       }
     ]

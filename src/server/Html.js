@@ -1,10 +1,10 @@
 // Libraries
-import React, {Component, PropTypes} from 'react';
-import {StaticRouter} from 'react-router';
-import {renderToString} from 'react-dom/server';
+import React, {Component, PropTypes} from 'react'
+import {StaticRouter} from 'react-router'
+import {renderToString} from 'react-dom/server'
 
 // Redux
-import { Provider } from 'react-redux';
+import { Provider } from 'react-redux'
 
 class Html extends Component {
   static propTypes = {
@@ -15,7 +15,7 @@ class Html extends Component {
   }
 
   render () {
-    const PROD = process.env.NODE_ENV === 'production';
+    const PROD = process.env.NODE_ENV === 'production'
 
     const {
       title,
@@ -23,18 +23,18 @@ class Html extends Component {
       assets,
       url,
       context
-    } = this.props;
+    } = this.props
 
     const {
       manifest,
       app,
       vendor
-    } = assets || {};
+    } = assets || {}
 
-    let state = store.getState();
+    let state = store.getState()
 
-    const initialState = `window.__INITIAL_STATE__ = ${JSON.stringify(state)}`;
-    const Layout =  PROD ? require( '../../build/prerender.js') : () => {};
+    const initialState = `window.__INITIAL_STATE__ = ${JSON.stringify(state)}`
+    const Layout =  PROD ? require( '../../build/prerender.js') : () => {}
 
     const root = PROD && renderToString(
       <Provider store={store}>
@@ -42,7 +42,7 @@ class Html extends Component {
           <Layout />
         </StaticRouter>
       </Provider>
-    );
+    )
 
     return (
      <html>
@@ -60,9 +60,9 @@ class Html extends Component {
          <script src={PROD ? app.js : '/static/app.js'} />
        </body>
      </html>
-    );
+    )
   }
 
 }
 
-export default Html;
+export default Html

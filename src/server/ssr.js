@@ -19,7 +19,7 @@ function renderApp(url, res, store, assets) {
 
   const html = renderToString(
     <Html
-      title='💥'
+      title='Simplicity'
       store={store}
       url={url}
       context={context}
