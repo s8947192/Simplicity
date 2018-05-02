@@ -4,12 +4,14 @@ import { Route, Switch, Redirect } from 'react-router'
 import * as RouteMap from 'universal/routes/static.js'
 import styles from './siteLayout.scss'
 
+import HeaderSite from 'universal/common/components/HeaderSite'
+
 export default class SiteLayout extends Component {
   render() {
     const { match } = this.props
     return (
-      <div>
-        SITE
+      <div className={styles.wrapper}>
+        <HeaderSite />
         <Switch>
           <Redirect exact from='/' to={`${match.url}home`} />
           <Route exact path={`${match.url}home`} component={RouteMap.SiteHomeLayout} />

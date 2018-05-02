@@ -55,7 +55,7 @@ export default {
   },
   module: {
     loaders: [
-      {test: /\.(png|j|jpeg|gif|svg|woff|woff2)$/,
+      {test: /\.(png|j|jpeg|jpg|gif|svg|woff|woff2)$/,
         use: {
           loader: 'url-loader',
           options: {

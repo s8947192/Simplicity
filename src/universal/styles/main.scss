@@ -1,0 +1,17 @@
+:global {
+  @import 'fonts';
+  @import '_vars';
+
+  html {
+    -webkit-font-smoothing: antialiased;
+  }
+
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-family: 'Fira Sans';
+  }
+}
