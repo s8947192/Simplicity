@@ -3,5 +3,9 @@
   "plugins": [
     ["transform-decorators-legacy"],
     ["add-module-exports"],
+    ["transform-runtime", {
+      "polyfill": false,
+      "regenerator": true
+    }]
   ]
 }

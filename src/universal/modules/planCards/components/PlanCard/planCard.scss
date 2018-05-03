@@ -1,0 +1,93 @@
+.planCardWrapper {
+  background-color: white;
+  width: 200px;
+  margin: 0 2px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 1px 5px 1px rgba(0,0,0,0.05);
+  padding-bottom: 20px;
+  position: relative;
+}
+
+.planTitle {
+  color: #a8a8a8;
+  text-transform: uppercase;
+  margin: 26px 0;
+  font-size: 18px;
+  font-family: 'Merienda', cursive;
+}
+
+.planPrice {
+  color: #595959;
+  font-family: 'Merienda', cursive;
+  &__sup {
+    vertical-align: top;
+    font-size: 20px;
+  }
+  &__main {
+    font-size: 60px;
+  }
+  &__leading {
+    font-size: 22px;
+  }
+}
+
+.planAdvantages {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+  align-items: center;
+  font-size: 13px;
+  margin-top: 10px;
+  padding-top: 20px;
+  border-top: 1px solid #e8e8e8;
+  color: #a7a7a7;
+  margin-bottom: 20px;
+  font-family: 'Merienda', cursive;
+  &__el {
+    margin: 5px 0 10px 0;
+  }
+}
+
+.button {
+  background-color: #45db92;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 500;
+  color: white;
+  padding: 17px 16px;
+  border-radius: 4px;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+
+.discountWrapper {
+  display: flex;
+  background-color: #45db92;
+  width: 100%;
+  justify-content: space-evenly;
+  height: 50px;
+  position: absolute;
+  align-items: center;
+  top: -50px;
+}
+
+.discountValue {
+  text-decoration: line-through;
+  color: white;
+  font-weight: 500;
+  font-size: 19px;
+}
+
+.discountLabel {
+  padding: 5px 15px;
+  background-color: #4bc188;
+  border-radius: 4px;
+  color: white;
+  font-weight: 500;
+}
