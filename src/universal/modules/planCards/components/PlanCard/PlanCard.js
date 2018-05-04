@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+import Button from 'universal/common/components/Button'
 import styles from './planCard.scss'
 
 export default class PlanCard extends Component {
@@ -68,7 +69,7 @@ export default class PlanCard extends Component {
             <div className={styles.planAdvantages__el}><strong>3</strong> month trial period</div>
             <div className={styles.planAdvantages__el}><strong>2</strong> active clients</div>
           </div>
-          <div onClick={onClick} className={styles.button}>sign up now</div>
+          <Button title='sign up now' onClick={onClick} textCapitalize />
         </div>
       )
     }
@@ -92,7 +93,7 @@ export default class PlanCard extends Component {
         <div className={styles.planAdvantages}>
           <div className={styles.planAdvantages__el}><strong>{ numOfStudents }</strong> active clients</div>
         </div>
-        <div onClick={onClick} className={styles.button}>sign up now</div>
+        <Button type='green' title='sign up now' onClick={onClick} textUppercase />
       </div>
     )
   }

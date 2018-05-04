@@ -1,0 +1,23 @@
+.button {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 17px 16px;
+  border-radius: 4px;
+  text-transform: capitalize;
+  width: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &_default {
+    border: 1px solid #e4e4e4;
+    color: #899399;
+  }
+  &_green {
+    background-color: #45db92;
+    color: white;
+  }
+}
+
+.button:hover {
+  cursor: pointer;
+}
