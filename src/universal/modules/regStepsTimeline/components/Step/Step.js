@@ -17,10 +17,10 @@ const Step = ({
   const styleType = isActive ? 'active' : isError ? 'err' : isSkipped ? 'skipped' : isDone ? 'done' : ''
   return (
     <div className={styles.step}>
-      <div className={cn(styles.step__number, {[styles[`step__number_${styleType}`]]: styleType.length })}>
+      <div onClick={onClick} className={cn(styles.step__number, {[styles[`step__number_${styleType}`]]: styleType.length })}>
         { !styleType.length && stepNumber }
       </div>
-      <div className={cn(styles.step__desc, {[styles[`step__desc_${styleType}`]]: styleType.length })}>
+      <div onClick={onClick} className={cn(styles.step__desc, {[styles[`step__desc_${styleType}`]]: styleType.length })}>
         { styleType === 'active' ? <strong>{ stepTitle }</strong> : stepTitle }
       </div>
       { hasLeadingLine && <div className={styles.step__leadingLine} /> }

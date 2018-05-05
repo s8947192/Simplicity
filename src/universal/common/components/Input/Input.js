@@ -18,19 +18,17 @@ export default ({
   isInFocus,
   marginBottom
 }) => {
-  const svgColor = isInFocus ? '#488dc8' : error ? '#bb8384' : value.length ? '#79af8a' : '#b0b3ba'
   return (
     <div className={styles.container} style={{ marginBottom: marginBottom || 0 }}>
-      { label && label.length && <label className={styles.label}>{ label }</label> }
+      <div className={styles.labelWrapper}>
+        { label && label.length && <label className={styles.label}>{ label }</label> }
+        { error && <div className={styles.inputError}>{ error }</div> }
+      </div>
       <div className={styles.inputWrapper}>
-        { name === 'email' && <EmailSVG className={styles.inputImg} color={svgColor} /> }
-        { (name === 'password' || name === 'passwordRepeat') && <PasswordSVG className={styles.inputImg} color={svgColor} /> }
+        { name === 'email' && <EmailSVG className={styles.inputImg} /> }
+        { (name === 'password' || name === 'passwordRepeat') && <PasswordSVG className={styles.inputImg} /> }
         <input id={name} type='text' name={name}
-          className={cn(
-            styles.input,
-            { [styles.error]: !isInFocus && error },
-            { [styles.success]: !isInFocus && !error && value.length }
-          )}
+          className={styles.input}
           placeholder={placeholder}
           value={value}
           onChange={onChange}
@@ -38,7 +36,6 @@ export default ({
           onBlur={onBlur}
         />
       </div>
-      { error && <div className={styles.inputError}>{ error }</div> }
     </div>
   )
 }

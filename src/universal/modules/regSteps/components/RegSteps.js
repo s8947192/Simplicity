@@ -4,14 +4,14 @@ import cn from 'classnames'
 import styles from './regSteps.scss'
 
 import Input from 'universal/common/components/Input'
-import Step1 from './Step1/Step1'
+import Step1Container from '../containers/Step1Container'
 
 export default class RegSteps extends Component {
   render() {
     return (
       <div className={styles.wrapper}>
         <div className={styles.title}>Account</div>
-        <Step1 />
+        <Step1Container />
       </div>
     )
   }

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 
 import Button from 'universal/common/components/Button'
-import styles from './planCard.scss'
+import styles from './subscriptionCard.scss'
 
-export default class PlanCard extends Component {
+export default class SubscriptionCard extends Component {
 
   constructor() {
     super()

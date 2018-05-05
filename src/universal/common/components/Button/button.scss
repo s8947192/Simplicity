@@ -16,6 +16,9 @@
     background-color: #45db92;
     color: white;
   }
+  &_disabled {
+    background-color: #afafaf;
+  }
 }
 
 .button:hover {

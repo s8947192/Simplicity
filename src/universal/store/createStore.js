@@ -3,8 +3,8 @@ import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-r
 import { composeWithDevTools } from 'redux-devtools-extension'
 import createSagaMiddleware from 'redux-saga'
 
-import * as Reducers from './reducers/index.js'
-import rootSaga from '../sagas'
+import * as Reducers from 'universal/common/reducers/index.js'
+import rootSaga from 'universal/common/sagas'
 
 export default (history) => {
   const routeMiddleware = routerMiddleware(history)
@@ -21,8 +21,8 @@ export default (history) => {
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
-     module.hot.accept('./reducers', () => {
-       const nextReducers = require('./reducers/index.js')
+     module.hot.accept('universal/common/reducers', () => {
+       const nextReducers = require('universal/common/reducers/index.js')
        const rootReducer = combineReducers({
          ...nextReducers,
          router: routerReducer
