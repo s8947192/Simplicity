@@ -6,7 +6,7 @@ import Input from 'universal/common/components/Input'
 import Select from 'universal/common/components/Select'
 import Controls from '../Controls/Controls'
 
-export default class Step1 extends Component {
+export default class Step2 extends Component {
   constructor() {
     super()
     this.state = {
@@ -70,10 +70,10 @@ export default class Step1 extends Component {
           label='System Language'
           style={{ marginBottom: 20 }}
           options={[
-            'english',
-            'russian',
-            'spanish',
-            'german'
+            { text: 'english', value: 'eng' },
+            { text: 'russian', value: 'rus' },
+            { text: 'spanish', value: 'spain' },
+            { text: 'german', value: 'ger' }
           ]}
         />
         <Controls

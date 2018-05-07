@@ -4,15 +4,17 @@ import { batchActions } from 'redux-batched-actions'
 import { checkIfUserExists } from 'universal/api/registration'
 import {
   COMPLETE_STEP_ONE,
-  COMPLETE_STEP_TWO
+  COMPLETE_STEP_TWO,
+  COMPLETE_STEP_THREE
 } from 'universal/common/actions/registration'
 import {
   completeStepOnePending,
   completeStepOneFulfilled,
   completeStepOneRejected,
   setAlreadyTakenEmail,
+  updateCompletedSteps,
   completeStepTwoFulfilled,
-  updateCompletedSteps
+  completeStepThreeFulfilled
 } from 'universal/common/actions/registration'
 
 function* defineCompletedSteps(currentStep) {
@@ -53,7 +55,16 @@ function* requestCompleteStepOneTwo({ firstName, lastName, systemLanguage }) {
   ]))
 }
 
+function* requestCompleteStepOneThree({ duration, subscription }) {
+  const newCompletedSteps = yield defineCompletedSteps(3)
+  yield put(batchActions([
+    updateCompletedSteps(newCompletedSteps),
+    completeStepThreeFulfilled(duration, subscription)
+  ]))
+}
+
 export default function* watchRegistration() {
   yield takeLatest(COMPLETE_STEP_ONE, requestCompleteStepOneSaga)
   yield takeLatest(COMPLETE_STEP_TWO, requestCompleteStepOneTwo)
+  yield takeLatest(COMPLETE_STEP_THREE, requestCompleteStepOneThree)
 }

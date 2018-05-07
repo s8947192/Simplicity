@@ -8,12 +8,25 @@ import Input from 'universal/common/components/Input'
 import Step from './Step/Step'
 
 export default class RegStepsTimeline extends Component {
+
+  componentWillMount() {
+    const { subscriptions, requestSubscriptions } = this.props
+    if (!subscriptions.length) {
+      requestSubscriptions()
+    }
+  }
+
   render() {
     const {
       activeStep,
       setActiveStep,
-      completedSteps
+      completedSteps,
+      isSubscriptionPredefined,
+      subscriptions,
+      selectedSubscriptionId
     } = this.props
+    const shouldShowPayment = !!subscriptions.length && subscriptions[0].id === selectedSubscriptionId
+    const isStepThreeDone = completedSteps.some(step => step === 3)
     return (
       <div className={styles.stepsWrapper}>
         <Step onClick={() => setActiveStep(1)}
@@ -31,19 +44,24 @@ export default class RegStepsTimeline extends Component {
           stepTitle='Personal'
         />
         <Step onClick={() => setActiveStep(3)}
-          isDone={completedSteps.some(step => step === 3)}
+          isDone={isStepThreeDone}
           isActive={activeStep === 3}
+          isSkipped={!isStepThreeDone && selectedSubscriptionId}
           stepNumber={3}
           hasLeadingLine
           stepTitle='Subscription'
         />
-        <Step onClick={() => setActiveStep(4)}
-          isDone={completedSteps.some(step => step === 4)}
-          isActive={activeStep === 4}
-          stepNumber={4}
-          hasLeadingLine
-          stepTitle='Payment'
-        />
+        {
+          shouldShowPayment && (
+            <Step onClick={() => setActiveStep(4)}
+              isDone={completedSteps.some(step => step === 4)}
+              isActive={activeStep === 4}
+              stepNumber={4}
+              hasLeadingLine
+              stepTitle='Payment'
+            />
+          )
+        }
         <Step onClick={() => setActiveStep(5)}
           isDone={completedSteps.some(step => step === 5)}
           isActive={activeStep === 5}

@@ -7,7 +7,8 @@ import {
   SET_ALREADY_TAKEN_EMAIL,
   CLEAR_ALREADY_TAKEN_EMAIL,
   COMPLETE_STEP_TWO,
-  UPDATE_COMPLETED_STEPS
+  UPDATE_COMPLETED_STEPS,
+  COMPLETE_STEP_THREE
 } from 'universal/common/actions/registration'
 
 const initialState = {
@@ -60,6 +61,14 @@ export default typeToReducer({
       firstName: action.firstName,
       lastName: action.lastName,
       language: action.systemLanguage,
+      activeStep: state.activeStep + 1
+    })
+  },
+  [COMPLETE_STEP_THREE]: {
+    FULFILLED: (state, action) => ({
+      ...state,
+      duration: action.duration,
+      subscription: action.subscription,
       activeStep: state.activeStep + 1
     })
   },
