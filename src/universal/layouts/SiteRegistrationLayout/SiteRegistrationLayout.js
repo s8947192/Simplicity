@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 import RegStepsTimelineContainer from 'universal/modules/regStepsTimeline/containers/RegStepsTimelineContainer'
-import RegSteps from 'universal/modules/regSteps/components/RegSteps'
+import RegStepsContainer from 'universal/modules/regSteps/containers/RegStepsContainer'
 
 import styles from './siteRegistrationLayout.scss'
 
@@ -17,7 +17,7 @@ const SiteRegistrationLayout = () => (
       <div className={styles.pageContentWrapper}>
         <RegStepsTimelineContainer />
         <div className={styles.verDevider} />
-        <RegSteps />
+        <RegStepsContainer />
       </div>
     </div>
   </div>

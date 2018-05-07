@@ -1,0 +1,32 @@
+.errorInfoBottom {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  background-color: #ff71718c;
+  margin: 20px 20px 0 20px;
+  border-radius: 4px;
+  color: #966969;
+  font-size: 13px;
+  position: relative;
+}
+
+.errorClose {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 20px;
+  background-color: #efa3a3;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  font-size: 11px;
+  padding: 2px;
+  border: 1px solid #e09a9a;
+  color: #b77878;
+  font-weight: 500;
+  cursor: pointer;
+}

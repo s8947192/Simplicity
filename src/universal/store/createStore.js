@@ -1,4 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { enableBatching } from 'redux-batched-actions'
 import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import createSagaMiddleware from 'redux-saga'
@@ -10,10 +11,13 @@ export default (history) => {
   const routeMiddleware = routerMiddleware(history)
   const sagaMiddleware = createSagaMiddleware()
 
-  const enhancer = composeWithDevTools(applyMiddleware(sagaMiddleware, routeMiddleware))
+  const enhancer = composeWithDevTools(applyMiddleware(
+    sagaMiddleware,
+    routeMiddleware
+  ))
 
   const store = createStore(
-    combineReducers({ ...Reducers, router: routerReducer }),
+    enableBatching(combineReducers({ ...Reducers, router: routerReducer })),
     enhancer
   )
 
@@ -28,7 +32,7 @@ export default (history) => {
          router: routerReducer
        })
 
-       store.replaceReducer(rootReducer)
+       store.replaceReducer(enableBatching(rootReducer))
      })
    }
 

@@ -3,15 +3,19 @@ import cn from 'classnames'
 
 import styles from './regSteps.scss'
 
-import Input from 'universal/common/components/Input'
 import Step1Container from '../containers/Step1Container'
+import Step2Container from '../containers/Step2Container'
 
 export default class RegSteps extends Component {
   render() {
+    const {
+      activeStep
+    } = this.props
     return (
       <div className={styles.wrapper}>
         <div className={styles.title}>Account</div>
-        <Step1Container />
+        { activeStep === 1 && <Step1Container /> }
+        { activeStep === 2 && <Step2Container /> }
       </div>
     )
   }

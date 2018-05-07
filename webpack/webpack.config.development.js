@@ -73,7 +73,6 @@ export default {
 
       // CSS
       {test: /\.(css|scss)$/,
-       include: clientInclude,
        use: [
          {loader: 'style-loader'},
          {loader: 'css-loader',
