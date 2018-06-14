@@ -10,10 +10,10 @@ import Step from './Step/Step'
 export default class RegStepsTimeline extends Component {
 
   componentWillMount() {
-    const { subscriptions, requestSubscriptions } = this.props
-    if (!subscriptions.length) {
-      requestSubscriptions()
-    }
+    // const { subscriptions, requestSubscriptions } = this.props
+    // if (!subscriptions.length) {
+    //   requestSubscriptions()
+    // }
   }
 
   render() {
@@ -52,7 +52,7 @@ export default class RegStepsTimeline extends Component {
           stepTitle='Subscription'
         />
         {
-          shouldShowPayment && (
+          !shouldShowPayment && (
             <Step onClick={() => setActiveStep(4)}
               isDone={completedSteps.some(step => step === 4)}
               isActive={activeStep === 4}

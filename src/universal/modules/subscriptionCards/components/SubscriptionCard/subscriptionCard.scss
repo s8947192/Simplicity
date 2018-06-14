@@ -59,7 +59,16 @@
   height: 50px;
   position: absolute;
   align-items: center;
-  top: -50px;
+  top: 0;
+  z-index: -1;
+  animation-duration: 0.2s;
+  animation-name: discount;
+  animation-fill-mode: forwards;
+}
+
+@keyframes discount {
+  0%    {top: 0;}
+  100%  {top: -50px;}
 }
 
 .discountValue {

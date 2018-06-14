@@ -1,6 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { enableBatching } from 'redux-batched-actions'
 import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux'
+import { reducer as formReducer } from 'redux-form'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import createSagaMiddleware from 'redux-saga'
 
@@ -17,7 +18,11 @@ export default (history) => {
   ))
 
   const store = createStore(
-    enableBatching(combineReducers({ ...Reducers, router: routerReducer })),
+    enableBatching(combineReducers({
+      ...Reducers,
+      router: routerReducer,
+      form: formReducer
+    })),
     enhancer
   )
 
@@ -29,7 +34,8 @@ export default (history) => {
        const nextReducers = require('universal/common/reducers/index.js')
        const rootReducer = combineReducers({
          ...nextReducers,
-         router: routerReducer
+         router: routerReducer,
+         form: formReducer
        })
 
        store.replaceReducer(enableBatching(rootReducer))

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 
 import SubscriptionCard from './SubscriptionCard/SubscriptionCard'
+import Preloader from 'universal/common/components/Preloader'
+
 import styles from './subscriptionCards.scss'
 
 export default class SubscriptionCards extends Component {
@@ -22,13 +24,17 @@ export default class SubscriptionCards extends Component {
     return (
       <div className={styles.planCardsWrapper}>
         {
-          subscriptions.map(plan => (
+          !subscriptions.length && <Preloader color='white' />
+        }
+        {
+          subscriptions.map(subscription => (
             <SubscriptionCard
-              key={plan.id}
-              title={plan.title}
-              price={plan.price}
-              numOfStudents={plan.students}
-              onClick={() => this.onSelectPlan(plan.id)}
+              key={subscription.id}
+              title={subscription.title}
+              price={subscription.price}
+              durationDiscounts={subscription.durationDiscounts}
+              numOfStudents={subscription.max_clients}
+              onClick={() => this.onSelectPlan(subscription.id)}
               duration={duration}
             />
           ))

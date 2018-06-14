@@ -3,20 +3,13 @@ import cn from 'classnames'
 
 import styles from './preloader.scss'
 
-const Preloader = () => (
+const Preloader = ({ color }) => (
   <div className={styles['sk-circle']}>
-    <div className={cn(styles['sk-circle1'], styles['sk-child'])}></div>
-    <div className={cn(styles['sk-circle2'], styles['sk-child'])}></div>
-    <div className={cn(styles['sk-circle3'], styles['sk-child'])}></div>
-    <div className={cn(styles['sk-circle4'], styles['sk-child'])}></div>
-    <div className={cn(styles['sk-circle5'], styles['sk-child'])}></div>
-    <div className={cn(styles['sk-circle6'], styles['sk-child'])}></div>
-    <div className={cn(styles['sk-circle7'], styles['sk-child'])}></div>
-    <div className={cn(styles['sk-circle8'], styles['sk-child'])}></div>
-    <div className={cn(styles['sk-circle9'], styles['sk-child'])}></div>
-    <div className={cn(styles['sk-circle10'], styles['sk-child'])}></div>
-    <div className={cn(styles['sk-circle11'], styles['sk-child'])}></div>
-    <div className={cn(styles['sk-circle12'], styles['sk-child'])}></div>
+    {
+      Array(13).fill().map((el, id) =>
+        <div key={id} className={cn({ [styles[`sk-circle__${color}`]]: color }, styles[`sk-circle${id}`], styles['sk-child'])}></div>
+      )
+    }
   </div>
 )
 

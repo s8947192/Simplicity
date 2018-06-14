@@ -45,21 +45,22 @@ class Html extends Component {
     )
 
     return (
-     <html>
-       <head>
-         <meta charSet="utf-8"/>
-         <title>{title}</title>
-
-         {PROD && <link rel="stylesheet" href="/static/prerender.css" type="text/css" />}
-       </head>
-       <body>
-         <script dangerouslySetInnerHTML={{__html: initialState}} />
-         {PROD ? <div id="root" dangerouslySetInnerHTML={{__html: root}}></div> : <div id="root"></div>}
+      <html>
+        <head>
+          <meta charSet="utf-8"/>
+          <title>{title}</title>
+          {PROD && <link rel="stylesheet" href="/static/prerender.css" type="text/css" />}
+        </head>
+        <body>
+          <script src="https://js.stripe.com/v3/"></script>
+          <script dangerouslySetInnerHTML={{__html: initialState}} />
+          {PROD ? <div id="root" dangerouslySetInnerHTML={{__html: root}}></div> : <div id="root"></div>}
           {PROD && <script dangerouslySetInnerHTML={{__html: manifest.text}}/>}
           {PROD && <script src={vendor.js}/>}
-         <script src={PROD ? app.js : '/static/app.js'} />
-       </body>
-     </html>
+          <script src={PROD ? app.js : '/static/app.js'} />
+          <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossOrigin="anonymous" />
+        </body>
+      </html>
     )
   }
 

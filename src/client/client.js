@@ -1,5 +1,6 @@
 import React from 'react'
 import {render} from 'react-dom'
+import {StripeProvider} from 'react-stripe-elements'
 import {AppContainer} from 'react-hot-loader'
 
 // Components
@@ -16,11 +17,13 @@ const store = createStore(history)
 const rootEl = document.getElementById('root')
 const renderApp = (Component) => {
     render(
-      <AppContainer>
-        <Provider store={store}>
-          <Component history={history} />
-        </Provider>
-      </AppContainer>,
+      <StripeProvider apiKey='pk_test_U5zfDnUYzX2WoMAMA8BEqNM9'>
+        <AppContainer>
+          <Provider store={store}>
+            <Component history={history} />
+          </Provider>
+        </AppContainer>
+      </StripeProvider>,
       rootEl
     )
 }

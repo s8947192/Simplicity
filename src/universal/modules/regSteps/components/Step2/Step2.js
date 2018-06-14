@@ -41,6 +41,11 @@ export default class Step2 extends Component {
     this.props.completeStepTwo(firstName, lastName, systemLanguage)
   }
 
+  onSelect = value => {
+    this.setState({ systemLanguage: value })
+    this.props.selectLanguage(value)  
+  }
+
   render() {
     const {
       firstName,
@@ -69,6 +74,7 @@ export default class Step2 extends Component {
         <Select
           label='System Language'
           style={{ marginBottom: 20 }}
+          onSelect={this.onSelect}
           options={[
             { text: 'english', value: 'eng' },
             { text: 'russian', value: 'rus' },

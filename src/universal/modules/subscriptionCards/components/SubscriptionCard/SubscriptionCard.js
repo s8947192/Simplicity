@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
 
 import Button from 'universal/common/components/Button'
+
 import styles from './subscriptionCard.scss'
+
+const discounts = {
+  '1': 0,
+  '3': 0.1,
+  '6': 0.2
+}
 
 export default class SubscriptionCard extends Component {
 
@@ -26,25 +33,37 @@ export default class SubscriptionCard extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const currentDiscount = this.props.duration === 1 ? 0 : this.props.duration === 3 ? 0.1 : 0.2
-    const nextDiscount = nextProps.duration === 1 ? 0 : nextProps.duration === 3 ? 0.1 : 0.2
-    const currentPrice = Math.floor(Math.round(this.props.price * this.props.duration * (1 - currentDiscount)) - 0.01)
-    const nextPrice = Math.floor(Math.round(nextProps.price * nextProps.duration * (1 - nextDiscount)) - 0.01)
-    const diff = nextPrice - currentPrice
+    const { duration: currentDuration, price: price } = this.props
+    const { duration: nextDuration } = nextProps
+    const diff = this.findPriceDifference(currentDuration, nextDuration, price)
     if (diff !== 0) {
-      this.setState({ diff: diff })
-      if (!this.countdown) this.countdown = setInterval(this.timer, 1);
+      this.setState({ diff })
+      if (!this.countdown) this.countdown = setInterval(this.timer, 20);
     }
   }
 
-  timer = () => this.setState({ diff: this.state.diff > 0 ? this.state.diff - 1 : this.state.diff + 1 })
+  findPriceDifference = (currentDuration, nextDuration, price) => {
+    const currentDiscount  = 1 - discounts[currentDuration]
+    const nextDiscount = 1 - discounts[nextDuration]
+    const currentPrice = parseFloat(price, 2)
+    const currentDiscountedPrice = Math.floor(Math.round(currentPrice * currentDuration * currentDiscount) - 0.01)
+    const nextDiscountedPrice = Math.floor(Math.round(currentPrice * nextDuration * nextDiscount) - 0.01)
+    return nextDiscountedPrice - currentDiscountedPrice
+  }
+
+  timer = () => {
+    const { diff } = this.state
+    if (diff > 10) return this.setState({ diff: 10 })
+    if (diff > 0) return this.setState({ diff: diff - 1 })
+    if (diff < -10) return this.setState({ diff: -10 })
+    if (diff <= 0) return this.setState({ diff: diff + 1 })
+  }
 
   render() {
     const {
       title,
       price,
       duration,
-      isFree,
       numOfStudents,
       onClick
     } = this.props
@@ -53,11 +72,10 @@ export default class SubscriptionCard extends Component {
       diff
     } = this.state
 
-    const discount = duration === 1 ? 0 : duration === 3 ? 0.1 : 0.2
-    const originalPrice = price * duration
-    const totalPrice = Math.floor(Math.round(price * duration * (1 - discount)) - 0.01) - diff
+    const discount = 1 - discounts[duration]
+    const totalPrice = Math.floor(Math.round(price * duration * discount) - 0.01) - diff
 
-    if (price === 0) {
+    if (price == 0) {
       return (
         <div className={styles.planCardWrapper}>
           <div className={styles.planTitle}>{ title }</div>
@@ -73,14 +91,13 @@ export default class SubscriptionCard extends Component {
         </div>
       )
     }
-
     return (
       <div className={styles.planCardWrapper}>
         {
-          duration > 1 && (
+          discount !== 1 && (
             <div className={styles.discountWrapper}>
-              <div className={styles.discountValue}>${ originalPrice }</div>
-              <div className={styles.discountLabel}>{discount * 100}% OFF</div>
+              <div className={styles.discountValue}>${ price * duration }</div>
+              <div className={styles.discountLabel}>{ 100 - discount * 100 }% OFF</div>
             </div>
           )
         }

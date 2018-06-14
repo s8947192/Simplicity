@@ -11,6 +11,7 @@ export const COMPLETE_STEP_TWO_FULFILLED = 'COMPLETE_STEP_TWO_FULFILLED'
 export const UPDATE_COMPLETED_STEPS = 'UPDATE_COMPLETED_STEPS'
 export const COMPLETE_STEP_THREE = 'COMPLETE_STEP_THREE'
 export const COMPLETE_STEP_THREE_FULFILLED = 'COMPLETE_STEP_THREE_FULFILLED'
+export const SELECT_LANGUAGE = 'SELECT_LANGUAGE'
 
 export const selectPlanWithDuration = (id, duration) =>
   ({ type: SELECT_PLAN_WITH_DURATION, id, duration })
@@ -35,6 +36,9 @@ export const clearAlreadyTakenEmail = () =>
 
 export const updateCompletedSteps = completedSteps =>
   ({ type: UPDATE_COMPLETED_STEPS, completedSteps })
+
+export const selectLanguage = language =>
+  ({ type: SELECT_LANGUAGE, language })
 
 export const completeStepOneFulfilled = (email, password) => ({
   type: COMPLETE_STEP_ONE_FULFILLED, email, password

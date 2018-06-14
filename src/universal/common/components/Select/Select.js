@@ -37,7 +37,9 @@ export default class Select extends Component {
   componentWillReceiveProps(nextProps) {
     const { options } = nextProps
     if(options.length) {
-      this.setState({ selectedValue: options[0].text })
+      if (!this.state.selectedValue) {
+        this.setState({ selectedValue: options[0].text })
+      }
     }
   }
 
@@ -45,7 +47,7 @@ export default class Select extends Component {
 
   onSelect = option => {
     this.setState({ selectedValue: option.text })
-    this.props.onSelect(option.id)
+    // this.props.onSelect(option.value)
   }
 
   render() {

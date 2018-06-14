@@ -8,7 +8,8 @@ import {
   CLEAR_ALREADY_TAKEN_EMAIL,
   COMPLETE_STEP_TWO,
   UPDATE_COMPLETED_STEPS,
-  COMPLETE_STEP_THREE
+  COMPLETE_STEP_THREE,
+  SELECT_LANGUAGE
 } from 'universal/common/actions/registration'
 
 const initialState = {
@@ -38,6 +39,7 @@ export default typeToReducer({
   [SET_ALREADY_TAKEN_EMAIL]: (state, action) => ({ ...state, takenEmail: action.email }),
   [CLEAR_ALREADY_TAKEN_EMAIL]: (state, action) => ({ ...state, takenEmail: null }),
   [UPDATE_COMPLETED_STEPS]: (state, action) => ({ ...state, completedSteps: action.completedSteps }),
+  [SELECT_LANGUAGE]: (state, action) => ({ ...state, language: action.language }),
   [COMPLETE_STEP_ONE]: {
     PENDING: (state, action) => ({
       ...state,

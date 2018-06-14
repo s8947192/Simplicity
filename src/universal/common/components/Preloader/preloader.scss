@@ -12,7 +12,7 @@
   top: 0;
 }
 
-.sk-circle .sk-child:before {
+.sk-child:before {
   content: '';
   display: block;
   margin: 0 auto;
@@ -21,6 +21,12 @@
   background-color: #28c378;
   border-radius: 100%;
   animation: sk-circleBounceDelay 1.2s infinite ease-in-out both;
+}
+
+.sk-circle {
+  &__white:before {
+    background-color: white;
+  }
 }
 
 .sk-circle .sk-circle2 {
