@@ -4,7 +4,8 @@ export const COMPLETE_STEP_ONE = 'COMPLETE_STEP_ONE'
 export const COMPLETE_STEP_ONE_PENDING = 'COMPLETE_STEP_ONE_PENDING'
 export const COMPLETE_STEP_ONE_REJECTED = 'COMPLETE_STEP_ONE_REJECTED'
 export const COMPLETE_STEP_ONE_FULFILLED = 'COMPLETE_STEP_ONE_FULFILLED'
-export const SET_ALREADY_TAKEN_EMAIL = 'SET_ALREADY_TAKEN_EMAIL'
+export const FIND_EMAIL = 'FIND_EMAIL'
+export const FIND_EMAIL_FULFILLED = 'FIND_EMAIL_FULFILLED'
 export const CLEAR_ALREADY_TAKEN_EMAIL = 'CLEAR_ALREADY_TAKEN_EMAIL'
 export const COMPLETE_STEP_TWO = 'COMPLETE_STEP_TWO'
 export const COMPLETE_STEP_TWO_FULFILLED = 'COMPLETE_STEP_TWO_FULFILLED'
@@ -19,8 +20,8 @@ export const selectPlanWithDuration = (id, duration) =>
 export const setActiveStep = step =>
   ({ type: SET_ACTIVE_STEP, step })
 
-export const completeStepOne = (email, password) =>
-  ({ type: COMPLETE_STEP_ONE, email, password })
+export const completeStepOne = (email, password, repeatPassword) =>
+  ({ type: COMPLETE_STEP_ONE, email, password, repeatPassword })
 
 export const completeStepOnePending = () =>
   ({ type: COMPLETE_STEP_ONE_PENDING })
@@ -28,8 +29,11 @@ export const completeStepOnePending = () =>
 export const completeStepOneRejected = () =>
   ({ type: COMPLETE_STEP_ONE_REJECTED })
 
-export const setAlreadyTakenEmail = email =>
-  ({ type: SET_ALREADY_TAKEN_EMAIL, email })
+export const findEmail = email =>
+  ({ type: FIND_EMAIL, email })
+
+export const findEmailFulfilled = isEmail =>
+  ({ type: FIND_EMAIL_FULFILLED, isEmail })
 
 export const clearAlreadyTakenEmail = () =>
   ({ type: CLEAR_ALREADY_TAKEN_EMAIL })
@@ -40,8 +44,8 @@ export const updateCompletedSteps = completedSteps =>
 export const selectLanguage = language =>
   ({ type: SELECT_LANGUAGE, language })
 
-export const completeStepOneFulfilled = (email, password) => ({
-  type: COMPLETE_STEP_ONE_FULFILLED, email, password
+export const completeStepOneFulfilled = (email, password, repeatPassword) => ({
+  type: COMPLETE_STEP_ONE_FULFILLED, email, password, repeatPassword
 })
 
 export const completeStepTwo = (firstName, lastName, systemLanguage) => ({

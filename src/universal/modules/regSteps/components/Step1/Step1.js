@@ -1,142 +1,113 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
+import { Field, reduxForm } from 'redux-form'
+import cn from 'classnames'
+
+import Input from 'universal/common/components/FormFields/Input'
+import Controls from '../Controls/Controls'
 
 import styles from './step1.scss'
 
-import Input from 'universal/common/components/Input'
-import Controls from '../Controls/Controls'
+import {
+  requiredCheck,
+  emailCheck,
+  minLength6Check,
+  maxLength12Check,
+  passwordsMatchCheck
+} from 'universal/utils/formFieldsValidation'
 
-export default class Step1 extends Component {
-  constructor() {
-    super()
-    this.state = {
-      email: '',
-      password: '',
-      passwordRepeat: '',
-      formErrors: { email: '', password: '', passwordRepeat: '' },
-      emailValid: false,
-      passwordValid: false,
-      passwordRepeatValid: false,
-      formValid: false
-    }
-  }
+const Progress = ({
+  currentString,
+  maxLength = 12
+}) => {
+  const currentLength = currentString ? currentString.length : 0
+  const progress = 100 - 100 / maxLength * currentLength
+  return (
+    <div className={styles.progressContainer}>
+      <div className={styles.progressText}>weak</div>
+      <div className={styles.progressWrapper}>
+        <div
+          style={{ width: `${progress}%` }}
+          className={
+            cn(
+              { [styles.progressLine__noRightBorder]: progress < 100 },
+              { [styles.progressLine__noBorder]: progress <= 0 },
+              styles.progressLine
+            )
+          }
+        />
+      </div>
+      <div className={styles.progressText}>strong</div>
+    </div>
+  )
+}
 
-  componentWillReceiveProps(nextProps) {
-    const { email, formErrors } = this.state
-    const { takenEmail } = nextProps
-    const takenEmailMessage = 'this email is already in use'
-    if (email === takenEmail) {
-      this.setState({
-        formErrors: {...formErrors, email: takenEmailMessage},
-        emailValid: false,
-      }, this.validateForm)
-    }
-  }
+class Step1 extends PureComponent {
 
-  onComplete = () => this.props.completeStepOne(this.state.email, this.state.password)
-
-  onChange = e => {
-    const { name, value } = e.target
-    this.setState({[name]: value}, () => { this.validateField(name, value) })
-  }
-
-  validateField = (fieldName, value) => {
-    let {
-      formErrors,
-      emailValid,
-      passwordValid,
-      passwordRepeatValid,
-      password,
-      passwordRepeat
-    } = this.state
-
-    switch(fieldName) {
-      case 'email':
-        emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)
-        formErrors.email = emailValid ? '' : 'email is invalid'
-        break
-      case 'password':
-        passwordValid = value.length >= 6
-        formErrors.password = passwordValid ? '': 'password is too short'
-        passwordRepeatValid = value === passwordRepeat
-        formErrors.passwordRepeat = passwordRepeatValid ? '': 'passwords don\'t match'
-        break
-      case 'passwordRepeat':
-        const ruleLength = value.length >= 6
-        const ruleMatch = value === password
-        passwordRepeatValid = ruleLength && ruleMatch
-        formErrors.passwordRepeat = !ruleMatch ? 'passwords don\'t match' : !ruleLength ? 'password is too short' : ''
-        break
-      default:
-        break
-    }
-    this.setState({
-      formErrors: formErrors,
-      emailValid: emailValid,
-      passwordValid: passwordValid,
-      passwordRepeatValid: passwordRepeatValid
-    }, this.validateForm)
-  }
-
-  validateForm = () => {
-    const { emailValid, passwordValid, passwordRepeatValid } = this.state
-    this.setState({ formValid: emailValid && passwordValid && passwordRepeatValid })
+  onSubmit = props => values => {
+    const { email, password, repeatPassword } = values
+    const { completeStepOne } = this.props
+    completeStepOne(email, password, repeatPassword)
   }
 
   render() {
     const {
-      isStepPending,
-      clearAlreadyTakenEmail
+      handleSubmit,
+      pristine,
+      reset,
+      submitting,
+      valid,
+      asyncValidating,
+      password
     } = this.props
-    const {
-      email,
-      password,
-      passwordRepeat,
-      formErrors,
-      formValid
-    } = this.state
-    const progress = 100 - 100 / 15 * password.length
     return (
-      <div>
-        <Input
+      <form>
+        <Field
+          type='email'
           name='email'
-          label='Email address *'
+          label='email'
           placeholder='enter your email'
-          style={{ marginBottom: 20 }}
-          error={email && formErrors.email}
-          onChange={this.onChange}
-          value={email}
+          component={Input}
+          validate={[
+            requiredCheck,
+            emailCheck
+          ]}
         />
-        <Input
+        <Field
+          type='password'
           name='password'
-          label='Password (min 6 letters) *'
-          placeholder='enater your password'
-          style={{ marginBottom: 10 }}
-          error={password && formErrors.password}
-          onChange={this.onChange}
-          value={password}
+          label='password'
+          placeholder='enter your password'
+          component={Input}
+          validate={[
+            requiredCheck,
+            minLength6Check,
+            maxLength12Check
+          ]}
         />
-        <div className={styles.progressContainer}>
-          <div className={styles.progressText}>weak</div>
-          <div className={styles.progressWrapper}>
-            <div style={{ width: `${progress}%` }} className={styles.progressLine} />
-          </div>
-          <div className={styles.progressText}>strong</div>
-        </div>
-        <Input
-          name='passwordRepeat'
-          label='Repeat password *'
+        <Progress currentString={password} />
+        <Field
+          type='password'
+          name='repeatPassword'
+          label='repeatPassword'
           placeholder='repeat your password'
-          style={{ marginBottom: 20 }}
-          error={passwordRepeat && formErrors.passwordRepeat}
-          onChange={this.onChange}
-          value={passwordRepeat}
+          component={Input}
+          validate={[
+            passwordsMatchCheck,
+            requiredCheck,
+            minLength6Check,
+            maxLength12Check
+          ]}
         />
         <Controls
-          isPending={isStepPending}
-          onCompleteClick={this.onComplete}
-          isEnabled={formValid}
+          isPending={false}
+          onCompleteClick={handleSubmit(this.onSubmit(this.props))}
+          isEnabled={valid && !submitting && !asyncValidating}
         />
-      </div>
+      </form>
     )
   }
 }
+
+export default reduxForm({
+  form: 'regStep1'
+})(Step1)

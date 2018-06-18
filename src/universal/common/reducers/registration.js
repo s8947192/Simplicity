@@ -9,16 +9,18 @@ import {
   COMPLETE_STEP_TWO,
   UPDATE_COMPLETED_STEPS,
   COMPLETE_STEP_THREE,
-  SELECT_LANGUAGE
+  SELECT_LANGUAGE,
+  FIND_EMAIL
 } from 'universal/common/actions/registration'
 
 const initialState = {
   completedSteps: [],
   activeStep: 1,
   stepPending: false,
-  takenEmail: null,
+  isEmailTaken: false,
   email: null,
   password: null,
+  repeatPassword: null,
   firstName: null,
   lastName: null,
   language: 'eng',
@@ -40,6 +42,12 @@ export default typeToReducer({
   [CLEAR_ALREADY_TAKEN_EMAIL]: (state, action) => ({ ...state, takenEmail: null }),
   [UPDATE_COMPLETED_STEPS]: (state, action) => ({ ...state, completedSteps: action.completedSteps }),
   [SELECT_LANGUAGE]: (state, action) => ({ ...state, language: action.language }),
+  [FIND_EMAIL]: {
+    FULFILLED: (state, action) => ({
+      ...state,
+      isEmailTaken: action.isEmail,
+    })
+  },
   [COMPLETE_STEP_ONE]: {
     PENDING: (state, action) => ({
       ...state,
@@ -50,7 +58,8 @@ export default typeToReducer({
       activeStep: state.activeStep + 1,
       stepPending: false,
       email: action.email,
-      password: action.password
+      password: action.password,
+      repeatPassword: action.repeatPassword,
     }),
     REJECTED: (state, action) => ({
       ...state,

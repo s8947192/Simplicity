@@ -1,11 +1,14 @@
 import { takeLatest, call, put, select } from 'redux-saga/effects'
 import { batchActions } from 'redux-batched-actions'
 
+import { emailCheck } from 'universal/utils/formFieldsValidation'
+
 import { checkIfUserExists } from 'universal/api/registration'
 import {
   COMPLETE_STEP_ONE,
   COMPLETE_STEP_TWO,
-  COMPLETE_STEP_THREE
+  COMPLETE_STEP_THREE,
+  FIND_EMAIL
 } from 'universal/common/actions/registration'
 import {
   completeStepOnePending,
@@ -14,7 +17,8 @@ import {
   setAlreadyTakenEmail,
   updateCompletedSteps,
   completeStepTwoFulfilled,
-  completeStepThreeFulfilled
+  completeStepThreeFulfilled,
+  findEmailFulfilled
 } from 'universal/common/actions/registration'
 
 function* defineCompletedSteps(currentStep) {
@@ -25,7 +29,10 @@ function* defineCompletedSteps(currentStep) {
   return newCompletedSteps
 }
 
-function* requestCompleteStepOneSaga({ email, password }) {
+function* requestCompleteStepOneSaga({ email, password, repeatPassword }) {
+  // console.log(email)
+  // console.log(password)
+  // console.log(repeatPassword)
   try {
     yield put(completeStepOnePending())
     const { data: user } = yield call(checkIfUserExists, email)
@@ -33,12 +40,12 @@ function* requestCompleteStepOneSaga({ email, password }) {
     if (isUserExists) {
       yield put(batchActions([
         completeStepOnePending(),
-        setAlreadyTakenEmail(email)
+        // setAlreadyTakenEmail(email)
       ]))
     } else {
       const newCompletedSteps = yield defineCompletedSteps(1)
       yield put(updateCompletedSteps(newCompletedSteps))
-      yield put(completeStepOneFulfilled(email, password))
+      yield put(completeStepOneFulfilled(email, password, repeatPassword))
     }
   } catch (e) {
     console.log(e)
@@ -63,7 +70,17 @@ function* requestCompleteStepOneThree({ duration, subscription }) {
   ]))
 }
 
+function* requestFindEmailSaga({ email }) {
+  if (!email.length) return
+  const isCorrectEmail = emailCheck(email) === undefined
+  if (!isCorrectEmail) return
+  const { data: user } = yield call(checkIfUserExists, email)
+  const isUserExists = user.length
+  yield put(findEmailFulfilled(!!isUserExists))
+}
+
 export default function* watchRegistration() {
+  yield takeLatest(FIND_EMAIL, requestFindEmailSaga)
   yield takeLatest(COMPLETE_STEP_ONE, requestCompleteStepOneSaga)
   yield takeLatest(COMPLETE_STEP_TWO, requestCompleteStepOneTwo)
   yield takeLatest(COMPLETE_STEP_THREE, requestCompleteStepOneThree)
