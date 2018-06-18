@@ -43,11 +43,7 @@ const Progress = ({
 
 class Step1 extends PureComponent {
 
-  onSubmit = props => values => {
-    const { email, password, repeatPassword } = values
-    const { completeStepOne } = this.props
-    completeStepOne(email, password, repeatPassword)
-  }
+  onSubmit = props => values => this.props.completeStepOne(values)
 
   render() {
     const {
@@ -57,8 +53,10 @@ class Step1 extends PureComponent {
       submitting,
       valid,
       asyncValidating,
-      password
+      password,
+      setNextStep
     } = this.props
+
     return (
       <form>
         <Field
@@ -101,6 +99,7 @@ class Step1 extends PureComponent {
         <Controls
           isPending={false}
           onCompleteClick={handleSubmit(this.onSubmit(this.props))}
+          onSkipClick={() => setNextStep(2)}
           isEnabled={valid && !submitting && !asyncValidating}
         />
       </form>

@@ -3,14 +3,8 @@ import { formValueSelector } from 'redux-form'
 
 import Step1 from '../components/Step1/Step1'
 
-import {
-  checkIfUserExists
-} from 'universal/api/registration'
-
-import {
-  completeStepOne
-} from 'universal/common/actions/registration'
-
+import { actions as registrationActions } from 'universal/common/actions/registration'
+import { checkIfUserExists } from 'universal/api/registration'
 import { emailCheck } from 'universal/utils/formFieldsValidation'
 
 import {
@@ -63,7 +57,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  completeStepOne: (email, password, repeatPassword) => dispatch(completeStepOne(email, password, repeatPassword)),
+  completeStepOne: data => dispatch(registrationActions.completeStepOne(data)),
+  setNextStep: nextStep => dispatch(registrationActions.setNextStep(nextStep))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Step1)

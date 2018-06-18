@@ -64,6 +64,7 @@
     "react-router-redux": "^5.0.0-alpha.4",
     "react-stripe-elements": "^1.6.0",
     "redux": "^3.6.0",
+    "redux-action-creator": "^2.3.0",
     "redux-batched-actions": "^0.3.0",
     "redux-form": "^7.3.0",
     "redux-saga": "^0.16.0",
