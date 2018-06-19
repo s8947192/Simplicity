@@ -3,9 +3,9 @@ import { Field, reduxForm } from 'redux-form'
 import cn from 'classnames'
 
 import Input from 'universal/common/components/FormFields/Input'
+import Select from 'universal/common/components/FormFields/Select'
+import PasswordSecurityProgress from 'universal/common/components/ProgressBars/PasswordSecurityProgress'
 import Controls from '../Controls/Controls'
-
-import styles from './step1.scss'
 
 import {
   requiredCheck,
@@ -14,32 +14,6 @@ import {
   maxLength12Check,
   passwordsMatchCheck
 } from 'universal/utils/formFieldsValidation'
-
-const Progress = ({
-  currentString,
-  maxLength = 12
-}) => {
-  const currentLength = currentString ? currentString.length : 0
-  const progress = 100 - 100 / maxLength * currentLength
-  return (
-    <div className={styles.progressContainer}>
-      <div className={styles.progressText}>weak</div>
-      <div className={styles.progressWrapper}>
-        <div
-          style={{ width: `${progress}%` }}
-          className={
-            cn(
-              { [styles.progressLine__noRightBorder]: progress < 100 },
-              { [styles.progressLine__noBorder]: progress <= 0 },
-              styles.progressLine
-            )
-          }
-        />
-      </div>
-      <div className={styles.progressText}>strong</div>
-    </div>
-  )
-}
 
 class Step1 extends PureComponent {
 
@@ -60,6 +34,17 @@ class Step1 extends PureComponent {
     return (
       <form>
         <Field
+          name='select'
+          label='select'
+          component={Select}
+          options={[
+            { value: 'rus', label: 'Russian', email: 'john@smith1.com' },
+            { value: 'eng', label: 'English', email: 'john@smith2.com' },
+            { value: 'ger', label: 'German', email: 'john@smith3.com' },
+            { value: 'spa', label: 'Spanish', email: 'john@smith4.com' }
+          ]}
+        />
+        <Field
           type='email'
           name='email'
           label='email'
@@ -68,6 +53,16 @@ class Step1 extends PureComponent {
           validate={[
             requiredCheck,
             emailCheck
+          ]}
+        />
+        <Field
+          type='text'
+          name='furstName'
+          label='first name'
+          placeholder='enter your first name'
+          component={Input}
+          validate={[
+            requiredCheck
           ]}
         />
         <Field
@@ -82,7 +77,9 @@ class Step1 extends PureComponent {
             maxLength12Check
           ]}
         />
-        <Progress currentString={password} />
+        <PasswordSecurityProgress
+          currentString={password}
+        />
         <Field
           type='password'
           name='repeatPassword'

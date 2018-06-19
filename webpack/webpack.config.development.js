@@ -72,7 +72,16 @@ export default {
       },
 
       // CSS
+      {
+       test: /\.css$/,
+       include: /node_modules/,
+       use: [
+         {loader: 'style-loader'},
+         {loader: 'css-loader' }
+       ]
+      },
       {test: /\.(css|scss)$/,
+        exclude: /node_modules/,
        use: [
          {loader: 'style-loader'},
          {loader: 'css-loader',

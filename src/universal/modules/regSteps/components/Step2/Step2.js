@@ -4,6 +4,7 @@ import styles from './step2.scss'
 
 import Input from 'universal/common/components/Input'
 import Select from 'universal/common/components/Select'
+// import Select1 from 'universal/common/components/FormFields/Select'
 import Controls from '../Controls/Controls'
 
 export default class Step2 extends Component {
@@ -43,7 +44,7 @@ export default class Step2 extends Component {
 
   onSelect = value => {
     this.setState({ systemLanguage: value })
-    this.props.selectLanguage(value)  
+    this.props.selectLanguage(value)
   }
 
   render() {

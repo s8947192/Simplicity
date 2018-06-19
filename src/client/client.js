@@ -3,6 +3,8 @@ import {render} from 'react-dom'
 import {StripeProvider} from 'react-stripe-elements'
 import {AppContainer} from 'react-hot-loader'
 
+import 'react-select/dist/react-select.css'
+
 // Components
 import App from './containers/AppContainer.js'
 
