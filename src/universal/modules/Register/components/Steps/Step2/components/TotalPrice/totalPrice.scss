@@ -1,0 +1,22 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  margin-top: 9px;
+  background-color: #d0fbbb;
+  border-radius: 4px;
+  align-items: center;
+}
+
+.label {
+  text-transform: uppercase;
+  font-size: 10px;
+  margin-right: 10px;
+  color: #829c75;
+}
+
+.value {
+  color: #85a277;
+  font-weight: bold;
+  font-size: 13px;
+}
