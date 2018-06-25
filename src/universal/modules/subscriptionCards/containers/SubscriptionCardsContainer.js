@@ -6,7 +6,7 @@ import SubscriptionCards from '../components/SubscriptionCards'
 import { requestSubscriptions } from 'universal/common/actions/subscriptions'
 import { getSubscriptions, getDuration } from 'universal/common/selectors/subscriptions'
 
-import { selectPlanWithDuration } from 'universal/common/actions/registration'
+// import { selectPlanWithDuration } from 'universal/common/actions/registration'
 
 const mapStateToProps = state => ({
   subscriptions: getSubscriptions(state),
@@ -15,7 +15,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   requestSubscriptions: () => dispatch(requestSubscriptions()),
-  selectPlanWithDuration: (id, duration) => dispatch(selectPlanWithDuration(id, duration))
+  // selectPlanWithDuration: (id, duration) => dispatch(selectPlanWithDuration(id, duration))
+  selectPlanWithDuration: () => console.log('oops')
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SubscriptionCards))

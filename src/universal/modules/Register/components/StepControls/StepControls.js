@@ -20,7 +20,11 @@ const StepControls = ({
   }
   return (
     <div className={styles.wrapper}>
-      <div className={styles.info}>You can click "finish" at any time</div>
+      {
+        /*
+          <div className={styles.info}>You can click "finish" at any time</div>
+        */
+      }
       <div className={styles.controls}>
         <Button title='skip' onClick={onSkipClick} />
         <Button type='green' onClick={isEnabled && onCompleteClick} title='finish' disabled={!isEnabled} />

@@ -1,12 +1,36 @@
 import React, { PureComponent } from 'react'
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm, change } from 'redux-form'
 
 import Input from 'universal/common/components/FormFields/Input'
 import Select from 'universal/common/components/FormFields/Select'
 import TotalPrice from './components/TotalPrice'
 import StepControls from '../../StepControls'
 
+import Preloader from 'universal/common/components/Preloader'
+
+import styles from './step2.scss'
+
+const durationOptions = [
+  { value: '1', label: '1 month' },
+  { value: '3', label: '3 month' },
+  { value: '6', label: '6 month' }
+]
+
 class Step2 extends PureComponent {
+
+  componentWillMount() {
+    const { subscriptions, requestSubscriptions } = this.props
+    if (!subscriptions.length) {
+      requestSubscriptions()
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { selectedSubscriptionPrice, initialValues, dispatch } = nextProps
+    if (selectedSubscriptionPrice <= 0) {
+      dispatch(change('regStep2', 'selectedDuration', 1))
+    }
+  }
 
   onSubmit = props => values => this.props.completeStepOne(values)
 
@@ -16,35 +40,31 @@ class Step2 extends PureComponent {
       submitting,
       setNextStep,
       selectedDuration,
-      selectedSubscription
+      selectedSubscriptionPrice,
+      subscriptions
     } = this.props
-
+    const isDurationDisabled = selectedSubscriptionPrice <= 0
+    if (!subscriptions.length) return (
+      <div className={styles.preloaderWrapper}><Preloader /></div>
+    )
     return (
       <form>
         <Field
           name='selectedDuration'
           label='duration'
           component={Select}
-          options={[
-            { value: '1', label: '1 month' },
-            { value: '3', label: '3 month' },
-            { value: '6', label: '6 month' }
-          ]}
+          options={durationOptions}
+          disabled={isDurationDisabled}
         />
         <Field
           name='selectedSubscription'
           label='subscription'
           component={Select}
-          options={[
-            { value: 'id0', label: 'Free' },
-            { value: 'id1', label: 'Standart: $8.99' },
-            { value: 'id2', label: 'Standart+: $14.99' },
-            { value: 'id3', label: 'Business: 48.99' }
-          ]}
+          options={subscriptions}
         />
         <TotalPrice
-          selectedDuration={selectedDuration}
-          selectedSubscription={selectedSubscription}
+          duration={selectedDuration}
+          price={selectedSubscriptionPrice}
         />
         <StepControls
           isPending={false}

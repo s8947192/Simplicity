@@ -1,8 +1,9 @@
 import typeToReducer from 'type-to-reducer'
+import { fromJS, Map } from 'immutable'
 
 import { types } from '../actions'
 
-const initialState = {
+const initialState = fromJS({
   completedSteps: [],
   activeStep: 1,
   email: null,
@@ -10,19 +11,18 @@ const initialState = {
   repeatPassword: null,
   selectedDuration: 1,
   selectedSubscription: 'id0'
-}
+})
 
 export default typeToReducer({
-  [types.SET_NEXT_STEP]: (state, { payload }) => ({
-    ...state,
-    activeStep: payload.nextStep
-  }),
+  [types.SET_NEXT_STEP]: (state, { payload }) => {
+    return state.set('activeStep', payload.nextStep)
+  },
   [types.COMPLETE_STEP_ONE]: {
-    SUCCESS: (state, { payload }) => ({
-      ...state,
-      email: payload.data.email,
-      password: payload.data.password,
-      repeatPassword: payload.data.repeatPassword
-    })
+    SUCCESS: (state, { payload }) => {
+      return state
+        .set('email', payload.data.email)
+        .set('password', payload.data.password)
+        .set('repeatPassword', payload.data.repeatPassword)
+    }
   }
 }, initialState)

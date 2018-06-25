@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import StepNav from '../components/StepsNav'
 import { actions } from '../actions'
 
+import { getIsSelectedSubscriptionFree } from 'universal/common/selectors/subscriptions'
+
 import {
   getActiveStep,
   getCompletedSteps
@@ -10,7 +12,8 @@ import {
 
 const mapStateToProps = state => ({
   activeStep: getActiveStep(state),
-  completedSteps: getCompletedSteps(state)
+  completedSteps: getCompletedSteps(state),
+  isSelectedSubscriptionFree: getIsSelectedSubscriptionFree(state)
 })
 
 const mapDispatchToProps = dispatch => ({

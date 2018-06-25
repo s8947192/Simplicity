@@ -1,31 +1,24 @@
 import typeToReducer from 'type-to-reducer'
+import { fromJS, Map } from 'immutable'
 
-import { REQUEST_SUBSCRIPTIONS, SELECT_DURATION } from 'universal/common/actions/subscriptions'
+import { types } from '../actions/subscriptions'
 
-const initialState = {
+const initialState = fromJS({
   subscriptions: [],
   duration: 1,
+  initialSelectedSubscriptionId: null,
   isPending: false,
   error: null
-}
+})
 
 export default typeToReducer({
-  [REQUEST_SUBSCRIPTIONS]: {
-    PENDING: () => ({
-      ...initialState,
-      isPending: true
-    }),
-    FULFILLED: (state, action) => ({
-      ...state,
-      subscriptions: action.subscriptions
-    }),
-    REJECTED: (state, action) => ({
-      ...initialState,
-      error: action.message
-    })
+  [types.REQUEST_SUBSCRIPTIONS]: {
+    SUCCESS: (state, { payload: { data } }) => {
+      return state
+        .set('subscriptions', data)
+        .set('initialSelectedSubscriptionId', data[0].id)
+    },
+    FAIL: (state, { error }) => initialState.set('error', error)
   },
-  [SELECT_DURATION]: (state, action) => ({
-    ...state,
-    duration: action.duration
-  })
+  [types.SELECT_DURATION]: (state, { payload }) => state.set('duration', payload.duration)
 }, initialState)

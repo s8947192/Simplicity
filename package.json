@@ -54,7 +54,7 @@
     "colors": "^1.1.2",
     "express": "^4.15.2",
     "history": "^4.6.1",
-    "immutable": "^3.8.1",
+    "immutable": "^3.8.2",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-gravatar": "^2.6.3",
@@ -70,6 +70,7 @@
     "redux-batched-actions": "^0.3.0",
     "redux-form": "^7.3.0",
     "redux-saga": "^0.16.0",
+    "reselect": "^3.0.1",
     "styled-components": "^3.3.3",
     "type-to-reducer": "^1.1.0"
   }

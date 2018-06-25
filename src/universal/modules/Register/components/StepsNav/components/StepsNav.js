@@ -8,7 +8,8 @@ import styles from './stepsNav.scss'
 const StepsNav = ({
   activeStep,
   completedSteps,
-  setNextStep
+  setNextStep,
+  isSelectedSubscriptionFree
 }) => (
   <div className={styles.wrapper}>
     <Step thisStep={1}
@@ -23,19 +24,23 @@ const StepsNav = ({
       setNextStep={setNextStep}
       stepLabel='Subscription'
     />
-    <Step thisStep={3}
-      activeStep={activeStep}
-      completedSteps={completedSteps}
-      setNextStep={setNextStep}
-      stepLabel='Payment'
-    />
-    <Step thisStep={4}
+    {
+      !isSelectedSubscriptionFree && (
+        <Step thisStep={3}
+          activeStep={activeStep}
+          completedSteps={completedSteps}
+          setNextStep={setNextStep}
+          stepLabel='Payment'
+        />
+      )
+    }
+    <Step thisStep={!isSelectedSubscriptionFree ? 4 : 3}
       activeStep={activeStep}
       completedSteps={completedSteps}
       setNextStep={setNextStep}
       stepLabel='Verification'
     />
-    <Step thisStep={5} noLine
+    <Step thisStep={!isSelectedSubscriptionFree ? 5 : 4} noLine
       activeStep={activeStep}
       completedSteps={completedSteps}
       setNextStep={setNextStep}

@@ -9,7 +9,7 @@ export class StripePaymentFormContainer extends Component {
     const cardData = {
       name: values.nameOnCard
     }
-    return stripe.createToken(cardData).then(card => this.props.onSubmit(card, values))
+    return stripe.createToken(values).then(token => console.log(token))
   }
 
   render () {
