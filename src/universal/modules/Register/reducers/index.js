@@ -4,7 +4,7 @@ import { fromJS, Map } from 'immutable'
 import { types } from '../actions'
 
 const initialState = fromJS({
-  completedSteps: [],
+  completedSteps: [1,2],
   activeStep: 1,
   email: null,
   password: null,

@@ -33,6 +33,13 @@
       background-size: 8px;
       background-image: url('universal/assets/icons/cancel.svg');
     }
+    &_invis {
+      background-color: #fa7677;
+      border: 3px solid #fa7677;
+      background-size: 10px;
+      cursor: not-allowed;
+      background-image: url('universal/assets/icons/locked.svg');
+    }
     &_skipped {
       background-color: #ffea8d;
       border: 3px solid #f5d8af;
@@ -47,6 +54,12 @@
       margin-left: 5px;
       background-color: #ff7777;
       padding: 5px;
+      &--red {
+        background-color: #ff7777;
+      }
+      &--green {
+        background-color: #20d67d;
+      }
     }
   }
   &__desc {
@@ -63,6 +76,9 @@
     }
     &_done {
       color: #3cb373;
+    }
+    &_invis {
+      cursor: not-allowed;
     }
   }
   &__leadingLine {

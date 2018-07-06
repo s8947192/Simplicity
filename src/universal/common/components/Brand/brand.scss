@@ -1,0 +1,15 @@
+.cardType {
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  &_visa {
+    color: #5598d6;
+  }
+  &_mastercard {
+    color: #d6557d;
+  }
+  &_noCard {
+    color: #a7a7a7;
+  }
+}

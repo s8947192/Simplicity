@@ -1,37 +1,39 @@
 import React from 'react'
 import { injectStripe } from 'react-stripe-elements'
 import { Field, reduxForm } from 'redux-form'
-import Input from 'universal/common/components/Input'
-// import { Input } from 'universal/common/components/FormFields'
-import { CardNumber, CardExpiry, Zipcode, CardCVC } from 'universal/common/components/FormFields/Stripe'
-import cn from 'classnames'
+
+import Input from 'universal/common/components/FormFields/Input'
+
+import {
+  CardNumber,
+  CardExpiry,
+  Zipcode,
+  CardCVC
+} from 'universal/common/components/FormFields/Stripe'
+
 import styles from './stripePaymentForm.scss'
 
-const onSubmit = props => values => {
-  return props.onSubmit(values, props.stripe)
+const onSubmit = ({ stripe, ...props }) => values => {
+  stripe.createToken().then(token => console.log(token))
 }
 
-export const StripePaymentForm = ({ handleSubmit, ...props }) => (
+const StripePaymentForm = ({ handleSubmit, ...props }) => (
   <form id='stripe-payment-form' onSubmit={handleSubmit(onSubmit(props))}>
     <div className={styles.formWrapper}>
-      <Field type='text' name='nameOnCard' component={Input} placeholder='Name on Card' />
-      <Field name='numberValid' component={CardNumber}/>
-      <Field name='expiryValid' component={CardExpiry} />
-      <Field name='cvcValid' component={CardCVC} />
-      <div className={cn(styles.cardType, 'col-md-2')}>
-        <i className='fa fa-cc-visa' />
+      <label className={styles.label}>Card Number*</label>
+      <Field name='cardNumber' component={CardNumber}/>
+      <label className={styles.label}>Expirity*</label>
+      <div className={styles.widthInExpirity}>
+        <Field name='expiryValid' component={CardExpiry} />
+      </div>
+      <label className={styles.label}>CVC*</label>
+      <div className={styles.widthInCVC}>
+        <Field name='cvcValid' component={CardCVC} />
       </div>
     </div>
   </form>
 )
 
 export default reduxForm({
-  form: 'paymentMethod',
-  // initialValues: {
-  //   meta: {
-  //     numberValid: false,
-  //     expiryValid: false,
-  //     cvcValid: false
-  //   }
-  // }
+  form: 'paymentMethod'
 })(injectStripe(StripePaymentForm))

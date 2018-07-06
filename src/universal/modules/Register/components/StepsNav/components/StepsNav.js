@@ -24,23 +24,20 @@ const StepsNav = ({
       setNextStep={setNextStep}
       stepLabel='Subscription'
     />
-    {
-      !isSelectedSubscriptionFree && (
-        <Step thisStep={3}
-          activeStep={activeStep}
-          completedSteps={completedSteps}
-          setNextStep={setNextStep}
-          stepLabel='Payment'
-        />
-      )
-    }
-    <Step thisStep={!isSelectedSubscriptionFree ? 4 : 3}
+    <Step thisStep={3}
+      isEnabled={false}
+      activeStep={activeStep}
+      completedSteps={completedSteps}
+      setNextStep={setNextStep}
+      stepLabel='Payment'
+    />
+    <Step thisStep={4}
       activeStep={activeStep}
       completedSteps={completedSteps}
       setNextStep={setNextStep}
       stepLabel='Verification'
     />
-    <Step thisStep={!isSelectedSubscriptionFree ? 5 : 4} noLine
+    <Step thisStep={5} noLine
       activeStep={activeStep}
       completedSteps={completedSteps}
       setNextStep={setNextStep}

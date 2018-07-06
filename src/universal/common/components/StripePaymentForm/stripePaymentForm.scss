@@ -3,35 +3,12 @@
   flex-direction: column;
 }
 
-// .input {
-//   display: block;
-//   width: 100%;
-//   padding: 17px;
-//   font-size: .9rem;
-//   color: #484848;
-//   background: #fff none;
-//   background-clip: padding-box;
-//   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-//   font-family: inherit;
-//
-//   border-radius: 5px;
-//   border: solid 1px #d9d9d9;
-//
-//   font-weight: 400;
-//
-//   &:active,
-//   &:focus {
-//     outline: none;
-//     border-color: #979797;
-//     box-shadow: 0px 0px 5px 0px rgba(77,141,201,0.58);
-//   }
-// }
-
-.cardType {
-  font-size: 1.5rem;
+.cardNumberWrapper {
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  margin-bottom: 10px;
+  & > div:last-child {
+    flex: 1;
+  }
 }
 
 .error {
@@ -40,4 +17,23 @@
   small {
     color: red;
   }
+}
+
+.brandPadding {
+  padding: 0 15px;
+}
+
+.widthInExpirity {
+  width: 85px;
+}
+
+.widthInCVC {
+  width: 65px;
+}
+
+.label {
+  margin-bottom: 10px;
+  font-size: 12px;
+  margin-left: 20px;
+  color: #8b9197;
 }

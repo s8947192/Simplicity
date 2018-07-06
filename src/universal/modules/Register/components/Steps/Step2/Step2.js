@@ -49,19 +49,21 @@ class Step2 extends PureComponent {
     )
     return (
       <form>
-        <Field
-          name='selectedDuration'
-          label='duration'
-          component={Select}
-          options={durationOptions}
-          disabled={isDurationDisabled}
-        />
-        <Field
-          name='selectedSubscription'
-          label='subscription'
-          component={Select}
-          options={subscriptions}
-        />
+        <div className={styles.wrapper}>
+          <Field
+            name='selectedDuration'
+            label='duration'
+            component={Select}
+            options={durationOptions}
+            disabled={isDurationDisabled}
+          />
+          <Field
+            name='selectedSubscription'
+            label='subscription'
+            component={Select}
+            options={subscriptions}
+          />
+        </div>
         <TotalPrice
           duration={selectedDuration}
           price={selectedSubscriptionPrice}
