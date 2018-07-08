@@ -1,0 +1,42 @@
+.card {
+  background-color: #5feaa6;
+  padding: 10px;
+  border-radius: 4px;
+  flex: 1;
+  margin: 1px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 18px;
+  animation-name: card-appear;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  transition: flex 0.3s ease;
+  min-width: 80px;
+  color: #35805b;
+  &__title {
+    text-transform: uppercase;
+    font-size: 10px;
+  }
+
+  &__text {
+    font-weight: bold;
+    font-size: 13px;
+  }
+  &--expanded {
+    flex: 2;
+  }
+  &--shaded {
+    background-color: #f6f6f8;
+    color: #a7a7a7;
+  }
+  &--improved {
+    background-color: #ffeb54;
+    color: #a29737;
+  }
+}
+
+@keyframes card-appear {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}

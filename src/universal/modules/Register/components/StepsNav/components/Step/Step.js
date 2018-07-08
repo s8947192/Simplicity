@@ -41,7 +41,14 @@ const Step = ({
       >
         { isActive ? <strong>{ stepLabel }</strong> : stepLabel }
       </div>
-      { !noLine && <div className={styles.step__leadingLine} /> }
+      {
+        !noLine && (
+          <div className={cn(
+            styles.step__leadingLine,
+            { [styles['step__leadingLine--done']]: isDone }
+          )} />
+        )
+      }
     </div>
   )
 }

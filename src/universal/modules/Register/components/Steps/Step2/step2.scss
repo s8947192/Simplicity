@@ -6,13 +6,8 @@
   height: 200px;
 }
 
-.wrapper {
+.formWrapper {
+  flex: 1;
   display: flex;
-  & > div:first-child {
-    min-width: 120px;
-    margin-right: 10px;
-  }
-  & > div:last-child {
-    flex: 1;
-  }
+  flex-direction: column;
 }

@@ -1,0 +1,27 @@
+.info {
+  font-size: 12px;
+  padding: 12px 20px;
+  background-color: #fff5e5;
+  border-radius: 4px;
+  color: dimgrey;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  line-height: 19px;
+  border: 1px solid #f1e8d9;
+  align-items: center;
+  animation-name: appear;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.infoIcon {
+  width: 24px;
+  height: 24px;
+  margin-right: 20px;
+}
+
+@keyframes appear {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}

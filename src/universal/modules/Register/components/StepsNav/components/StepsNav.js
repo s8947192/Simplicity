@@ -25,7 +25,6 @@ const StepsNav = ({
       stepLabel='Subscription'
     />
     <Step thisStep={3}
-      isEnabled={false}
       activeStep={activeStep}
       completedSteps={completedSteps}
       setNextStep={setNextStep}

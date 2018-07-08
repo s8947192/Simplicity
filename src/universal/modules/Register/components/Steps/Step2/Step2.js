@@ -3,10 +3,11 @@ import { Field, reduxForm, change } from 'redux-form'
 
 import Input from 'universal/common/components/FormFields/Input'
 import Select from 'universal/common/components/FormFields/Select'
+import Preloader from 'universal/common/components/Preloader'
+import Notification from 'universal/common/components/Notification'
+
 import TotalPrice from './components/TotalPrice'
 import StepControls from '../../StepControls'
-
-import Preloader from 'universal/common/components/Preloader'
 
 import styles from './step2.scss'
 
@@ -26,8 +27,8 @@ class Step2 extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { selectedSubscriptionPrice, initialValues, dispatch } = nextProps
-    if (selectedSubscriptionPrice <= 0) {
+    const { subscriptionPrice, initialValues, dispatch } = nextProps
+    if (subscriptionPrice <= 0) {
       dispatch(change('regStep2', 'selectedDuration', 1))
     }
   }
@@ -40,36 +41,48 @@ class Step2 extends PureComponent {
       submitting,
       setNextStep,
       selectedDuration,
-      selectedSubscriptionPrice,
+      subscriptionPrice,
       subscriptions
     } = this.props
-    const isDurationDisabled = selectedSubscriptionPrice <= 0
+
+    const infoMessage = subscriptionPrice <= 0
+      ? 'Free plan is absolutely free and lasts forever, but has some functional limitations'
+      : 'Choosing chargable plan, you will need to add your credit card to subscribe during user registration process'
+
     if (!subscriptions.length) return (
       <div className={styles.preloaderWrapper}><Preloader /></div>
     )
+
     return (
-      <form>
-        <div className={styles.wrapper}>
-          <Field
-            name='selectedDuration'
-            label='duration'
-            component={Select}
-            options={durationOptions}
-            disabled={isDurationDisabled}
-          />
+      <form className={styles.formWrapper}>
+        <Notification message={infoMessage} />
+        <div>
           <Field
             name='selectedSubscription'
             label='subscription'
             component={Select}
             options={subscriptions}
           />
+          {
+            subscriptionPrice > 0 && (
+              <Field
+                name='selectedDuration'
+                label='duration'
+                component={Select}
+                options={durationOptions}
+              />
+            )
+          }
         </div>
-        <TotalPrice
-          duration={selectedDuration}
-          price={selectedSubscriptionPrice}
-        />
+        {
+          subscriptionPrice != 0 && (
+            <TotalPrice
+              duration={selectedDuration}
+              price={subscriptionPrice}
+            />
+          )
+        }
         <StepControls
-          isPending={false}
           onCompleteClick={handleSubmit(this.onSubmit(this.props))}
           onSkipClick={() => setNextStep(3)}
           isEnabled={!submitting}

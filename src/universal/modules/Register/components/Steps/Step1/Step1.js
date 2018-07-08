@@ -12,6 +12,8 @@ import snglishFlag from 'universal/assets/icons/flags/england.svg'
 import germanyFlag from 'universal/assets/icons/flags/germany.svg'
 import spanishFlag from 'universal/assets/icons/flags/spain.svg'
 
+import styles from './step1.scss'
+
 import {
   requiredCheck,
   emailCheck,
@@ -37,7 +39,7 @@ class Step1 extends PureComponent {
     } = this.props
 
     return (
-      <form>
+      <form className={styles.wrapper}>
         <Field
           type='email'
           name='email'
@@ -47,16 +49,6 @@ class Step1 extends PureComponent {
           validate={[
             requiredCheck,
             emailCheck
-          ]}
-        />
-        <Field
-          type='text'
-          name='furstName'
-          label='first name'
-          placeholder='enter your first name'
-          component={Input}
-          validate={[
-            requiredCheck
           ]}
         />
         <Field

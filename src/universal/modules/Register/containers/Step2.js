@@ -17,7 +17,7 @@ const formValues = formValueSelector('regStep2')
 
 const mapStateToProps = state => ({
   selectedDuration: formValues(state, 'selectedDuration'),
-  selectedSubscriptionPrice: getSelectedSubscriptionPrice(state),
+  subscriptionPrice: getSelectedSubscriptionPrice(state),
   subscriptions: getInputFormattedSubscriptions(state),
   enableReinitialize: true,
   initialValues: {
