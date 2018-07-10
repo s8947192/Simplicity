@@ -1,18 +1,11 @@
 import React, { PureComponent } from 'react'
 import { Field, reduxForm } from 'redux-form'
-import cn from 'classnames'
 
 import Input from 'universal/common/components/FormFields/Input'
-import Select from 'universal/common/components/FormFields/Select'
 import PasswordSecurityProgress from 'universal/common/components/ProgressBars/PasswordSecurityProgress'
 import StepControls from '../../StepControls'
 
-import russianFlag from 'universal/assets/icons/flags/russia.svg'
-import snglishFlag from 'universal/assets/icons/flags/england.svg'
-import germanyFlag from 'universal/assets/icons/flags/germany.svg'
-import spanishFlag from 'universal/assets/icons/flags/spain.svg'
-
-import styles from './step1.scss'
+import styles from './accountStep.scss'
 
 import {
   requiredCheck,
@@ -22,7 +15,7 @@ import {
   passwordsMatchCheck
 } from 'universal/utils/formFieldsValidation'
 
-class Step1 extends PureComponent {
+class AccountStep extends PureComponent {
 
   onSubmit = props => values => this.props.completeStepOne(values)
 
@@ -40,6 +33,17 @@ class Step1 extends PureComponent {
 
     return (
       <form className={styles.wrapper}>
+        <Field
+          type='text'
+          name='username'
+          label='username'
+          placeholder='enter your username'
+          component={Input}
+          validate={[
+            requiredCheck,
+            maxLength12Check
+          ]}
+        />
         <Field
           type='email'
           name='email'
@@ -92,4 +96,4 @@ class Step1 extends PureComponent {
 
 export default reduxForm({
   form: 'regStep1'
-})(Step1)
+})(AccountStep)

@@ -3,10 +3,12 @@ import React, { Component } from 'react'
 import StripePaymentFormContainer from 'universal/common/containers/StripePaymentFormContainer'
 import StepControls from '../../StepControls'
 
-export default class Step3 extends Component {
+import styles from './paymentMethodStep.scss'
+
+export default class PaymentMethodStep extends Component {
   render() {
     return (
-      <div>
+      <div className={styles.wrapper}>
         <StripePaymentFormContainer />
         {
           /*

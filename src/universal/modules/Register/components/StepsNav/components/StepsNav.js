@@ -1,48 +1,59 @@
 import React from 'react'
-
+import ReactTransitionGroup from 'react-transition-group/TransitionGroup'
+import AnimatedMount from 'universal/common/components/AnimatedMount'
 import Input from 'universal/common/components/Input'
 import Step from './Step'
 
 import styles from './stepsNav.scss'
 
-const StepsNav = ({
-  activeStep,
-  completedSteps,
-  setNextStep,
-  isSelectedSubscriptionFree
-}) => (
-  <div className={styles.wrapper}>
-    <Step thisStep={1}
-      activeStep={activeStep}
-      completedSteps={completedSteps}
-      setNextStep={setNextStep}
-      stepLabel='Account'
-    />
-    <Step thisStep={2}
-      activeStep={activeStep}
-      completedSteps={completedSteps}
-      setNextStep={setNextStep}
-      stepLabel='Subscription'
-    />
-    <Step thisStep={3}
-      activeStep={activeStep}
-      completedSteps={completedSteps}
-      setNextStep={setNextStep}
-      stepLabel='Payment'
-    />
-    <Step thisStep={4}
-      activeStep={activeStep}
-      completedSteps={completedSteps}
-      setNextStep={setNextStep}
-      stepLabel='Verification'
-    />
-    <Step thisStep={5} noLine
-      activeStep={activeStep}
-      completedSteps={completedSteps}
-      setNextStep={setNextStep}
-      stepLabel='Done'
-    />
-  </div>
-)
+const AnimatedStep = AnimatedMount({
+  unmountedStyle: {
+    opacity: 0,
+    transform: 'translate3d(0, -20px, 0)',
+    transition: 'opacity 250ms ease-out, transform 250ms ease-out',
+  },
+  mountedStyle: {
+    opacity: 1,
+    transform: 'translate3d(0, 0, 0)',
+    transition: 'opacity 250ms ease-out, transform 250ms ease-out',
+  },
+})(Step)
+
+const StepsNav = ({ isSubscrFree, ...props }) => {
+  return (
+    <div className={styles.wrapper}>
+      <Step {...props} thisStep={0} stepLabel='Account' />
+      <Step {...props} thisStep={1} stepLabel='Subscription' />
+      <ReactTransitionGroup>
+        {
+          !isSubscrFree && (
+            <AnimatedStep {...props}
+              thisStep={2}
+              isEnabled={false}
+              stepLabel='Payment Method'
+            />
+          )
+        }
+      </ReactTransitionGroup>
+      <Step {...props}
+        thisStep={3}
+        isSubscrFree={isSubscrFree}
+        stepLabel='Main Settings'
+      />
+      <Step {...props}
+        thisStep={4}
+        isSubscrFree={isSubscrFree}
+        stepLabel='Verification'
+      />
+      <Step {...props}
+        thisStep={5}
+        isSubscrFree={isSubscrFree}
+        stepLabel='Complete'
+        isEnabled={false}
+        noLine
+      />
+    </div>
+  )
+}
 
 export default StepsNav

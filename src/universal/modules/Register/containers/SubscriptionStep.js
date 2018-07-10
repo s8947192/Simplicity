@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { formValueSelector } from 'redux-form'
 
-import Step2 from '../components/Steps/Step2'
+import SubscriptionStep from '../components/Steps/SubscriptionStep'
 import actions from '../actions'
 
 import { actions as subscriptionActions } from 'universal/common/actions/subscriptions'
@@ -33,4 +33,4 @@ const mapDispatchToProps = dispatch => ({
   dispatch
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Step2)
+export default connect(mapStateToProps, mapDispatchToProps)(SubscriptionStep)

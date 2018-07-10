@@ -15,15 +15,9 @@ const Input = ({
   const isRequired = meta.error === 'required'
   const isError = meta.error && !isRequired
   const isSuccess = !isRequired && !isError
-  // console.log(meta.error)
   return (
     <div className={styles.container}>
       <div className={styles.labelWrapper}>
-        {
-          /*
-            { label && label.length && <label className={styles.label}>{ label }</label> }
-          */
-        }
         <div className={styles.infoWrapper}>
           <div className={cn(
             styles.info,
@@ -58,6 +52,7 @@ const Input = ({
           {...input}
           className={styles.input}
           placeholder={placeholder}
+          autoComplete='off'
           type={type}
         />
       </div>

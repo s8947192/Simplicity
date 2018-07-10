@@ -9,7 +9,7 @@ import Notification from 'universal/common/components/Notification'
 import TotalPrice from './components/TotalPrice'
 import StepControls from '../../StepControls'
 
-import styles from './step2.scss'
+import styles from './subscriptionStep.scss'
 
 const durationOptions = [
   { value: '1', label: '1 month' },
@@ -17,7 +17,7 @@ const durationOptions = [
   { value: '6', label: '6 month' }
 ]
 
-class Step2 extends PureComponent {
+class SubscriptionStep extends PureComponent {
 
   componentWillMount() {
     const { subscriptions, requestSubscriptions } = this.props
@@ -52,7 +52,6 @@ class Step2 extends PureComponent {
     if (!subscriptions.length) return (
       <div className={styles.preloaderWrapper}><Preloader /></div>
     )
-
     return (
       <form className={styles.formWrapper}>
         <Notification message={infoMessage} />
@@ -94,4 +93,4 @@ class Step2 extends PureComponent {
 
 export default reduxForm({
   form: 'regStep2'
-})(Step2)
+})(SubscriptionStep)

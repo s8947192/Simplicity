@@ -13,7 +13,7 @@ import {
 const mapStateToProps = state => ({
   activeStep: getActiveStep(state),
   completedSteps: getCompletedSteps(state),
-  isSelectedSubscriptionFree: getIsSelectedSubscriptionFree(state)
+  isSubscrFree: getIsSelectedSubscriptionFree(state)
 })
 
 const mapDispatchToProps = dispatch => ({

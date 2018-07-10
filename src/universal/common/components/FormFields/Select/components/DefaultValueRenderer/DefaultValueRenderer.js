@@ -5,7 +5,7 @@ import styles from './defaultValueRenderer.scss'
 const DefaultValueRenderer = ({ children, value }) => (
   <div className={cn('Select-value', styles.value)}>
     <span className={cn('Select-value-label', styles.valueEl)}>
-      { value.icon && <img height={value.icon.size} className={styles.icon} src={value.icon.src} /> }
+      { value.imgSrc && <img height={24} className={styles.icon} src={value.imgSrc} /> }
       { children }
     </span>
   </div>

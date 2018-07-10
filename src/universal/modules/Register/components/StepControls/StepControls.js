@@ -22,7 +22,7 @@ const StepControls = ({
     <div className={styles.wrapper}>
       <div className={styles.controls}>
         <Button title='skip' onClick={onSkipClick} />
-        <Button type='green' onClick={isEnabled && onCompleteClick} title='finish' disabled={!isEnabled} />
+        <Button type='green' onClick={isEnabled && onCompleteClick} title='complete' disabled={!isEnabled} />
       </div>
     </div>
   )

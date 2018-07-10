@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import cn from 'classnames'
 
+import AnimatedMount from 'universal/common/components/AnimatedMount'
+
 import styles from './step.scss'
 
 const Step = ({
@@ -10,11 +12,14 @@ const Step = ({
   setNextStep,
   stepLabel,
   isEnabled=true,
+  isAppearing,
+  isSubscrFree,
   noLine
 }) => {
 
   const isDone = completedSteps.indexOf(thisStep) !== -1
   const isActive = activeStep === thisStep
+  const stepNumber = isSubscrFree ? thisStep : thisStep + 1
 
   return (
     <div className={styles.step}>
@@ -28,7 +33,7 @@ const Step = ({
           {[styles['step__number_invis']]: !isEnabled}
         )}
       >
-        { !isActive && !isDone && isEnabled && thisStep }
+        { !isActive && !isDone && isEnabled && stepNumber }
       </div>
       <div
         onClick={() => (isEnabled && setNextStep(thisStep))}

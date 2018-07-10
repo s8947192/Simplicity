@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { formValueSelector } from 'redux-form'
 
-import Step1 from '../components/Steps/Step1'
+import AccountStep from '../components/Steps/AccountStep'
 import actions from '../actions'
 
 import {
@@ -57,4 +57,4 @@ const mapDispatchToProps = dispatch => ({
   setNextStep: nextStep => dispatch(actions.setNextStep(nextStep))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Step1)
+export default connect(mapStateToProps, mapDispatchToProps)(AccountStep)
