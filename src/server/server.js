@@ -48,5 +48,5 @@ const server = http.createServer(app);
 
 server.listen(8080, function() {
    const address = server.address();
-   console.log(`${'>>>'.cyan} ${'Listening on:'.rainbow} ${'localhost::'.trap.magenta}${`${address.port}`.green}`);
+   console.log(`${'App listening on:'.gray} ${'localhost:'.magenta}${`${address.port}`.green}`);
  });

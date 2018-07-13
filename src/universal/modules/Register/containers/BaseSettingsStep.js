@@ -5,6 +5,7 @@ import BaseSettingsStep from '../components/Steps/BaseSettingsStep'
 const mapStateToProps = state => ({
   initialValues: {
     systemLanguage: 'english',
+    defaultCurrency: 'dollar',
   }
 })
 
