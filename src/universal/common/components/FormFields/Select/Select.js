@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import ReactSelect from 'react-select'
-import styled from 'styled-components'
+import StyledReactSelect from './StyledReactSelect'
 
 import DefaultValueRenderer from './components/DefaultValueRenderer'
 import DefaultLabelRenderer from './components/DefaultLabelRenderer'
@@ -10,7 +9,7 @@ export default class Select extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      option: props.options[0]
+      option: null
     }
   }
 
@@ -32,7 +31,7 @@ export default class Select extends Component {
     } = this.props
 
     return (
-      <div>
+      <div style={{ marginBottom: 20 }}>
         { label && <DefaultLabelRenderer label={label} /> }
         <StyledReactSelect {...input}
           onChange={this.setOption}
@@ -48,31 +47,3 @@ export default class Select extends Component {
     )
   }
 }
-
-const StyledReactSelect = styled(ReactSelect)`
-  &.Select {
-    &.is-open > .Select-control {
-      outline: none;
-      border: 1px solid #e9e9e9;
-      box-shadow: none;
-    }
-    &.is-focused:not(.is-open) > .Select-control {
-      outline: none;
-      box-shadow: 0px 0px 8px 1px rgba(77, 141, 255, 0.2);
-      border: 1px solid #c3d5f3;
-    }
-  }
-  .Select-control {
-    &:hover {
-      box-shadow: none;
-    }
-    cursor: pointer;
-    height: 48px;
-    border: 1px solid #e9e9e9;
-    & > *:last-child {
-      transform: scaleX(0.7);
-      margin-right: 10px;
-      color: #949494;
-    }
-  }
-`

@@ -17,7 +17,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setNextStep: nextStep => dispatch(actions.setNextStep(nextStep))
+  switchToStep: nextStep => dispatch(actions.switchToStep(nextStep))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StepNav)

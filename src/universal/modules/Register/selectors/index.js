@@ -1,6 +1,7 @@
 export const getCompletedSteps = state => state.registration.get('completedSteps')
 export const getActiveStep = state => state.registration.get('activeStep')
 export const getEmail = state => state.registration.get('email')
+export const getUsername = state => state.registration.get('username')
 export const getPassword = state => state.registration.get('password')
 export const getRepeatPassword = state => state.registration.get('repeatPassword')
 export const getSelectedDuration = state => state.registration.get('selectedDuration')

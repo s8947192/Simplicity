@@ -17,7 +17,7 @@ import {
 
 class AccountStep extends PureComponent {
 
-  onSubmit = props => values => this.props.completeStepOne(values)
+  onSubmit = props => values => props.completeStep(values)
 
   render() {
     const {
@@ -28,7 +28,7 @@ class AccountStep extends PureComponent {
       valid,
       asyncValidating,
       password,
-      setNextStep
+      skipStep
     } = this.props
 
     return (
@@ -84,9 +84,8 @@ class AccountStep extends PureComponent {
           ]}
         />
         <StepControls
-          isPending={false}
           onCompleteClick={handleSubmit(this.onSubmit(this.props))}
-          onSkipClick={() => setNextStep(2)}
+          onSkipClick={skipStep}
           isEnabled={valid && !submitting && !asyncValidating}
         />
       </form>
@@ -95,5 +94,5 @@ class AccountStep extends PureComponent {
 }
 
 export default reduxForm({
-  form: 'regStep1'
+  form: 'accountStep'
 })(AccountStep)

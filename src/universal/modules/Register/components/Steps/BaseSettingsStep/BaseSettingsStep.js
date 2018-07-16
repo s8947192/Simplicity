@@ -4,7 +4,7 @@ import cn from 'classnames'
 
 import Input from 'universal/common/components/FormFields/Input'
 import Select from 'universal/common/components/FormFields/Select'
-import StepControls from '../../StepControls'
+import Notification from 'universal/common/components/Notification'
 
 import russianFlag from 'universal/assets/icons/flags/russia.svg'
 import englishFlag from 'universal/assets/icons/flags/england.svg'
@@ -17,6 +17,8 @@ import yuanIcon from 'universal/assets/icons/currencies/yuan.svg'
 import poundSterlingIcon from 'universal/assets/icons/currencies/pound-sterling.svg'
 import rubleIcon from 'universal/assets/icons/currencies/ruble.svg'
 
+import StepControls from '../../StepControls'
+
 import styles from './baseSettingsStep.scss'
 
 const durationOptions = [
@@ -27,11 +29,11 @@ const durationOptions = [
 ]
 
 const currencyOptions = [
-  { value: 'dollar', label: 'Dollar', imgSrc: dollarIcon },
-  { value: 'euro', label: 'Euro', imgSrc: euroIcon },
-  { value: 'yuan', label: 'Yuan', imgSrc: yuanIcon },
-  { value: 'poundSterling', label: 'Pound-Sterling', imgSrc: poundSterlingIcon },
-  { value: 'ruble', label: 'Ruble', imgSrc: rubleIcon }
+  { value: 'dollar', label: 'Dollar', imgSrc: dollarIcon, imgSize: 18 },
+  { value: 'euro', label: 'Euro', imgSrc: euroIcon, imgSize: 18 },
+  { value: 'yuan', label: 'Yuan', imgSrc: yuanIcon, imgSize: 18 },
+  { value: 'poundSterling', label: 'Pound-Sterling', imgSrc: poundSterlingIcon, imgSize: 18 },
+  { value: 'ruble', label: 'Ruble', imgSrc: rubleIcon, imgSize: 18 }
 ]
 
 
@@ -48,8 +50,11 @@ class BaseSettingsStep extends PureComponent {
       setNextStep
     } = this.props
 
+    const infoMessage = 'You can easily change default currency and interface language from your profile page'
+
     return (
       <form className={styles.wrapper}>
+        <Notification message={infoMessage} />
         <Field
           name='systemLanguage'
           label='interface language'

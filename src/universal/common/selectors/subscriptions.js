@@ -1,21 +1,22 @@
 import { createSelector } from 'reselect'
 import { formValueSelector } from 'redux-form'
 
-const formValues = formValueSelector('regStep2')
+const formValues = formValueSelector('subscriptionStep')
 
 export const getSubscriptions = state => state.subscriptions.get('subscriptions')
-export const getInitialSelectedSubscriptionId = state => state.subscriptions.get('initialSelectedSubscriptionId')
+export const getSelectedSubscriptionId = state => state.registration.get('selectedSubscription')
 
-const getSelectedSubscriptionId = state => formValues(state, 'selectedSubscription')
+const getFormSubscriptionId = state => formValues(state, 'selectedSubscription')
+
 const getSelectedSubscription = createSelector(
-  [getSubscriptions, getSelectedSubscriptionId],
+  [getSubscriptions, getFormSubscriptionId],
   (subscriptions, id) => subscriptions.find(subscription => subscription.id === id)
 )
 
 export const getSelectedSubscriptionPrice = createSelector(
   [getSelectedSubscription],
   subscription => {
-    if (!subscription) return null
+    if (!subscription) return 0
     return subscription.price
   }
 )
@@ -29,14 +30,11 @@ export const getInputFormattedSubscriptions = createSelector(
 )
 
 export const getIsSelectedSubscriptionFree = createSelector(
-  [getInitialSelectedSubscriptionId, getSelectedSubscriptionId, getSubscriptions],
-  (stateSubscriptionId, formSubscriptionId, subscriptions) => {
-    if (formSubscriptionId) {
-      const currentSubscription = subscriptions.find(el => el.id === formSubscriptionId)
-      return currentSubscription.title === 'free'
-    }
-    if (stateSubscriptionId) {
-      const currentSubscription = subscriptions.find(el => el.id === stateSubscriptionId)
+  [getSelectedSubscriptionId, getFormSubscriptionId, getSubscriptions],
+  (selectedSubscriptionId, formSubscriptionId, subscriptions) => {
+    if (formSubscriptionId || selectedSubscriptionId) {
+      const subscriptionId = formSubscriptionId ? formSubscriptionId : selectedSubscriptionId
+      const currentSubscription = subscriptions.find(subscription => subscription.id === subscriptionId)
       return currentSubscription.title === 'free'
     }
     return true

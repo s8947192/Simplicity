@@ -6,23 +6,16 @@ import { types } from '../actions'
 const initialState = fromJS({
   completedSteps: [],
   activeStep: 0,
+  username: null,
   email: null,
   password: null,
   repeatPassword: null,
-  selectedDuration: 1,
-  selectedSubscription: 'id0'
+  selectedDuration: null,
+  selectedSubscription: null
 })
 
 export default typeToReducer({
-  [types.SET_NEXT_STEP]: (state, { payload }) => {
-    return state.set('activeStep', payload.nextStep)
-  },
-  [types.COMPLETE_STEP_ONE]: {
-    SUCCESS: (state, { payload }) => {
-      return state
-        .set('email', payload.data.email)
-        .set('password', payload.data.password)
-        .set('repeatPassword', payload.data.repeatPassword)
-    }
-  }
+  [types.SET_NEXT_ACTIVE_STEP]: (state, { payload }) => state.set('activeStep', payload.nextActiveStep),
+  [types.UPDATE_COMPLETED_STEPS]: (state, { payload }) => state.updateIn(['completedSteps'], arr => arr.push(payload.currentStep)),
+  [types.COMPLETE_STEP]: { SUCCESS: (state, { payload }) => state.merge(payload.data) }
 }, initialState)

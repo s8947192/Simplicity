@@ -29,11 +29,11 @@ class SubscriptionStep extends PureComponent {
   componentWillReceiveProps(nextProps) {
     const { subscriptionPrice, initialValues, dispatch } = nextProps
     if (subscriptionPrice <= 0) {
-      dispatch(change('regStep2', 'selectedDuration', 1))
+      dispatch(change('subscriptionStep', 'selectedDuration', 1))
     }
   }
 
-  onSubmit = props => values => this.props.completeStepOne(values)
+  onSubmit = props => values => this.props.completeStep(values)
 
   render() {
     const {
@@ -92,5 +92,5 @@ class SubscriptionStep extends PureComponent {
 }
 
 export default reduxForm({
-  form: 'regStep2'
+  form: 'subscriptionStep'
 })(SubscriptionStep)

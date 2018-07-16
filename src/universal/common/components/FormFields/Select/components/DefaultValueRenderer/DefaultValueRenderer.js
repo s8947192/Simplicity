@@ -2,10 +2,16 @@ import React from 'react'
 import cn from 'classnames'
 import styles from './defaultValueRenderer.scss'
 
-const DefaultValueRenderer = ({ children, value }) => (
+const DefaultValueRenderer = ({
+  children,
+  value: {
+    imgSrc,
+    imgSize=24
+  }
+}) => (
   <div className={cn('Select-value', styles.value)}>
     <span className={cn('Select-value-label', styles.valueEl)}>
-      { value.imgSrc && <img height={24} className={styles.icon} src={value.imgSrc} /> }
+      { imgSrc && <img width={imgSize} className={styles.icon} src={imgSrc} /> }
       { children }
     </span>
   </div>

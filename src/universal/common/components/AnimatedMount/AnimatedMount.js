@@ -9,13 +9,21 @@ const AnimatedMount = ({ unmountedStyle, mountedStyle }) => {
       }
     }
 
+    componentWillAppear(callback) {
+      this.transitionTrigger(callback)
+    }
+
     componentWillEnter(callback) {
+      this.transitionTrigger(callback)
+    }
+
+    transitionTrigger = callback => {
       this.onTransitionEnd = callback
       setTimeout(() => {
         this.setState({
           style: mountedStyle,
         })
-      }, 20)
+      }, 10)
     }
 
     componentWillLeave(callback) {

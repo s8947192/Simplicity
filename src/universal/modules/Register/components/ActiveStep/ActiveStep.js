@@ -13,7 +13,6 @@ import styles from './activeStep.scss'
 
 const stepTitles = [
   'Account',
-  'User Info',
   'Subscription',
   'Payment Method',
   'Basic Settings',

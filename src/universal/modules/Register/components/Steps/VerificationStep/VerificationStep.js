@@ -3,20 +3,12 @@ import { Field, reduxForm } from 'redux-form'
 import cn from 'classnames'
 
 import Button from 'universal/common/components/Button'
+import Checkbox from 'universal/common/components/FormFields/Checkbox'
 
 import checkIcon from 'universal/assets/icons/check.svg'
 import warningIcon from 'universal/assets/icons/warning.svg'
 
 import styles from './verificationStep.scss'
-
-const Checkbox = ({ input, meta }) => (
-  <div className="form-group">
-    <input type='checkbox' id={input.name} {...input} />
-    {meta.touched && meta.error && (
-      <p className="error">{meta.error}</p>
-    )}
-  </div>
-)
 
 class VerificationStep extends Component {
   render() {
@@ -79,11 +71,16 @@ class VerificationStep extends Component {
           </div>
         </div>
         <div className={styles.devider} />
-        <Field
-          name='termsAndPolices'
-          type='checkbox'
-          component={props => <Checkbox {...props} />}
-        />
+        <div className={styles.checkboxWrapper}>
+          <Field
+            name='termsAndPolices'
+            component={Checkbox}
+          />
+          <div>
+            <span className={styles.checkboxLabelDesc}>Accept</span>
+            <span className={styles.checkboxLabelValue}>terms and polices</span>
+          </div>
+        </div>
         <div className={styles.buttonWrapper}>
           <Button title='Complete' type='green' disabled />
         </div>

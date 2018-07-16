@@ -2,9 +2,10 @@ import { connect } from 'react-redux'
 import { formValueSelector } from 'redux-form'
 
 import AccountStep from '../components/Steps/AccountStep'
-import actions from '../actions'
+import { actions } from '../actions'
 
 import {
+  getUsername,
   getEmail,
   getPassword,
   getRepeatPassword
@@ -13,7 +14,7 @@ import {
 import { findUserByEmail } from 'universal/api/auth'
 import { emailCheck } from 'universal/utils/formFieldsValidation'
 
-const formValues = formValueSelector('regStep1')
+const formValues = formValueSelector('accountStep')
 
 const asyncValidate = (values, dispatch, props, field) => {
   const { email } = values
@@ -46,6 +47,7 @@ const mapStateToProps = state => ({
   asyncValidate,
   password: formValues(state, 'password'),
   initialValues: {
+    username: getUsername(state),
     email: getEmail(state),
     password: getPassword(state),
     repeatPassword: getRepeatPassword(state)
@@ -53,8 +55,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  completeStepOne: data => dispatch(actions.completeStepOne(data)),
-  setNextStep: nextStep => dispatch(actions.setNextStep(nextStep))
+  completeStep: data => dispatch(actions.completeStep(data)),
+  skipStep: () => dispatch(actions.skipStep())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountStep)

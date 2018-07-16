@@ -20,6 +20,7 @@ const AnimatedStep = AnimatedMount({
 })(Step)
 
 const StepsNav = ({ isSubscrFree, ...props }) => {
+  const isPaymentStepEnabled = props.completedSteps.some(el => el === 1)
   return (
     <div className={styles.wrapper}>
       <Step {...props} thisStep={0} stepLabel='Account' />
@@ -29,7 +30,7 @@ const StepsNav = ({ isSubscrFree, ...props }) => {
           !isSubscrFree && (
             <AnimatedStep {...props}
               thisStep={2}
-              isEnabled={false}
+              isEnabled={isPaymentStepEnabled}
               stepLabel='Payment Method'
             />
           )

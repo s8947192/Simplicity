@@ -48,11 +48,35 @@
   height: 1px;
   background-color: #f6f6f8;
   border: 1px solid #f2f2f2;
-  margin: 10px 0 20px 0;
+  margin-top: 10px;
 }
 
 .buttonWrapper {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.checkboxWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 20px;
+  margin: 10px 0;
+}
+
+.checkboxLabelDesc {
+  color: #74767f;
+  font-size: 12px;
+  margin-right: 5px;
+}
+
+.checkboxLabelValue {
+  font-size: 12px;
+  color: #fa7577;
+  text-decoration: underline;
+  &:hover {
+    text-decoration: none;
+    cursor: pointer;
+  }
 }

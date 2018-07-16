@@ -9,7 +9,7 @@ const Step = ({
   activeStep,
   completedSteps,
   thisStep,
-  setNextStep,
+  switchToStep,
   stepLabel,
   isEnabled=true,
   isAppearing,
@@ -24,7 +24,7 @@ const Step = ({
   return (
     <div className={styles.step}>
       <div
-        onClick={() => (isEnabled && setNextStep(thisStep))}
+        onClick={() => (isEnabled && switchToStep(thisStep))}
         className={cn(
           styles.step__number,
           {[cn(styles['step__number_active'], styles['step__number_active--red'])]: isActive && !isDone},
@@ -36,7 +36,7 @@ const Step = ({
         { !isActive && !isDone && isEnabled && stepNumber }
       </div>
       <div
-        onClick={() => (isEnabled && setNextStep(thisStep))}
+        onClick={() => (isEnabled && switchToStep(thisStep))}
         className={cn(
           styles.step__desc,
           {[styles[`step__desc_active`]]: isActive },

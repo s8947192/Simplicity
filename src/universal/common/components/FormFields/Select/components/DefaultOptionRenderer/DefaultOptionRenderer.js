@@ -23,17 +23,24 @@ export default class DefaultOptionRenderer extends Component {
 	}
 
   render() {
-    const { option, children, className } = this.props
-    const { imgSrc } = option
+    const {
+      children,
+      className,
+      option: {
+        title,
+        imgSrc,
+        imgSize=24
+      }
+    } = this.props
     return (
       <div
         className={cn(className, styles.option)}
 				onMouseDown={this.handleMouseDown}
 				onMouseEnter={this.handleMouseEnter}
 				onMouseMove={this.handleMouseMove}
-				title={option.title}
+				title={title}
       >
-        { imgSrc && <img height={24} className={styles.icon} src={imgSrc} /> }
+        { imgSrc && <img width={imgSize} className={styles.icon} src={imgSrc} /> }
 				{ children }
 			</div>
     )
