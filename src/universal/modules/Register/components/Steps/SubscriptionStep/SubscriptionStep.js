@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Field, reduxForm, change } from 'redux-form'
+import { Field, reduxForm, change } from 'redux-form/immutable'
 
 import Input from 'universal/common/components/FormFields/Input'
 import Select from 'universal/common/components/FormFields/Select'
@@ -42,7 +42,7 @@ class SubscriptionStep extends PureComponent {
       setNextStep,
       selectedDuration,
       subscriptionPrice,
-      subscriptions
+      subscriptions,
     } = this.props
 
     const infoMessage = subscriptionPrice <= 0
@@ -52,6 +52,7 @@ class SubscriptionStep extends PureComponent {
     if (!subscriptions.length) return (
       <div className={styles.preloaderWrapper}><Preloader /></div>
     )
+
     return (
       <form className={styles.formWrapper}>
         <Notification message={infoMessage} />

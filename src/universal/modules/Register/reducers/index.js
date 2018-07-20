@@ -11,7 +11,9 @@ const initialState = fromJS({
   password: null,
   repeatPassword: null,
   selectedDuration: null,
-  selectedSubscription: null
+  selectedSubscription: null,
+  languages: null,
+  currencies: null
 })
 
 export default typeToReducer({

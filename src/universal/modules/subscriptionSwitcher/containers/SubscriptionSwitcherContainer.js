@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import SubscriptionSwitcher from '../components/SubscriptionSwitcher'
 import { selectDuration } from 'universal/common/actions/subscriptions'
-import { getDuration } from 'universal/common/selectors/subscriptions'
+import { getDuration } from 'universal/common/selectors/entities'
 
 const mapStateToProps = state => ({
   duration: getDuration(state)

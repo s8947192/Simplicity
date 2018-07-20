@@ -1,7 +1,9 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import { combineReducers } from 'redux-immutable'
+import Immutable from 'immutable'
 import { enableBatching } from 'redux-batched-actions'
 import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux'
-import { reducer as formReducer } from 'redux-form'
+import { reducer as formReducer } from 'redux-form/immutable'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import createSagaMiddleware from 'redux-saga'
 
@@ -17,12 +19,15 @@ export default (history) => {
     routeMiddleware
   ))
 
+  const initialState = Immutable.Map()
+
   const store = createStore(
     enableBatching(combineReducers({
       ...Reducers,
       router: routerReducer,
       form: formReducer
     })),
+    initialState,
     enhancer
   )
 

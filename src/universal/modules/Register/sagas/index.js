@@ -3,7 +3,7 @@ import { batchActions } from 'redux-batched-actions'
 
 import { types, actions } from '../actions'
 import { getActiveStep, getCompletedSteps } from '../selectors'
-import { getIsSelectedSubscriptionFree } from 'universal/common/selectors/subscriptions'
+import { getIsSelectedSubscriptionFree } from 'universal/common/selectors/entities'
 
 function* defineNextStepSaga() {
   const currentStep = yield select(getActiveStep)

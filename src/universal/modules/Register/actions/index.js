@@ -5,11 +5,13 @@ export const types = createTypes([
   'SET_NEXT_ACTIVE_STEP',
   'SWITCH_TO_STEP',
   'UPDATE_COMPLETED_STEPS',
+  'REQUEST_BASE_SETTINGS',
   ...async('COMPLETE_STEP'),
 ], 'REGISTRATION')
 
 export const actions = {
   skipStep: actionCreator(types.SKIP_STEP, 'currentStep'),
+  requestBaseSettings: actionCreator(types.REQUEST_BASE_SETTINGS),
   setNextActiveStep: actionCreator(types.SET_NEXT_ACTIVE_STEP, 'nextActiveStep'),
   switchToStep: actionCreator(types.SWITCH_TO_STEP, 'nextStep'),
   updateCompletedSteps: actionCreator(types.UPDATE_COMPLETED_STEPS, 'currentStep'),

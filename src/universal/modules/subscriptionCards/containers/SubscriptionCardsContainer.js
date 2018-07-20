@@ -4,7 +4,7 @@ import { withRouter } from 'react-router'
 import SubscriptionCards from '../components/SubscriptionCards'
 
 import { requestSubscriptions } from 'universal/common/actions/subscriptions'
-import { getSubscriptions, getDuration } from 'universal/common/selectors/subscriptions'
+import { getSubscriptions, getDuration } from 'universal/common/selectors/entities'
 
 // import { selectPlanWithDuration } from 'universal/common/actions/registration'
 

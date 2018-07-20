@@ -2,11 +2,16 @@ import { connect } from 'react-redux'
 
 import BaseSettingsStep from '../components/Steps/BaseSettingsStep'
 
+import actions from '../actions'
+import { getLanguages, getCurrencies } from '../selectors'
+
 const mapStateToProps = state => ({
-  // initialValues: {
-  //   systemLanguage: 'english',
-  //   defaultCurrency: 'dollar',
-  // }
+  languages: getLanguages(state),
+  currencies: getCurrencies(state)
 })
 
-export default connect(mapStateToProps, null)(BaseSettingsStep)
+const mapDispatchToProps = dispatch => ({
+  requestBaseSettings: () => dispatch(actions.requestBaseSettings())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(BaseSettingsStep)

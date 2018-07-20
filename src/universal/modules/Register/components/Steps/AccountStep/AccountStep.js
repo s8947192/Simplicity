@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm } from 'redux-form/immutable'
 
 import Input from 'universal/common/components/FormFields/Input'
 import PasswordSecurityProgress from 'universal/common/components/ProgressBars/PasswordSecurityProgress'

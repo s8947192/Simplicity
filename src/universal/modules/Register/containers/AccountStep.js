@@ -17,7 +17,7 @@ import { emailCheck } from 'universal/utils/formFieldsValidation'
 const formValues = formValueSelector('accountStep')
 
 const asyncValidate = (values, dispatch, props, field) => {
-  const { email } = values
+  const email = values.get('email')
   const emailError = emailCheck(email)
   if (emailError) return Promise.reject({ email: emailError })
   if (!email.length) return Promise.reject({ email: 'required' })

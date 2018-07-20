@@ -38,6 +38,21 @@ const currencyOptions = [
 
 
 class BaseSettingsStep extends PureComponent {
+
+  componentWillMount() {
+    const { languages, currencies, requestBaseSettings } = this.props
+    if (!languages.length && !currencies.length) {
+      requestBaseSettings()
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { languages, currencies, requestBaseSettings } = nextProps
+    if (!languages.length && !currencies.length) {
+      requestBaseSettings()
+    }
+  }
+
   render() {
     const {
       handleSubmit,

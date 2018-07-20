@@ -1,14 +1,9 @@
 import { connect } from 'react-redux'
 
 import StepNav from '../components/StepsNav'
+
 import { actions } from '../actions'
-
-import { getIsSelectedSubscriptionFree } from 'universal/common/selectors/subscriptions'
-
-import {
-  getActiveStep,
-  getCompletedSteps
-} from '../selectors'
+import { getActiveStep, getCompletedSteps, getIsSelectedSubscriptionFree } from '../selectors'
 
 const mapStateToProps = state => ({
   activeStep: getActiveStep(state),
