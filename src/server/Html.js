@@ -1,5 +1,5 @@
 // Libraries
-import React, {Component, PropTypes} from 'react'
+import React, { Component } from 'react'
 import {StaticRouter} from 'react-router'
 import {renderToString} from 'react-dom/server'
 
@@ -7,13 +7,6 @@ import {renderToString} from 'react-dom/server'
 import { Provider } from 'react-redux'
 
 class Html extends Component {
-  static propTypes = {
-    url: PropTypes.string.isRequired,
-    store: PropTypes.object.isRequired,
-    title: PropTypes.string.isRequired,
-    assets: PropTypes.object
-  }
-
   render () {
     const PROD = process.env.NODE_ENV === 'production'
 
