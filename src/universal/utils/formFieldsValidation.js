@@ -29,7 +29,7 @@ export const emailCheck = value =>
     : undefined
 
 export const passwordsMatchCheck = (value, allValues, props, asd) =>
-  value !== allValues.password
+  value !== allValues.get('password')
     ? 'Passwords dont match'
     : undefined
 

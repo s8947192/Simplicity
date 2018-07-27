@@ -6,12 +6,8 @@ export { default as ProfileInvoicesLayout } from 'universal/layouts/ProfileInvoi
 export { default as ProfileStatisticsLayout } from 'universal/layouts/ProfileStatisticsLayout'
 export { default as ProfileNotificationsLayout } from 'universal/layouts/ProfileNotificationsLayout'
 
-export { default as SiteLayout } from 'universal/layouts/SiteLayout'
-export { default as SiteHomeLayout } from 'universal/layouts/SiteHomeLayout'
-export { default as SiteFeaturesLayout } from 'universal/layouts/SiteFeaturesLayout'
-export { default as SitePricingLayout } from 'universal/layouts/SitePricingLayout'
-export { default as SiteContactsLayout } from 'universal/layouts/SiteContactsLayout'
+export { default as Site } from 'universal/layouts/Site'
 
-export { default as Register } from 'universal/modules/Register'
+export { default as Registration } from 'universal/modules/Registration'
 export { default as Login } from 'universal/modules/Login'
 export { default as NotFoundLayout } from 'universal/layouts/NotFoundLayout'

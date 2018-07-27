@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from  'react'
+import React, { Component } from  'react'
 import { Route, Switch, Redirect } from 'react-router'
 
 import * as RouteMap from '../routes/static.js'
@@ -13,7 +13,7 @@ export default class Routes extends Component {
         <Switch>
           <Route path='/user/:userId' component={RouteMap.ProfileLayout} />
           <Route exact path='/404' component={RouteMap.NotFoundLayout} />
-          <Route path='/' component={RouteMap.SiteLayout} />
+          <Route path='/' component={RouteMap.Site} />
         </Switch>
       </AppLayout>
     )

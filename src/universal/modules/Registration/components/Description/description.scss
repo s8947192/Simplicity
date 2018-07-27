@@ -1,0 +1,30 @@
+.component {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #303336;
+}
+
+.description {
+  font-size: 11px;
+  text-align: -webkit-center;
+  margin-top: 10px;
+  color: #8e9096;
+  margin: 10px 20px 20px 20px;
+}

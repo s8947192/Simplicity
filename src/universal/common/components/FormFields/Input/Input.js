@@ -1,61 +1,44 @@
 import React from 'react'
 import cn from 'classnames'
 
-import Puff from 'universal/common/components/Spinners/Puff/Puff'
+import Puff from 'universal/common/components/Spinners/Puff'
 
-import styles from './styles.scss'
+import requiredImg from 'universal/assets/icons/input/required.svg'
+import errorImg from 'universal/assets/icons/input/error.svg'
+import successImg from 'universal/assets/icons/input/success.svg'
+
+import styles from './input.scss'
 
 const Input = ({
   input,
   label,
   type,
-  placeholder='',
-  meta
+  placeholder,
+  meta,
+  className
 }) => {
   const isRequired = meta.error === 'required'
   const isError = meta.error && !isRequired
-  const isSuccess = !isRequired && !isError
+  const isSuccess = !isError && !meta.asyncValidating
   return (
-    <div className={styles.container}>
+    <div className={cn(styles.component, className)}>
+      { isRequired && <img className={styles.img} src={requiredImg} /> }
+      { isError && <img className={styles.img} src={errorImg} /> }
+      { isSuccess && input.value.length !== 0 && <img className={styles.img} src={successImg} /> }
+      { meta.asyncValidating && <div className={styles.asyncLoader}><Puff /></div> }
       <div className={styles.labelWrapper}>
-        <div className={styles.infoWrapper}>
-          <div className={cn(
-            styles.info,
-            { [styles.info__alert]: !meta.asyncValidating && isRequired },
-            { [styles.info__error]: !meta.asyncValidating && isError },
-            { [styles.info__success]: !meta.asyncValidating && isSuccess },
-            { [styles.info__validating]: meta.asyncValidating },
-          )}>{ meta.error ? meta.error : meta.asyncValidating ? 'checking email' : 'ready' }</div>
-        </div>
-      </div>
-      <div className={styles.inputWrapper}>
+        <label htmlFor={input.name}>{label}</label>
         {
-          !meta.asyncValidating && (
-            <div className={styles.iconWrapper}>
-              <div className={cn(
-                styles.sign,
-                { [styles.sign__alert]: isRequired },
-                { [styles.sign__error]: isError },
-                { [styles.sign__success]: isSuccess }
-              )} />
-            </div>
+          meta.error && (
+            <div className={cn(
+              styles.info,
+              { [styles.info__required]: isRequired },
+              { [styles.info__error]: isError }
+            )}>{ meta.error }</div>
           )
         }
-        {
-          meta.asyncValidating && (
-            <div className={styles.tailSpinWrapper}>
-              <Puff />
-            </div>
-          )
-        }
-        <input
-          {...input}
-          className={styles.input}
-          placeholder={placeholder}
-          autoComplete='off'
-          type={type}
-        />
       </div>
+      <input type={type} id={input.name} {...input} className={styles.input} placeholder={placeholder} autoComplete='off' />
     </div>
   )
 }

@@ -1,0 +1,38 @@
+.wrapper {
+  display: flex;
+  background-color: #f8f8f8;
+}
+
+.devider {
+  display: flex;
+  width: 1px;
+  background-color: #f6f6f8;
+  border: 1px solid #f2f2f2;
+  flex-direction: column;
+}
+
+.leftBar {
+  display: flex;
+  flex-direction: column;
+  max-width: 230px;
+  margin: 20px;
+}
+
+.rightBar {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #303336;
+}
+
+.description {
+  font-size: 11px;
+  color: #8e9096;
+  margin: 10px 0;
+}

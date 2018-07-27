@@ -1,0 +1,43 @@
+.component {
+  display: flex;
+  height: 50px;
+  align-items: center;
+  background-color: white;
+  margin: 3px 0;
+  box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.03);
+  color: #656b71;
+  &:hover {
+    cursor: pointer;
+    font-weight: bold;
+    color: #303336;
+  }
+}
+
+.iconWrapper {
+  width: 50px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #aef7ca;
+  border: 1px solid #abf2c6;
+}
+
+.icon {
+  width: 21px;
+  margin-left: 15px;
+}
+
+.isDone {
+  width: 14px;
+}
+
+.text {
+  font-size: 12px;
+  margin-left: 15px;
+  margin-right: 15px;
+  &__active {
+    font-weight: bold;
+    color: #303336;
+  }
+}

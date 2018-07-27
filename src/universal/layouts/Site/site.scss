@@ -1,0 +1,22 @@
+.component {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-bottom: 150px;
+}
+
+.bg_img {
+  &::after {
+    content: '';
+    background-image: url('universal/assets/images/auth_bg.jpeg');
+    opacity: 0.3;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}

@@ -1,0 +1,61 @@
+.component {
+  position: absolute;
+  bottom: 0;
+  height: 150px;
+  width: 100%;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(58, 67, 80, 0.81);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.emailWrapper {
+  background-color: rgba(58, 67, 80, 0.67);
+  height: 51px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.emailText {
+  color: #7b8490;
+  font-size: 12px;
+}
+
+.emailImg {
+  width: 15px;
+  margin: 0 15px;
+}
+
+.socialWrapper {
+  display: flex;
+  align-items: center;
+  height: 51px;
+  background-color: rgba(58, 67, 80, 1);
+  padding: 0 20px;
+}
+
+.socialText {
+  color: #606a77;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.socialImg {
+  width: 24px;
+  height: 24px;
+  margin-left: 10px;
+}
+
+.rights {
+  color: #888f98;
+  font-size: 11px;
+  margin-top: 12px;
+}

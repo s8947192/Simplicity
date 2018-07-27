@@ -1,0 +1,23 @@
+.form {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+}
+
+.devider {
+  width: 5px;
+}
+
+.inputWrapper {
+  margin-top: 10px;
+}
+
+.buttonWrapper {
+  display: flex;
+  margin-top: 20px;
+  justify-content: flex-end;
+}
