@@ -1,13 +1,13 @@
 import React from 'react'
 
-import AuthLayout from 'universal/layouts/AuthLayout'
+import Auth from 'universal/layouts/Auth'
 
 import styles from './login.scss'
 
 const Login = () => (
-  <AuthLayout>
+  <Auth>
     <div>LOGIN</div>
-  </AuthLayout>
+  </Auth>
 )
 
 export default Login
