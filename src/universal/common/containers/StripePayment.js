@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import { Elements } from 'react-stripe-elements'
 import { formValueSelector } from 'redux-form'
 
-import StripePaymentForm from '../components/StripePaymentForm'
+import StripePayment from '../components/StripePayment'
 
 const formValues = formValueSelector('paymentMethod')
 
-export class StripePaymentFormContainer extends Component {
+export class StripePaymentContainer extends Component {
   handleSubmit = (values, stripe) => {
     return stripe.createToken().then(token => console.log(token))
   }
@@ -18,7 +18,7 @@ export class StripePaymentFormContainer extends Component {
     } = this.props
     return (
       <Elements>
-        <StripePaymentForm
+        <StripePayment
           {...this.props}
           onSubmit={this.handleSubmit}
         />
@@ -31,4 +31,4 @@ const mapStateToProps = state => ({
   brand: formValues(state, 'cardNumber.brand')
 })
 
-export default connect(mapStateToProps, null)(StripePaymentFormContainer)
+export default connect(mapStateToProps, null)(StripePaymentContainer)

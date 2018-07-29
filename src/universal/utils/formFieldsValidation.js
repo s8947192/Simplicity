@@ -18,6 +18,11 @@ export const alphaNumeric = value =>
     ? 'Only alphanumeric characters'
     : undefined
 
+export const nameCheck = value =>
+  value && /[^a-zA-Z ]/i.test(value)
+    ? 'Invalid name'
+    : undefined
+
 export const phoneNumber = value =>
   value && !/^(0|[1-9][0-9]{9})$/i.test(value)
     ? 'Invalid phone number, must be 10 digits'

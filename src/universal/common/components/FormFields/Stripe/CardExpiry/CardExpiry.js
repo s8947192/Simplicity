@@ -5,7 +5,7 @@ import { CardExpiryElement } from 'react-stripe-elements'
 
 const CardExpiry = ({ onChange, ...inputOptions }) => (
   <CardExpiryElement
-    {...inputOptions}
+    style={{ base: { fontSize: '12px' } }}
     onChange={({ complete }) => onChange(complete)}
   />
 )

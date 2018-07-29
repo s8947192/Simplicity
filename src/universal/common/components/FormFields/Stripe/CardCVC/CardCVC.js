@@ -6,7 +6,7 @@ import styles from './cardCVC.scss'
 
 const CardCVC = ({ onChange, ...inputOptions }) => (
   <CardCVCElement
-    {...inputOptions}
+    style={{ base: { fontSize: '12px' } }}
     onChange={({ complete }) => onChange(complete)}
   />
 )

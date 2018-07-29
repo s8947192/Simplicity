@@ -39,13 +39,19 @@ const currencyOptions = [
 const MainSettings = ({  }) => {
   return (
     <form>
-      <TitleDevider img={worldwideImg} text='Select subscription plan' />
+      <TitleDevider
+        img={worldwideImg}
+        text='Select system language'
+      />
       <Field
         name='systemLanguage'
         component={Select}
         options={durationOptions}
       />
-      <TitleDevider img={moneyImg} text='Select subscription plan' />
+      <TitleDevider
+        img={moneyImg}
+        text='Select system currency'
+      />
       <Field
         name='defaultCurrency'
         component={Select}

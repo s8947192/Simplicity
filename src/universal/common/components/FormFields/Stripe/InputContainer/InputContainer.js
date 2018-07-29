@@ -1,59 +1,46 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import cx from 'classnames'
-import styles from './InputContainer.scss'
+import cn from 'classnames'
+import styles from './inputContainer.scss'
 
-const inputOptions = {
-  style: {
-    base: {
-      fontSize: '14px',
-      color: '#484848',
-      fontFamily: 'Open Sans, sans-serif',
-      '::placeholder': {
-        color: 'rgba(0, 0, 0, .3)'
-      }
-    },
-    invalid: {
-      color: '#f74356'
-    }
-  }
-}
+import Brand from 'universal/common/components/Brand'
+
+import requiredImg from 'universal/assets/icons/input/required.svg'
+import errorImg from 'universal/assets/icons/input/error.svg'
+import successImg from 'universal/assets/icons/input/success.svg'
 
 const InputContainer = Component => {
-  const HoC = ({ input, onChangeStatus, error, initialValue = '' }) => {
+  const HoC = ({
+    input,
+    label,
+    placeholder,
+    className,
+    meta
+  }) => {
 
-    const handleChange = (valid, data) => {
-      input.onChange(valid)
-      if (onChangeStatus) {
-        onChangeStatus(valid, data)
-      }
-    }
+    const handleChange = valid => input.onChange(valid)
 
-    if (initialValue) {
-      inputOptions.value = initialValue
-    }
+    const isRequired = input.value === '' || input.value === false || (input.value.complete === false && !input.value.error)
+    const isError = !isRequired && input.value.error
 
     return (
-      <div className={cx(styles.component, {[styles.hasError]: error})}>
-        <div className={styles.input}>
-          <Component className={styles.StripeElement} {...inputOptions} onChange={handleChange} />
-          <input {...input} type='hidden' />
+      <div className={cn(styles.component, className)}>
+        { isRequired && <img className={styles.img} src={requiredImg} /> }
+        { isError && <img className={styles.img} src={errorImg} /> }
+        { !isRequired && !isError && <img className={styles.img} src={successImg} /> }
+        <div className={styles.labelWrapper}>
+          <label htmlFor={input.name}>{label}</label>
+          { isRequired && <div className={cn(styles.info, styles.info__required)}>required</div> }
+          { isError && <div className={cn(styles.info, styles.info__error)}>{ input.value.error.message }</div> }
         </div>
-        {error && (
-          <div className={styles.error}>
-            <small>{error}</small>
+        <div className={styles.input}>
+          { input.name === 'cardNumber' && <Brand size={30} name={input.value.brand} className={styles.brand} /> }
+          <div className={styles.inputWrapper}>
+            <Component {...input} onChange={handleChange} />
           </div>
-        )}
+        </div>
       </div>
     )
-  }
-
-  HoC.propTypes = {
-    onChangeStatus: PropTypes.func,
-    input: PropTypes.object.isRequired,
-    error: PropTypes.string,
-    initialValue: PropTypes.any
   }
 
   return connect((state, ownProps) => ({ error: null }))(HoC)

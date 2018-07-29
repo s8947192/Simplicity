@@ -37,3 +37,13 @@
   margin-left: 20px;
   color: #8b9197;
 }
+
+.fieldsWrapper {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.fieldWrapper {
+  flex: 0 1 49%;
+}

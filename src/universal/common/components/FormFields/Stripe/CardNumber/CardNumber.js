@@ -1,12 +1,7 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { CardNumberElement } from 'react-stripe-elements'
-import cn from 'classnames'
 
 import InputContainer from '../InputContainer'
-import Brand from 'universal/common/components/Brand'
-
-import styles from './cardNumber.scss'
 
 class CardNumber extends Component {
   constructor() {
@@ -31,22 +26,13 @@ class CardNumber extends Component {
       ...inputOptions
     } = this.props
     return (
-      <div className={styles.wrapper}>
-        <Brand name={brandName} className={styles.brandMargin} />
-        <CardNumberElement
-          className={cn(styles.input, className)}
-          {...inputOptions}
-          placeholder={placeholder}
-          onChange={data => this.onHandleChange(data)}
-        />
-      </div>
+      <CardNumberElement
+        style={{ base: { fontSize: '12px' } }}
+        placeholder="Enter card number..."
+        onChange={this.onHandleChange}
+      />
     )
   }
-}
-
-CardNumber.propTypes = {
-  placeholder: PropTypes.string,
-  onChange: PropTypes.func.isRequired
 }
 
 export default InputContainer(CardNumber)

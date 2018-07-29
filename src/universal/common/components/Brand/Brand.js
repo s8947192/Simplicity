@@ -2,13 +2,17 @@ import React from 'react'
 import styles from './brand.scss'
 import cn from 'classnames'
 
+import defaultCardImg from 'universal/assets/icons/cards/credit-card.svg'
+import visaImg from 'universal/assets/icons/cards/visa.svg'
+import mastercardImg from 'universal/assets/icons/cards/mastercard.svg'
+
 const Brand = ({ size, name, className }) => {
   const isBrand = name && name !== 'unknown'
-  const cardIcon = isBrand ? `fa fa-cc-${name}` : 'fa fa-credit-card'
-  const cardStyle = isBrand ? styles[`cardType_${name}`] : styles.cardType_noCard
   return (
     <div className={cn(className, styles.cardType)}>
-      <i className={cn(cardIcon, cardStyle)} />
+      { !isBrand && <img width={size} height={size} src={defaultCardImg} /> }
+      { name === 'visa' && <img width={size} height={size} src={visaImg} /> }
+      { name === 'mastercard' && <img width={size} height={size} src={mastercardImg} /> }
     </div>
   )
 }
