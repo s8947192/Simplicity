@@ -1,0 +1,36 @@
+.component {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  padding-bottom: 15px;
+  margin: 15px 0px;
+  border-bottom: 1px solid #eaeaea;
+  justify-content: space-between;
+}
+
+.img {
+  width: 21px;
+  height: 21px;
+  display: flex;
+  align-self: flex-start;
+  margin-left: 20px;
+}
+
+.main {
+  color: #656b71;
+  font-size: 11px;
+  margin: 0 25px;
+  flex: 1;
+}
+
+.title {
+  font-weight: 500;
+  margin: 5px 0 15px 0;
+}
+
+.row {
+  line-height: 15px;
+  &__value {
+    font-weight: 500;
+  }
+}

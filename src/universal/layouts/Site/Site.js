@@ -21,6 +21,7 @@ const Site = ({ match, location: { pathname } }) => {
         <Route exact path={`${match.url}contacts`} component={RouteMap.SiteContactsLayout} />
         <Route exact path={`${match.url}login`} component={RouteMap.Login} />
         <Route exact path={`${match.url}registration`} component={RouteMap.Registration} />
+        <Route exact path='/terms' component={RouteMap.Terms} />
         <Redirect from='*' to='/home' />
       </Switch>
       <FooterSite />

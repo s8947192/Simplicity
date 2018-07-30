@@ -1,0 +1,20 @@
+.termsAndPolices {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  &__text {
+    font-size: 11px;
+    color: #828a90;
+  }
+  &__link {
+    color: #46a269;
+  }
+}
+
+.buttonWrapper {
+  display: flex;
+  margin-top: 20px;
+  justify-content: flex-end;
+}

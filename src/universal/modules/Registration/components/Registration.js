@@ -1,5 +1,6 @@
 import React from 'react'
 import { List, Map } from 'immutable'
+import { Field, reduxForm } from 'redux-form/immutable'
 
 import Auth from 'universal/layouts/Auth'
 
@@ -10,6 +11,8 @@ import Account from '../containers/Account'
 import Subscription from '../containers/Subscription'
 import MainSettings from '../containers/MainSettings'
 import PaymentMethod from '../containers/PaymentMethod'
+import Verification from '../containers/Verification'
+import Done from '../containers/Done'
 
 import styles from './registration.scss'
 
@@ -34,12 +37,20 @@ const steps = List([
     desc: 'Add your payment method, so we can charge you later',
     component: <PaymentMethod />
   }),
-  // { title: 'Verification', component: VerificationStep() },
-  // { title: 'Complete', component: CompleteStep() },
+  Map({
+    title: 'Verification',
+    desc: 'After you successfully complete this step, you account will be created',
+    component: <Verification />
+  }),
+  Map({
+    title: 'Done',
+    desc: 'You have successfully been registered',
+    component: <Done />
+  })
 ])
 
 const Registration = () => {
-  const currentStep = steps.get(3)
+  const currentStep = steps.get(1)
   return (
     <Auth>
       <div className={styles.wrapper}>

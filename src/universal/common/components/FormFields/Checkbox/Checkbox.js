@@ -1,26 +1,34 @@
 import React from 'react'
 import Checkbox from '@material-ui/core/Checkbox'
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import { withStyles } from '@material-ui/core/styles'
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank'
+import CheckBoxIcon from '@material-ui/icons/CheckBox'
 
-import styles from './checkbox.scss'
+const styles = {
+  root: {
+    color: '#969696',
+    '&$checked': {
+      color: '#48bb7a',
+    },
+  },
+  checked: {},
+  sizeIcon: {
+    fontSize: 24
+  },
+};
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#32c83d'
-    }
-  }
-})
-
-const CheckboxRenderer = ({ input, label }) => (
-  <MuiThemeProvider theme={theme}>
-    <Checkbox
-      label={label}
-      checked={input.value ? true : false}
-      onChange={input.onChange}
-      color='primary'
-    />
-  </MuiThemeProvider>
+const CheckboxRenderer = ({ input, label, classes }) => (
+  <Checkbox
+    label={label}
+    checked={input.value ? true : false}
+    onChange={input.onChange}
+    icon={<CheckBoxOutlineBlankIcon className={classes.sizeIcon} />}
+    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
+    classes={{
+      root:classes.root,
+      checked:classes.checked
+    }}
+  />
 )
 
-export default CheckboxRenderer
+export default withStyles(styles)(CheckboxRenderer)

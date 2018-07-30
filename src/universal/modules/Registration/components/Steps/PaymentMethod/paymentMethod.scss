@@ -1,0 +1,67 @@
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardNumberWrapper {
+  display: flex;
+  margin-bottom: 10px;
+  & > div:last-child {
+    flex: 1;
+  }
+}
+
+.error {
+  margin-top: 4px;
+
+  small {
+    color: red;
+  }
+}
+
+.brandPadding {
+  padding: 0 15px;
+}
+
+.widthInExpirity {
+  width: 85px;
+}
+
+.widthInCVC {
+  width: 65px;
+}
+
+.label {
+  margin-bottom: 10px;
+  font-size: 12px;
+  margin-left: 20px;
+  color: #8b9197;
+}
+
+.fieldsWrapper {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.fieldWrapper {
+  flex: 0 1 49%;
+}
+
+.rememberCard {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  &__text {
+    font-size: 11px;
+    color: #828a90;
+  }
+}
+
+.buttonWrapper {
+  display: flex;
+  margin-top: 20px;
+  justify-content: flex-end;
+}
