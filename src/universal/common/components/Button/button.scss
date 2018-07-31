@@ -13,6 +13,10 @@
   &__primary {
     background-color: #4589dd;
     color: #e7f2ff;
+    &--shaded {
+      border: 1px solid #e8e8e8;
+      color: #a4a9af;
+    }
   }
   &__small {
     height: 35px;

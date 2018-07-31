@@ -1,0 +1,45 @@
+.component {
+  width: 100%;
+  display: flex;
+  margin-top: 20px;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.img {
+  width: 24px;
+  height: 24px;
+  opacity: 0.6;
+  margin-right: 20px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.title {
+  color: #45494e;
+  line-height: 20px;
+  &__main {
+    font-size: 13px
+  }
+  &__last_update {
+    opacity: 0.5;
+    font-size: 11px
+  }
+}
+
+.terms {
+  display: flex;
+  flex-direction: column;
+  max-height: 450px;
+  overflow-y: scroll;
+  margin-bottom: 13px;
+}

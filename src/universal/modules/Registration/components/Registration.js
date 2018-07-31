@@ -50,7 +50,7 @@ const steps = List([
 ])
 
 const Registration = () => {
-  const currentStep = steps.get(1)
+  const currentStep = steps.get(4)
   return (
     <Auth>
       <div className={styles.wrapper}>

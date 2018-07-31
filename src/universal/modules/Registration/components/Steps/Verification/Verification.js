@@ -3,13 +3,17 @@ import { Field, reduxForm } from 'redux-form/immutable'
 import { Link } from 'react-router-dom'
 import { List, Map } from 'immutable'
 
+import TermsOfService from 'universal/modules/Site/TermsOfService'
+
 import TitleDevider from 'universal/common/components/TitleDevider'
 import Checkbox from 'universal/common/components/FormFields/Checkbox'
 import Button from 'universal/common/components/Button'
+import Confirm from 'universal/common/components/Confirm'
 
 import StepCard from './StepCard'
 
 import databaseImg from 'universal/assets/icons/common/database.svg'
+import walletImg from 'universal/assets/icons/common/wallet.svg'
 import accountImg from 'universal/assets/icons/registration/account.svg'
 import subscriptionImg from 'universal/assets/icons/registration/subscription.svg'
 import mainSettingsImg from 'universal/assets/icons/registration/mainSettings.svg'
@@ -17,9 +21,37 @@ import paymentMethodImg from 'universal/assets/icons/registration/paymentMethod.
 
 import styles from './verification.scss'
 
+const message = `
+  Hey, Peter! You are about to buy "Business" subscription for 6 month, which will cost $128 for you. Press "AGREE" button,
+  so we can withdraw money from your card, register your account and grand access to your selected subscription right away.
+`
+
+const overlayStyles = {
+  content: {
+    top: '20%',
+    maxWidth: '900px'
+  }
+}
+
 const Verification = ({  }) => {
   return (
     <form>
+      <Confirm
+        isOpen={false}
+        onClose={() => console.log('CLOSE')}
+        onConfirm={() => console.log('CONFIRM')}
+        title='Subscription Buying Confirmation'
+        img={walletImg}
+        message={message}
+      />
+      <Confirm
+        isOpen={false}
+        onClose={() => console.log('CLOSE')}
+        onConfirm={() => console.log('CONFIRM')}
+        overlayStyles={overlayStyles}
+      >
+        <TermsOfService />
+      </Confirm>
       <TitleDevider
         img={databaseImg}
         text='Steps to be checked'

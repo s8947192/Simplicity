@@ -1,0 +1,49 @@
+.component {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  position: relative;
+}
+
+.img {
+  width: 40px;
+  height: 40px;
+  margin: 20px 0;
+  opacity: 0.6;
+}
+
+.title {
+  font-size: 14px;
+  color: #4c5360;
+  font-weight: 500;
+}
+
+.message {
+  font-size: 12px;
+  color: #4c5360;
+  margin: 20px 30px;
+  text-align: justify;
+}
+
+.buttons {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.firstButton {
+  margin-right: 10px;
+}
+
+.close {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  top: 20px;
+  right: 20px;
+  opacity: 0.5;
+  &:hover {
+    cursor: pointer;
+  }
+}
