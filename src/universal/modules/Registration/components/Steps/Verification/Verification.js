@@ -26,29 +26,19 @@ const message = `
   so we can withdraw money from your card, register your account and grand access to your selected subscription right away.
 `
 
-const overlayStyles = {
-  content: {
-    top: '20%',
-    maxWidth: '900px'
-  }
-}
-
 const Verification = ({  }) => {
   return (
     <form>
-      <Confirm
-        isOpen={false}
+      <Confirm isOpen={false}
         onClose={() => console.log('CLOSE')}
         onConfirm={() => console.log('CONFIRM')}
         title='Subscription Buying Confirmation'
         img={walletImg}
         message={message}
       />
-      <Confirm
-        isOpen={false}
+      <Confirm isOpen={false} width={900}
         onClose={() => console.log('CLOSE')}
         onConfirm={() => console.log('CONFIRM')}
-        overlayStyles={overlayStyles}
       >
         <TermsOfService />
       </Confirm>

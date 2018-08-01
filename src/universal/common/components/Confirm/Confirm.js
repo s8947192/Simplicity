@@ -15,15 +15,19 @@ const inlineStyles = {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.298039)',
-    zIndex: '1000'
+    backgroundColor: 'rgba(0, 0, 0, 0.298)',
+    zIndex: 1000,
+    display: 'flex',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   content: {
+    top: 'none',
+    left: 'none',
+    right: 'none',
+    bottom: 'none',
     position: 'absolute',
-    top: '40%',
-    left: '40px',
-    right: '40px',
-    bottom: 'initial',
     border: 0,
     background: '#fff',
     overflow: 'auto',
@@ -31,7 +35,6 @@ const inlineStyles = {
     borderRadius: '4px',
     padding: 0,
     outline: 'none',
-    maxWidth: '400px',
     marginLeft: 'auto',
     marginRight: 'auto'
   }
@@ -47,17 +50,18 @@ const Confirm = ({
   denyLabel='CANCEL',
   onConfirm,
   children,
-  overlayStyles
+  width=400,
+  height
 }) => (
   <ReactModal
     contentLabel={title}
-    style={objectAssignDeep(inlineStyles, overlayStyles)}
+    style={inlineStyles}
     isOpen={isOpen}
     ariaHideApp={false}
     onRequestClose={onClose}
     shouldCloseOnOverlayClick={true}
   >
-    <div className={styles.component}>
+    <div className={styles.component} style={{ width: width, height: height }}>
       <img onClick={onClose} className={styles.close} src={closeImg} />
       { img && <img className={styles.img} src={img} /> }
       { title && <div className={styles.title}>{title}</div> }
