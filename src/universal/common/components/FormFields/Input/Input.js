@@ -1,7 +1,7 @@
 import React from 'react'
 import cn from 'classnames'
 
-import Puff from 'universal/common/components/Spinners/Puff'
+import Puff from 'universal/common/components/Preloaders/Puff'
 
 import requiredImg from 'universal/assets/icons/input/required.svg'
 import errorImg from 'universal/assets/icons/input/error.svg'

@@ -1,20 +1,16 @@
 import { createTypes, async, actionCreator } from 'redux-action-creator'
+import createRequestAction from 'universal/utils/createRequestAction'
 
 export const types = createTypes([
-  'SKIP_STEP',
-  'SET_NEXT_ACTIVE_STEP',
-  'SWITCH_TO_STEP',
   'UPDATE_COMPLETED_STEPS',
-  'REQUEST_BASE_SETTINGS',
-  ...async('COMPLETE_STEP'),
+  'SET_ACTIVE_STEP',
+  'SET_ACTIVE_SUBSCRIPTION_ID',
+  ...async('SAVE_ACCOUNT_DATA'),
 ], 'REGISTRATION')
 
 export const actions = {
-  skipStep: actionCreator(types.SKIP_STEP, 'currentStep'),
-  requestBaseSettings: actionCreator(types.REQUEST_BASE_SETTINGS),
-  setNextActiveStep: actionCreator(types.SET_NEXT_ACTIVE_STEP, 'nextActiveStep'),
-  switchToStep: actionCreator(types.SWITCH_TO_STEP, 'nextStep'),
-  updateCompletedSteps: actionCreator(types.UPDATE_COMPLETED_STEPS, 'currentStep'),
-  completeStep: actionCreator(types.COMPLETE_STEP, 'data'),
-  completeStepSuccess: actionCreator(types.COMPLETE_STEP_SUCCESS, 'data')
+  updateCompletedSteps: actionCreator(types.UPDATE_COMPLETED_STEPS, 'completedStep'),
+  setActiveStep: actionCreator(types.SET_ACTIVE_STEP, 'activeStep'),
+  saveAccountData: createRequestAction(types.SAVE_ACCOUNT_DATA),
+  setActiveSubscriptionId: actionCreator(types.SET_ACTIVE_SUBSCRIPTION_ID, 'subscriptionId')
 }

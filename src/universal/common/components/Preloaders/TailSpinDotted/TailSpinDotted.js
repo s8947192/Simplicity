@@ -1,7 +1,7 @@
 import React from 'react'
 import cn from 'classnames'
 
-import styles from './preloader.scss'
+import styles from './tailSpinDotted.scss'
 
 const Preloader = ({ color }) => (
   <div className={styles['sk-circle']}>

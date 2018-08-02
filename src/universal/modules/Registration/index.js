@@ -1,3 +1,3 @@
-import Registration from './components/Registration.js'
+import Registration from './containers/Registration.js'
 
 export default Registration

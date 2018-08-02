@@ -16,16 +16,15 @@ import styles from './account.scss'
 
 class AccountStep extends Component {
 
-  onSubmit = props => values => {
-    console.log(values)
-  }
+  onSubmit = props => values => props.saveAccountData(values)
 
   render() {
     const {
       handleSubmit,
       valid,
       submitting,
-      asyncValidating
+      asyncValidating,
+      isStepCompleted
     } = this.props
     return (
       <form className={styles.form}>
@@ -96,7 +95,11 @@ class AccountStep extends Component {
           ]}
         />
         <div className={styles.buttonWrapper}>
-          <Button disabled={!valid || submitting || asyncValidating} onClick={handleSubmit(this.onSubmit(this.props))} value='complete' />
+          <Button
+            disabled={!valid || submitting || asyncValidating}
+            onClick={handleSubmit(this.onSubmit(this.props))}
+            value={isStepCompleted ? 'update' : 'complete'}
+          />
         </div>
       </form>
     )

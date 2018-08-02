@@ -1,7 +1,7 @@
 import React from 'react'
 
-const TailSpin = props => (
-  <svg width='24' height='24' viewBox='0 0 38 38' xmlns='http://www.w3.org/2000/svg'>
+const TailSpin = ({ size=30 }) => (
+  <svg width={size} height={size} viewBox='0 0 38 38' xmlns='http://www.w3.org/2000/svg'>
     <defs>
       <linearGradient x1='8.042%' y1='0%' x2='65.682%' y2='23.865%' id='a'>
         <stop stopColor='silver' stopOpacity='0' offset='0%'/>

@@ -1,38 +1,26 @@
 import { takeLatest, call, put, select, fork } from 'redux-saga/effects'
 import { batchActions } from 'redux-batched-actions'
 
+import { getSubscriptions } from 'universal/common/selectors/entities'
+
 import { types, actions } from '../actions'
-import { getActiveStep, getCompletedSteps } from '../selectors'
-import { getIsSelectedSubscriptionFree } from 'universal/common/selectors/entities'
+import { types as entitiesTypes } from 'universal/common/actions/entities'
 
-function* defineNextStepSaga() {
-  const currentStep = yield select(getActiveStep)
-  const isFreeSubscription = yield select(getIsSelectedSubscriptionFree)
-  if (isFreeSubscription && currentStep === 1) return currentStep + 2
-  return currentStep + 1
-}
-
-function* requestSwitchToStepSaga({ payload: { nextStep } }) {
-  yield put(actions.setNextActiveStep(nextStep))
-}
-
-function* requestSkipStepSaga() {
-  const nextActiveStep = yield call(defineNextStepSaga)
-  yield put(actions.setNextActiveStep(nextActiveStep))
-}
-
-function* requestCompleteStepSaga({ payload: { data } }) {
-  const currentStep = yield select(getActiveStep)
-  const nextActiveStep = yield call(defineNextStepSaga)
+function* saveAccountDataSaga({ payload }) {
   yield put(batchActions([
-    actions.updateCompletedSteps(currentStep),
-    actions.completeStepSuccess(data),
-    actions.setNextActiveStep(nextActiveStep)
+    actions.updateCompletedSteps(0),
+    actions.setActiveStep(1),
+    actions.saveAccountData.success(payload)
   ]))
 }
 
+function* setDefaultSubscriptionSaga({ payload }) {
+  const subscriptions = yield select(getSubscriptions)
+  const defaultSubscription = subscriptions.find(subscription => subscription.get('title') === 'free')
+  yield put(actions.setActiveSubscriptionId(defaultSubscription.get('id')))
+}
+
 export default function* watchRegistration() {
-  yield takeLatest(types.COMPLETE_STEP, requestCompleteStepSaga)
-  yield takeLatest(types.SKIP_STEP, requestSkipStepSaga)
-  yield takeLatest(types.SWITCH_TO_STEP, requestSwitchToStepSaga)
+  yield takeLatest(types.SAVE_ACCOUNT_DATA, saveAccountDataSaga)
+  yield takeLatest(entitiesTypes.REQUEST_SUBSCRIPTIONS_SUCCESS, setDefaultSubscriptionSaga)
 }

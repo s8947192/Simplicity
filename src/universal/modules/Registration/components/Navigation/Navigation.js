@@ -11,14 +11,50 @@ import doneImg from 'universal/assets/icons/registration/done.svg'
 
 import styles from './navigation.scss'
 
-const Navigation = () => (
+const Navigation = ({ completedSteps, activeStep, setActiveStep }) => (
   <div className={styles.component}>
-    <NavEl img={accountImg} text='Account' isDone />
-    <NavEl img={subscriptionImg} text='Subscription' isActive />
-    <NavEl img={mainSettingsImg} text='Main Settings' />
-    <NavEl img={paymentMethodImg} text='Payment Method' isDone />
-    <NavEl img={verificationImg} text='Verification' />
-    <NavEl img={doneImg} text='Done' />
+    <NavEl
+      text='Account'
+      img={accountImg}
+      isDone={completedSteps.has(0)}
+      isActive={activeStep === 0}
+      onClick={() => setActiveStep(0)}
+    />
+    <NavEl
+      text='Subscription'
+      img={subscriptionImg}
+      isDone={completedSteps.has(1)}
+      isActive={activeStep === 1}
+      onClick={() => setActiveStep(1)}
+    />
+    <NavEl
+      text='Main Settings'
+      img={mainSettingsImg}
+      isDone={completedSteps.has(2)}
+      isActive={activeStep === 2}
+      onClick={() => setActiveStep(2)}
+    />
+    <NavEl
+      text='Payment Method'
+      img={paymentMethodImg}
+      isDone={completedSteps.has(3)}
+      isActive={activeStep === 3}
+      onClick={() => setActiveStep(3)}
+    />
+    <NavEl
+      text='Verification'
+      img={verificationImg}
+      isDone={completedSteps.has(4)}
+      isActive={activeStep === 4}
+      onClick={() => setActiveStep(4)}
+    />
+    <NavEl
+      text='Done'
+      img={doneImg}
+      isDone={completedSteps.has(5)}
+      isActive={activeStep === 5}
+      onClick={() => setActiveStep(5)}
+    />
   </div>
 )
 

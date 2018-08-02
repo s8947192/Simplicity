@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
-import { formValueSelector } from 'redux-form'
 
 import Account from '../components/Steps/Account'
 
+import { actions } from '../actions'
+import { isStepCompleted } from '../selectors'
+
 import { findUserByEmail } from 'universal/api/auth'
 import { emailCheck } from 'universal/utils/formFieldsValidation'
-
-const formValues = formValueSelector('accountStep')
 
 const asyncValidate = values => {
   const email = values.get('email')
@@ -35,9 +35,14 @@ const shouldAsyncValidate = params => {
 }
 
 const mapStateToProps = state => ({
+  isStepCompleted: isStepCompleted(state, 0),
   shouldAsyncValidate,
   asyncValidate
 })
 
+const mapDispatchToProps = dispatch => ({
+  saveAccountData: data => dispatch(actions.saveAccountData.start(data)),
+})
 
-export default connect(mapStateToProps, null)(Account)
+
+export default connect(mapStateToProps, mapDispatchToProps)(Account)
