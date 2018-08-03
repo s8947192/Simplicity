@@ -11,7 +11,7 @@ const DurationOption = ({ text, textAfter, textAfterLabel, onClick, isActive }) 
         <span className={styles.after__value}>{ textAfter }</span>
         { textAfterLabel && <span className={styles.after__label}>{ textAfterLabel }</span> }
       </div>
-      <Button type={isActive ? 'small--shaded' : 'small'} value={text} />
+      <Button type={isActive ? 'small--shaded' : 'small--red'} value={text} />
     </div>
   )
 }

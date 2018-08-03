@@ -17,10 +17,14 @@
       border: 1px solid #e8e8e8;
       color: #a4a9af;
     }
+    &--red {
+      color: white;
+      background-color: #f16961;
+    }
   }
   &__small {
-    height: 35px;
-    width: 100px;
+    height: 37px;
+    width: 102px;
     font-size: 12px;
     background-color: #4589dd;
     color: #e7f2ff;
@@ -30,6 +34,13 @@
       font-size: 12px;
       border: 1px solid #e8e8e8;
       color: #a4a9af;
+    }
+    &--red {
+      height: 37px;
+      width: 102px;
+      color: white;
+      font-size: 12px;
+      background-color: #f16961;
     }
   }
   &__disabled {

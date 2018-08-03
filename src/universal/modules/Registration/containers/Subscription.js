@@ -6,16 +6,23 @@ import { actions as entitiesActions } from 'universal/common/actions/entities'
 import { getSubscriptions } from 'universal/common/selectors/entities'
 
 import { actions } from '../actions'
-import { getActiveSubscriptionId } from '../selectors'
+import {
+  getActiveSubscriptionId,
+  getActiveSubscription,
+  getSubscriptionDuration,
+  isStepCompleted
+} from '../selectors'
 
 const mapStateToProps = state => ({
+  isStepCompleted: isStepCompleted(state, 1),
   subscriptions: getSubscriptions(state),
-  activeSubscriptionId: getActiveSubscriptionId(state)
+  activeSubscription: getActiveSubscription(state),
+  subscriptionDuration: getSubscriptionDuration(state)
 })
 
 const mapDispatchToProps = dispatch => ({
   requestSubscriptions: () => dispatch(entitiesActions.requestSubscriptions.start()),
-  setActiveSubscriptionId: subscriptionId => dispatch(actions.setActiveSubscriptionId(subscriptionId))
+  saveSubscriptionData: data => dispatch(actions.saveSubscriptionData.start(data))
 })
 
 

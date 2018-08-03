@@ -6,13 +6,12 @@ import { types } from '../actions'
 const initialState = fromJS({
   completedSteps: OrderedSet(),
   activeStep: 0,
-  activeSubscriptionId: null,
   firstName: null,
   lastName: null,
   nickName: null,
   email: null,
   password: null,
-  subscriptionId: null,
+  activeSubscriptionId: null,
   subscriptionDuration: 1,
   systemLanguage: null,
   systemCurrency: null,
@@ -28,10 +27,11 @@ const initialState = fromJS({
 export default typeToReducer({
   [types.UPDATE_COMPLETED_STEPS]: (state, { payload }) => state
     .updateIn(['completedSteps'], completedSteps => completedSteps.add(payload.completedStep)),
-  [types.SET_ACTIVE_STEP]: (state, { payload }) => state
-    .set('activeStep', payload.activeStep),
-  [types.SET_ACTIVE_SUBSCRIPTION_ID]: (state, { payload }) => state
-    .set('activeSubscriptionId', payload.subscriptionId),
+  [types.SET_ACTIVE_STEP]: (state, { payload }) => state.set('activeStep', payload.activeStep),
+  [types.SET_ACTIVE_SUBSCRIPTION_ID]: (state, { payload }) => state.set('activeSubscriptionId', payload.subscriptionId),
+  [types.SAVE_SUBSCRIPTION_DATA_SUCCESS]: (state, { payload }) => state
+    .set('activeSubscriptionId', payload.activeSubscriptionId)
+    .set('subscriptionDuration', payload.subscriptionDuration),
   [types.SAVE_ACCOUNT_DATA_SUCCESS]: (state, { payload }) => state
     .set('firstName', payload.get('firstName'))
     .set('lastName', payload.get('lastName'))

@@ -20,7 +20,18 @@ function* setDefaultSubscriptionSaga({ payload }) {
   yield put(actions.setActiveSubscriptionId(defaultSubscription.get('id')))
 }
 
+function* saveSubscriptionDataSaga({ payload }) {
+  const { activeSubscriptionId, subscriptionDuration } = payload
+  if (!activeSubscriptionId) return
+  yield put(batchActions([
+    actions.updateCompletedSteps(1),
+    actions.setActiveStep(2),
+    actions.saveSubscriptionData.success(payload)
+  ]))
+}
+
 export default function* watchRegistration() {
   yield takeLatest(types.SAVE_ACCOUNT_DATA, saveAccountDataSaga)
+  yield takeLatest(types.SAVE_SUBSCRIPTION_DATA, saveSubscriptionDataSaga)
   yield takeLatest(entitiesTypes.REQUEST_SUBSCRIPTIONS_SUCCESS, setDefaultSubscriptionSaga)
 }

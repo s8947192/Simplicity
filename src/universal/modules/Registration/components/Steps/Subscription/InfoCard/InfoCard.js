@@ -37,7 +37,7 @@ const InfoCard = ({
         <span className={styles.text}>{ value > 0 ? `$${value}` : 'free' }</span>
         { value > 0 && <span className={cn(styles.text, styles['text--small'])}>/mo</span> }
       </div>
-      <Button value='select' type={buttonType} onClick={onClick} />
+      <Button value={isActive ? 'selected' : 'select'} type={buttonType} onClick={onClick} />
     </div>
   )
 }

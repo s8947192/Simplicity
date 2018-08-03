@@ -17,18 +17,52 @@ import styles from './subscription.scss'
 import TailSpin from 'universal/common/components/Preloaders/TailSpin'
 
 export default class Subscription extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      activeSubscription: props.activeSubscription || new Map(),
+      subscriptionDuration: props.subscriptionDuration
+    }
+  }
+
   componentWillMount() {
     const { subscriptions, requestSubscriptions } = this.props
     if (!subscriptions.size) {
       requestSubscriptions()
     }
   }
+
+  componentWillReceiveProps(nextProps) {
+    const {
+      activeSubscription,
+      subscriptionDuration
+    } = nextProps
+    this.setState({
+      activeSubscription,
+      subscriptionDuration
+    })
+  }
+
+  saveSubscriptionData = () => {
+    const { activeSubscription, subscriptionDuration } = this.state
+    const activeSubscriptionId = activeSubscription.get('id')
+    this.props.saveSubscriptionData({ activeSubscriptionId, subscriptionDuration })
+  }
+
   render() {
+
     const {
       subscriptions,
-      activeSubscriptionId,
-      setActiveSubscriptionId
+      selectSubscriptionDuration,
+      isStepCompleted
     } = this.props
+
+    const {
+      activeSubscription,
+      subscriptionDuration
+    } = this.state
+
     if (!subscriptions.size) {
       return (
         <div className={styles.preloader}>
@@ -42,42 +76,57 @@ export default class Subscription extends Component {
         <TitleDevider img={subscriptionImg} text='Select subscription plan' />
         <div className={styles.subscriptions}>
           {
-            subscriptions.toList().map((subscription, index) =>
+            activeSubscription && subscriptions.toList().map((subscription, index) =>
               <InfoCard key={index}
-                isActive={activeSubscriptionId === subscription.get('id')}
-                onClick={() => setActiveSubscriptionId(subscription.get('id'))}
+                isActive={activeSubscription.get('id') === subscription.get('id')}
+                onClick={() => this.setState({ activeSubscription: subscription})}
                 title={subscription.get('title')}
                 value={subscription.get('price')}
               />
             )
           }
         </div>
-        <TitleDevider img={stopwatchImg} text='Select subscription duration' />
-        <div className={styles.durationOptions}>
-          <DurationOption
-            text='1 month'
-            textAfter='0%'
-            textAfterLabel='save'
-            onClick={() => console.log('CLICK')}
-          />
-          <DurationOption
-            isActive
-            text='3 month'
-            textAfter='10%'
-            textAfterLabel='save'
-            onClick={() => console.log('CLICK')}
-          />
-          <DurationOption
-            text='6 month'
-            textAfter='20%'
-            textAfterLabel='save'
-            onClick={() => console.log('CLICK')}
-          />
-        </div>
-        <TitleDevider img={bargainImg} text='Billing info' />
-        <TotalPrice originalPrice={248.99} discount={0.2} />
+        {
+          activeSubscription && activeSubscription.get('title') !== 'free' && (
+            <div>
+              <TitleDevider img={stopwatchImg} text='Select subscription duration' />
+              <div className={styles.durationOptions}>
+                <DurationOption
+                  text='1 month'
+                  textAfter='0%'
+                  textAfterLabel='save'
+                  isActive={subscriptionDuration === 1}
+                  onClick={() => this.setState({ subscriptionDuration: 1 })}
+                />
+                <DurationOption
+                  text='3 month'
+                  textAfter='10%'
+                  textAfterLabel='save'
+                  isActive={subscriptionDuration === 3}
+                  onClick={() => this.setState({ subscriptionDuration: 3 })}
+                />
+                <DurationOption
+                  text='6 month'
+                  textAfter='20%'
+                  textAfterLabel='save'
+                  isActive={subscriptionDuration === 6}
+                  onClick={() => this.setState({ subscriptionDuration: 6 })}
+                />
+              </div>
+              <TitleDevider img={bargainImg} text='Billing info' />
+              <TotalPrice
+                originalPrice={activeSubscription.get('price')}
+                duration={subscriptionDuration}
+              />
+            </div>
+          )
+        }
         <div className={styles.buttonWrapper}>
-          <Button onClick={() => console.log('CLICK')} value='complete' />
+          <Button
+            disabled={!activeSubscription}
+            onClick={this.saveSubscriptionData}
+            value={isStepCompleted ? 'update' : 'complete'}
+          />
         </div>
       </div>
     )
