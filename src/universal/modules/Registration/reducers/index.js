@@ -27,11 +27,27 @@ const initialState = fromJS({
 export default typeToReducer({
   [types.UPDATE_COMPLETED_STEPS]: (state, { payload }) => state
     .updateIn(['completedSteps'], completedSteps => completedSteps.add(payload.completedStep)),
-  [types.SET_ACTIVE_STEP]: (state, { payload }) => state.set('activeStep', payload.activeStep),
-  [types.SET_ACTIVE_SUBSCRIPTION_ID]: (state, { payload }) => state.set('activeSubscriptionId', payload.subscriptionId),
+
+  [types.SET_ACTIVE_STEP]: (state, { payload }) => state
+    .set('activeStep', payload.activeStep),
+
+  [types.SET_ACTIVE_SUBSCRIPTION_ID]: (state, { payload }) => state
+    .set('activeSubscriptionId', payload.subscriptionId),
+
+  [types.SET_DEFAULT_LANGUAGE_ID]: (state, { payload }) => state
+    .set('systemLanguage', payload.languageId),
+
+  [types.SET_DEFAULT_CURRENCY_ID]: (state, { payload }) => state
+    .set('systemCurrency', payload.currencyId),
+
   [types.SAVE_SUBSCRIPTION_DATA_SUCCESS]: (state, { payload }) => state
     .set('activeSubscriptionId', payload.activeSubscriptionId)
     .set('subscriptionDuration', payload.subscriptionDuration),
+
+  [types.SAVE_MAIN_SETTINGS_SUCCESS]: (state, { payload }) => state
+    .set('systemLanguage', payload.get('systemLanguage'))
+    .set('systemCurrency', payload.get('systemCurrency')),
+
   [types.SAVE_ACCOUNT_DATA_SUCCESS]: (state, { payload }) => state
     .set('firstName', payload.get('firstName'))
     .set('lastName', payload.get('lastName'))

@@ -3,25 +3,26 @@ import styled from 'styled-components'
 
 const StyledReactSelect = styled(ReactSelect)`
   &.Select {
-    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.03);
     &.is-open > .Select-control {
       outline: none;
       box-shadow: none;
     }
-    &.is-focused:not(.is-open) > .Select-control {
+    &.is-focused > .Select-control {
       outline: none;
       box-shadow: none;
-      border: none;
+      border: 1px solid #efefef;
     }
   }
   .Select-menu-outer {
-    border: none;
+    border: 1px solid #efefef;
     box-shadow: none;
   }
   .Select-placeholder {
-    top: 7px;
-    font-size: 13px;
-    left: 10px;
+    font-size: 11px;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    margin-left: 10px;
   }
   .Select-arrow-zone {
     padding-right: 20px;
@@ -31,8 +32,9 @@ const StyledReactSelect = styled(ReactSelect)`
   .Select-control {
     cursor: pointer;
     height: 48px;
-    border: none;
     box-shadow: none;
+    border: 1px solid #efefef;
+    border-radius: 0;
   }
 `
 export default StyledReactSelect

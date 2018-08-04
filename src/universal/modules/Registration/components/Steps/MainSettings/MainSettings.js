@@ -1,64 +1,115 @@
-import React from 'react'
-import { Field, reduxForm } from 'redux-form'
+import React, { Component } from 'react'
+import { Field, reduxForm } from 'redux-form/immutable'
 import cn from 'classnames'
 
+import TailSpin from 'universal/common/components/Preloaders/TailSpin'
 import TitleDevider from 'universal/common/components/TitleDevider'
 import Select from 'universal/common/components/FormFields/Select'
-
-import russianFlag from 'universal/assets/icons/flags/russia.svg'
-import englishFlag from 'universal/assets/icons/flags/england.svg'
-import germanyFlag from 'universal/assets/icons/flags/germany.svg'
-import spanishFlag from 'universal/assets/icons/flags/spain.svg'
-
-import dollarIcon from 'universal/assets/icons/currencies/dollar.svg'
-import euroIcon from 'universal/assets/icons/currencies/euro.svg'
-import yuanIcon from 'universal/assets/icons/currencies/yuan.svg'
-import poundSterlingIcon from 'universal/assets/icons/currencies/pound-sterling.svg'
-import rubleIcon from 'universal/assets/icons/currencies/ruble.svg'
+import Button from 'universal/common/components/Button'
 
 import worldwideImg from 'universal/assets/icons/common/worldwide.svg'
 import moneyImg from 'universal/assets/icons/common/money.svg'
 
 import styles from './mainSettings.scss'
 
-const durationOptions = [
-  { value: 'english', label: 'English', imgSrc: englishFlag },
-  { value: 'russian', label: 'Russian', imgSrc: russianFlag },
-  { value: 'german', label: 'German', imgSrc: germanyFlag },
-  { value: 'spanish', label: 'Spanish', imgSrc: spanishFlag }
-]
+class MainSettings extends Component {
 
-const currencyOptions = [
-  { value: 'dollar', label: 'Dollar', imgSrc: dollarIcon, imgSize: 18 },
-  { value: 'euro', label: 'Euro', imgSrc: euroIcon, imgSize: 18 },
-  { value: 'yuan', label: 'Yuan', imgSrc: yuanIcon, imgSize: 18 },
-  { value: 'poundSterling', label: 'Pound-Sterling', imgSrc: poundSterlingIcon, imgSize: 18 },
-  { value: 'ruble', label: 'Ruble', imgSrc: rubleIcon, imgSize: 18 }
-]
+  constructor(props) {
+    super(props)
+    this.state = {
+      optionLanguages: null,
+      optionCurrencies: null
+    }
+  }
 
-const MainSettings = ({  }) => {
-  return (
-    <form>
-      <TitleDevider
-        img={worldwideImg}
-        text='Select system language'
-      />
-      <Field
-        name='systemLanguage'
-        component={Select}
-        options={durationOptions}
-      />
-      <TitleDevider
-        img={moneyImg}
-        text='Select system currency'
-      />
-      <Field
-        name='defaultCurrency'
-        component={Select}
-        options={currencyOptions}
-      />
-    </form>
-  )
+  async componentWillMount() {
+    const { languages, currencies, requestMainSettings } = this.props
+    if (!languages.size || !currencies.size) {
+      return requestMainSettings()
+    }
+    const optionLanguages = await this.formOptions('flags', languages)
+    const optionCurrencies = await this.formOptions('currencies', currencies, 14)
+    this.setState({ optionLanguages, optionCurrencies })
+  }
+
+  async componentWillReceiveProps(nextProps) {
+    const optionLanguages = await this.formOptions('flags', nextProps.languages)
+    const optionCurrencies = await this.formOptions('currencies', nextProps.currencies, 14)
+    this.setState({ optionLanguages, optionCurrencies })
+  }
+
+  async formOptions(type, entities, imgSize=24) {
+    if (!entities.size) return
+    const optionLanguages = entities.toList().toJS().map(async entity => {
+      const img = await import(`universal/assets/icons/${type}/${entity.title}.svg`)
+      return {
+        value: entity.id,
+        label: entity.title,
+        imgSrc: img,
+        imgSize: imgSize
+      }
+    })
+    return await Promise.all(optionLanguages)
+  }
+
+  onSubmit = props => values => props.saveMainSettings(values)
+
+  render() {
+
+    const {
+      optionLanguages,
+      optionCurrencies
+    } = this.state
+
+    const {
+      handleSubmit
+    } = this.props
+
+    if (!optionLanguages || !optionCurrencies) {
+      return (
+        <div className={styles.preloader}>
+          <TailSpin size={50} />
+          <div className={styles.preloader__desc}>loading main settings...</div>
+        </div>
+      )
+    }
+
+    return (
+      <form className={styles.component}>
+        <div className={styles.wrapper}>
+          <div className={styles.el}>
+            <TitleDevider
+              img={worldwideImg}
+              text='Select system language'
+            />
+            <Field
+              name='systemLanguage'
+              component={Select}
+              options={optionLanguages}
+            />
+          </div>
+          <div className={styles.devider} />
+          <div className={styles.el}>
+            <TitleDevider
+              img={moneyImg}
+              text='Select system currency'
+            />
+            <Field
+              name='systemCurrency'
+              component={Select}
+              options={optionCurrencies}
+            />
+          </div>
+        </div>
+        <div className={styles.buttonWrapper}>
+          <Button
+            onClick={handleSubmit(this.onSubmit(this.props))}
+            value='complete'
+          />
+        </div>
+      </form>
+    )
+  }
 }
 
 export default reduxForm({

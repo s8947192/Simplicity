@@ -9,7 +9,7 @@ import { types, actions } from '../actions/entities'
 
 function* requestSubscriptionsSaga() {
   try {
-    const subscriptions = yield call(requestSubscriptions)
+    const { data: subscriptions } = yield call(requestSubscriptions)
     const norm = yield call(normalize, subscriptions, [schemas.subscription])
     yield put(actions.requestSubscriptions.success(norm))
   } catch (err) {

@@ -3,7 +3,14 @@ import { connect } from 'react-redux'
 import Account from '../components/Steps/Account'
 
 import { actions } from '../actions'
-import { isStepCompleted } from '../selectors'
+import {
+  isStepCompleted,
+  getFirstName,
+  getLastName,
+  getNickName,
+  getEmail,
+  getPassword
+} from '../selectors'
 
 import { findUserByEmail } from 'universal/api/auth'
 import { emailCheck } from 'universal/utils/formFieldsValidation'
@@ -37,7 +44,15 @@ const shouldAsyncValidate = params => {
 const mapStateToProps = state => ({
   isStepCompleted: isStepCompleted(state, 0),
   shouldAsyncValidate,
-  asyncValidate
+  asyncValidate,
+  initialValues: {
+    firstName: getFirstName(state),
+    lastName: getLastName(state),
+    nickName: getNickName(state),
+    email: getEmail(state),
+    password: getPassword(state),
+    repeatPassword: getPassword(state)
+  }
 })
 
 const mapDispatchToProps = dispatch => ({
