@@ -72,6 +72,7 @@
     "object-assign-deep": "^0.4.0",
     "react": "^16.4.1",
     "react-addons-transition-group": "^15.6.2",
+    "react-async-component": "^2.0.0",
     "react-dom": "^16.4.1",
     "react-gravatar": "^2.6.3",
     "react-maskedinput": "^4.0.1",

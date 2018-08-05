@@ -5,12 +5,8 @@
 }
 
 .wrapper {
-  display: flex;
   flex: 1;
-}
-
-.el {
-  flex: 1;
+  flex-direction: column;
 }
 
 .devider {
@@ -19,7 +15,6 @@
 
 .buttonWrapper {
   display: flex;
-  margin-top: 20px;
   justify-content: flex-end;
 }
 

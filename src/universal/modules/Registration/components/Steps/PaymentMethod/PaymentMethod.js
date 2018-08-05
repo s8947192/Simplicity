@@ -15,10 +15,14 @@ import creditCardImg from 'universal/assets/icons/cards/credit-card-1.svg'
 import styles from './paymentMethod.scss'
 
 const onSubmit = ({ stripe, ...props }) => values => {
-  stripe.createToken().then(token => console.log(token))
+  props.savePaymentData({ stripe, values })
 }
 
-const PaymentMethod = ({ handleSubmit, ...props }) => (
+const PaymentMethod = ({
+  handleSubmit,
+  isStripeTokenPending,
+  ...props
+}) => (
   <div>
     <TitleDevider
       img={creditCardImg}
@@ -65,7 +69,7 @@ const PaymentMethod = ({ handleSubmit, ...props }) => (
           <div className={styles.rememberCard__text}>Do you want to remember this card?</div>
         </div>
         <div className={styles.buttonWrapper}>
-          <Button disabled={props.invalid} onClick={handleSubmit(onSubmit(props))} value='complete' />
+          <Button disabled={props.invalid || isStripeTokenPending} onClick={handleSubmit(onSubmit(props))} value='complete' />
         </div>
       </div>
     </form>

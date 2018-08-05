@@ -26,9 +26,47 @@ const message = `
   so we can withdraw money from your card, register your account and grand access to your selected subscription right away.
 `
 
-const Verification = ({  }) => {
+const discountMap = Map({ 1: 0, 3: 0.1, 6: 0.2 })
+
+const definePrices = (subscription, duration) => {
+  if (!subscription || !duration) return
+  const originalPrice = subscription.get('price')
+  const discount = discountMap.get(duration.toString())
+  const price = parseFloat(originalPrice, 10)
+  const totalSave = price * discount
+  const totalBilled = (price - totalSave)
+  return Map({
+    originalPrice: (originalPrice * duration).toFixed(2),
+    totalSave: (totalSave * duration).toFixed(2),
+    totalBilled: (totalBilled * duration).toFixed(2)
+  })
+}
+
+const Verification = ({
+  firstName,
+  lastName,
+  nickName,
+  email,
+  password,
+  subscription,
+  subscriptionDuration,
+  systemLanguage,
+  systemCurrency,
+  paymentMethod,
+  savePaymentMethod,
+  completedSteps
+}) => {
+  const prices = definePrices(subscription, subscriptionDuration)
   return (
     <form>
+      {
+        /*
+        { console.log(paymentMethod) }
+        { console.log(savePaymentMethod) }
+        { console.log(completedSteps) }
+        */
+      }
+      { console.log(paymentMethod && paymentMethod.getIn(['card', 'brand'])) }
       <Confirm isOpen={false}
         onClose={() => console.log('CLOSE')}
         onConfirm={() => console.log('CONFIRM')}
@@ -47,45 +85,51 @@ const Verification = ({  }) => {
         text='Steps to be checked'
       />
       <StepCard
+        isCompleted={completedSteps.has(0)}
         img={accountImg}
         title='Account'
         editStep={0}
         values={List([
-          Map({ title: 'user info', value: 'Peter Parker (Spiderman)' }),
-          Map({ title: 'email', value: 'spiderman@gmail.com' }),
-          Map({ title: 'password', value: 'qwerty123' })
+          Map({ title: 'user info', value: `${firstName} ${lastName} (${nickName})` }),
+          Map({ title: 'email', value: email }),
+          Map({ title: 'password', value: password })
         ])}
       />
       <StepCard
+        isCompleted={completedSteps.has(1)}
         img={subscriptionImg}
         title='Subscription'
         editStep={1}
-        values={List([
-          Map({ title: 'subscription', value: 'Business' }),
-          Map({ title: 'duration', value: '3 month' }),
-          Map({ title: 'original price', value: '$146.97/mo' }),
-          Map({ title: 'you save', value: '$18' }),
-          Map({ title: 'total payout', value: '$128' })
+        values={prices && List([
+          Map({ title: 'subscription', value: subscription.get('title') }),
+          Map({ title: 'duration', value: `${subscriptionDuration} month` }),
+          Map({ title: 'original price', value: `$${prices.get('originalPrice')}` }),
+          Map({ title: 'you save', value: `$${prices.get('totalSave')}` }),
+          Map({ title: 'total payout', value: `$${prices.get('totalBilled')}` })
         ])}
       />
       <StepCard
+        isCompleted={completedSteps.has(2)}
         img={mainSettingsImg}
         title='Main Settings'
         editStep={2}
-        values={List([
-          Map({ title: 'system language', value: 'English' }),
-          Map({ title: 'system currency', value: 'Euro' })
+        values={systemLanguage && systemCurrency && List([
+          Map({ title: 'system language', value: systemLanguage.get('title') }),
+          Map({ title: 'system currency', value: systemCurrency.get('title') })
         ])}
       />
       <StepCard
+        isCompleted={completedSteps.has(3)}
         img={paymentMethodImg}
         title='Payment Method'
         editStep={3}
-        values={List([
+        values={paymentMethod && List([
           Map({ title: 'payment method', value: 'credit card' }),
-          Map({ title: 'card number', value: '4242 4242 4242 4242' }),
-          Map({ title: 'name on card', value: 'Peter Parker' }),
-          Map({ title: 'expiration date', value: '11/21' }),
+          Map({ title: 'brand', value: paymentMethod.getIn(['card', 'brand']) }),
+          Map({ title: 'card country', value: paymentMethod.getIn(['card', 'country']) }),
+          Map({ title: 'last 4 digits', value: paymentMethod.getIn(['card', 'last4']) }),
+          Map({ title: 'name on card', value: paymentMethod.getIn(['card', 'name']) }),
+          Map({ title: 'expiration date', value: `${paymentMethod.getIn(['card', 'exp_month'])}/${paymentMethod.getIn(['card', 'exp_year'])}` }),
           Map({ title: 'save payment source', value: 'yes' })
         ])}
       />

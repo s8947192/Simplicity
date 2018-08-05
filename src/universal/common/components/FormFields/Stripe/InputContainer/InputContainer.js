@@ -13,11 +13,8 @@ const InputContainer = Component => {
   const HoC = ({
     input,
     label,
-    placeholder,
-    className,
-    meta
+    className
   }) => {
-
     const handleChange = valid => input.onChange(valid)
 
     const isRequired = input.value === '' || input.value === false || (input.value.complete === false && !input.value.error)

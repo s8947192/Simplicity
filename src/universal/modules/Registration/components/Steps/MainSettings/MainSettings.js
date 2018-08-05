@@ -88,7 +88,6 @@ class MainSettings extends Component {
               options={optionLanguages}
             />
           </div>
-          <div className={styles.devider} />
           <div className={styles.el}>
             <TitleDevider
               img={moneyImg}

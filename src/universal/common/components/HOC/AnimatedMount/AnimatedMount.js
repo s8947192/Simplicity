@@ -6,6 +6,7 @@ const AnimatedMount = ({ unmountedStyle, mountedStyle }) => {
       super(props)
       this.state = {
         style: unmountedStyle,
+        isAvailable: false
       }
     }
 
@@ -22,6 +23,7 @@ const AnimatedMount = ({ unmountedStyle, mountedStyle }) => {
       setTimeout(() => {
         this.setState({
           style: mountedStyle,
+          isAvailable: true
         })
       }, 10)
     }
@@ -30,16 +32,18 @@ const AnimatedMount = ({ unmountedStyle, mountedStyle }) => {
       this.onTransitionEnd = callback
       this.setState({
         style: unmountedStyle,
+        isAvailable: false
       })
     }
 
     render() {
-      return <div
-        style={this.state.style}
-        onTransitionEnd={this.onTransitionEnd}
-      >
-        <Wrapped { ...this.props } />
-      </div>
+      const { style, isAvailable } = this.state
+      const { onClick } = this.props
+      return (
+        <div style={style} onTransitionEnd={this.onTransitionEnd} >
+          <Wrapped { ...this.props } onClick={isAvailable ? onClick : undefined} />
+        </div>
+      )
     }
   }
 }

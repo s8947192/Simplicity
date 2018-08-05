@@ -1,12 +1,14 @@
 import { takeLatest, call, put, select, fork } from 'redux-saga/effects'
 import { batchActions } from 'redux-batched-actions'
 import { normalize } from 'normalizr'
+import { fromJS } from 'immutable'
 
 import * as schemas from 'universal/schemas'
 
 import { getSubscriptions } from 'universal/common/selectors/entities'
 
 import { types, actions } from '../actions'
+import { getIsPaymentMethodAvailable } from '../selectors'
 
 import { types as entitiesTypes } from 'universal/common/actions/entities'
 import { actions as entitiesActions } from 'universal/common/actions/entities'
@@ -61,12 +63,32 @@ function* requestMainSettingsSaga() {
 }
 
 function* saveMainSettingsSaga({ payload }) {
-  console.log(payload)
+  const isPaymentMethodAvailable = yield select(getIsPaymentMethodAvailable)
+  const nextStep = isPaymentMethodAvailable ? 3 : 4
   yield put(batchActions([
     actions.updateCompletedSteps(2),
-    actions.setActiveStep(3),
+    actions.setActiveStep(nextStep),
     actions.saveMainSettings.success(payload)
   ]))
+}
+
+function* savePaymentDataSaga({ payload }) {
+  yield put(actions.toggleStripeTokenPending(true))
+  const cardData = { name: payload.values.get('nameOnCard') }
+  const shouldRememberCard = payload.values.get('rememberCard') || false
+  try {
+    const paymentMethod = yield call(payload.stripe.createToken, cardData)
+    console.log(fromJS(paymentMethod))
+    yield put(batchActions([
+      actions.updateCompletedSteps(3),
+      actions.setActiveStep(4),
+      actions.savePaymentData.success(fromJS(paymentMethod)),
+      actions.toggleStripeTokenPending(false),
+      actions.shouldRememberPaymentMethod(shouldRememberCard)
+    ]))
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 export default function* watchRegistration() {
@@ -74,5 +96,6 @@ export default function* watchRegistration() {
   yield takeLatest(types.SAVE_SUBSCRIPTION_DATA, saveSubscriptionDataSaga)
   yield takeLatest(types.REQUEST_MAIN_SETTINGS, requestMainSettingsSaga)
   yield takeLatest(types.SAVE_MAIN_SETTINGS, saveMainSettingsSaga)
+  yield takeLatest(types.SAVE_PAYMENT_DATA, savePaymentDataSaga)
   yield takeLatest(entitiesTypes.REQUEST_SUBSCRIPTIONS_SUCCESS, setDefaultSubscriptionSaga)
 }

@@ -1,4 +1,7 @@
 import React from 'react'
+import ReactTransitionGroup from 'react-transition-group/TransitionGroup'
+
+import AnimatedMount from 'universal/common/components/HOC/AnimatedMount'
 
 import NavEl from './NavEl'
 
@@ -11,7 +14,27 @@ import doneImg from 'universal/assets/icons/registration/done.svg'
 
 import styles from './navigation.scss'
 
-const Navigation = ({ completedSteps, activeStep, setActiveStep }) => (
+const AnimatedNavEl = AnimatedMount({
+  unmountedStyle: {
+    opacity: 0,
+    transform: 'translate3d(-20px, 0, 0)',
+    transition: 'all 500ms cubic-bezier(1.000, 0.350, 0.750, 0.750)',
+    transitionTimingFunction: 'cubic-bezier(1.000, 0.350, 0.750, 0.750)'
+  },
+  mountedStyle: {
+    opacity: 1,
+    transform: 'translate3d(0, 0, 0)',
+    transition: 'all 500ms cubic-bezier(1.000, 0.350, 0.750, 0.750)',
+    transitionTimingFunction: 'cubic-bezier(1.000, 0.350, 0.750, 0.750)'
+  },
+})(NavEl)
+
+const Navigation = ({
+  completedSteps,
+  activeStep,
+  setActiveStep,
+  isPaymentMethodAvailable
+}) => (
   <div className={styles.component}>
     <NavEl
       text='Account'
@@ -34,13 +57,20 @@ const Navigation = ({ completedSteps, activeStep, setActiveStep }) => (
       isActive={activeStep === 2}
       onClick={() => setActiveStep(2)}
     />
-    <NavEl
-      text='Payment Method'
-      img={paymentMethodImg}
-      isDone={completedSteps.has(3)}
-      isActive={activeStep === 3}
-      onClick={() => setActiveStep(3)}
-    />
+    <ReactTransitionGroup>
+      {
+        isPaymentMethodAvailable && (
+          <AnimatedNavEl
+            text='Payment Method'
+            img={paymentMethodImg}
+            isDone={completedSteps.has(3)}
+            isActive={activeStep === 3}
+            onClick={() => setActiveStep(3)}
+            isPaymentMethodAvailable={isPaymentMethodAvailable}
+          />
+        )
+      }
+    </ReactTransitionGroup>
     <NavEl
       text='Verification'
       img={verificationImg}

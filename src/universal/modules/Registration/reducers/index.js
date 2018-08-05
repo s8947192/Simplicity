@@ -15,10 +15,8 @@ const initialState = fromJS({
   subscriptionDuration: 1,
   systemLanguage: null,
   systemCurrency: null,
-  cardNumber: null,
-  nameOnCard: null,
-  cvcNumber: null,
-  cardExpirity: null,
+  paymentMethod: null,
+  isStripeTokenPending: false,
   savePaymentMethod: false,
   agreeWithTermsOfPolices: false,
   agreeToBuySubscription: false
@@ -39,6 +37,15 @@ export default typeToReducer({
 
   [types.SET_DEFAULT_CURRENCY_ID]: (state, { payload }) => state
     .set('systemCurrency', payload.currencyId),
+
+  [types.TOGGLE_STRIPE_TOKEN_PENDING]: (state, { payload }) => state
+    .set('isStripeTokenPending', payload.isPending),
+
+  [types.SHOULD_REMEMBER_PAYMENT_METHOD]: (state, { payload }) => state
+    .set('shouldRememberPaymentMethod', payload.isRemember),
+
+  [types.SAVE_PAYMENT_DATA_SUCCESS]: (state, { payload }) => state
+    .set('paymentMethod', payload.get('token')),
 
   [types.SAVE_SUBSCRIPTION_DATA_SUCCESS]: (state, { payload }) => state
     .set('activeSubscriptionId', payload.activeSubscriptionId)
