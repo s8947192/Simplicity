@@ -1,0 +1,71 @@
+.subscription {
+  display: flex;
+  flex: 1;
+  background-color: white;
+  margin: 2px 0;
+  height: 40px;
+  padding: 4px;
+  box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.03);
+  border-radius: 4px;
+  transition: all 0.2s;
+  &--active {
+    margin: 12px;
+  }
+}
+
+.info {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  &__el {
+    display: flex;
+    align-items: center;
+    color: #303336;
+  }
+  &__desc {
+    display: flex;
+    flex-direction: column;
+    color: #303336;
+    &__title {
+      font-size: 13px;
+      font-weight: 500;
+    }
+    &__main {
+      font-size: 11px;
+    }
+  }
+}
+
+.sign {
+  padding-bottom: 10px;
+  margin-right: 2px;
+  font-size: 13px;
+}
+
+.value {
+  font-size: 20px;
+}
+
+.duration {
+  font-size: 11px;
+  padding-top: 7px;
+}
+
+.img {
+  height: 24px;
+  width: 24px;
+  margin: 15px;
+  margin-right: 20px;
+}
+
+.button {
+  margin-left: 35px;
+  display: flex;
+  align-items: center;
+}
+
+.selected {
+  background-color: #ffffff;
+  color: #383b3d;
+  border: none;
+}

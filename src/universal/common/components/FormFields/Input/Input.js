@@ -27,7 +27,7 @@ const Input = ({
       { isSuccess && input.value.length !== 0 && <img className={styles.img} src={successImg} /> }
       { meta.asyncValidating && <div className={styles.asyncLoader}><Puff /></div> }
       <div className={styles.labelWrapper}>
-        <label htmlFor={input.name}>{label}</label>
+        <label className={cn(styles.component__label, {[styles['component__label--active']]: meta.active})} htmlFor={input.name}>{label}</label>
         {
           meta.error && (
             <div className={cn(

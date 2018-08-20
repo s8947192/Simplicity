@@ -14,11 +14,5 @@ const initialState = fromJS({
 export default typeToReducer({
   [types.REQUEST_SUBSCRIPTIONS]: {
     SUCCESS: mergeEntities('subscriptions')
-  },
-  [types.REQUEST_LANGUAGES]: {
-    SUCCESS: mergeEntities('languages')
-  },
-  [types.REQUEST_CURRENCIES]: {
-    SUCCESS: mergeEntities('currencies')
   }
 }, initialState)

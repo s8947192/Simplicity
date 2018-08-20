@@ -1,18 +1,22 @@
 .button {
-  min-width: 100px;
+  min-width: 95px;
   max-width: 150px;
   display: flex;
   justify-content: center;
-  font-size: 14px;
-  height: 46px;
+  font-size: 12px;
+  font-weight: 500;
+  height: 35px;
   align-items: center;
   border-radius: 4px;
+  padding-top: 3px;
   &:hover {
     cursor: pointer;
   }
   &__primary {
-    background-color: #4589dd;
-    color: #e7f2ff;
+    background-color: #53aaea;
+    color: #d1e9ff;
+    border-bottom: 3px solid #479ede;
+    transition: all 0.2s;
     &--shaded {
       border: 1px solid #e8e8e8;
       color: #a4a9af;
@@ -46,6 +50,7 @@
   &__disabled {
     background-color: #d6d6d6;
     color: #888888;
+    border-bottom: 3px solid #d6d6d6;
     &:hover {
       cursor: not-allowed;
     }

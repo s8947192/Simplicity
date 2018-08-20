@@ -10,9 +10,13 @@ const NavEl = ({
   isActive,
   img,
   text,
-  onClick
+  onClick,
+  isDisabled
 }) => (
-  <div onClick={!isActive ? onClick : undefined} className={styles.component}>
+  <div
+    onClick={!isDisabled && !isActive ? onClick : undefined}
+    className={cn(styles.component, {[styles['component--disabled']]: isDisabled})}
+  >
     { isDone && (
       <div className={styles.iconWrapper}>
         <img className={styles.isDone} src={tickImg} />

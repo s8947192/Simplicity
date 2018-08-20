@@ -1,131 +1,128 @@
 import React, { Component } from 'react'
-import { List, Map } from 'immutable'
+import cn from 'classnames'
 
 import TitleDevider from 'universal/common/components/TitleDevider'
+import TailSpinDotted from 'universal/common/components/Preloaders/TailSpinDotted'
 import Button from 'universal/common/components/Button'
-
-import InfoCard from './InfoCard'
-import DurationOption from './DurationOption'
+import SubscriptionCard from './SubscriptionCard'
+import DurationCard from './DurationCard'
 import TotalPrice from './TotalPrice'
 
-import subscriptionImg from 'universal/assets/icons/registration/subscription.svg'
-import stopwatchImg from 'universal/assets/icons/common/stopwatch.svg'
-import bargainImg from 'universal/assets/icons/common/bargain.svg'
+import stopWatchImg from 'universal/assets/icons/common/stopwatch.svg'
 
 import styles from './subscription.scss'
 
-import TailSpin from 'universal/common/components/Preloaders/TailSpin'
-
-export default class Subscription extends Component {
-
+export default class Subscriptions extends Component {
+  componentWillMount() {
+    const { requestSubscriptions } = this.props
+    requestSubscriptions()
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      activeSubscriptionId: nextProps.selectedSubscriptionId,
+      activePlanId: nextProps.selectedSubscriptionPlanId,
+      selectedSubscriptionPlans: nextProps.selectedSubscriptionPlans
+    })
+  }
   constructor(props) {
     super(props)
     this.state = {
-      activeSubscription: props.activeSubscription || new Map(),
-      subscriptionDuration: props.subscriptionDuration
+      activeSubscriptionId: props.selectedSubscriptionId,
+      activePlanId: props.selectedSubscriptionPlanId,
+      selectedSubscriptionPlans: props.selectedSubscriptionPlans
     }
   }
 
-  componentWillMount() {
-    const { subscriptions, requestSubscriptions } = this.props
-    if (!subscriptions.size) {
-      requestSubscriptions()
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const {
-      activeSubscription,
-      subscriptionDuration
-    } = nextProps
+  setActiveSubscriptionPlanId = id => this.setState({ activePlanId: id })
+  changeSubscription = subscription => {
+    const defaultPlan = subscription.get('name') === 'free'
+      ? subscription.getIn(['plans', 0])
+      : subscription.get('plans').find(plan => plan.get('nickname') === 'monthly')
     this.setState({
-      activeSubscription,
-      subscriptionDuration
+      activeSubscriptionId: subscription.get('id'),
+      activePlanId: defaultPlan.get('id'),
+      selectedSubscriptionPlans: subscription.get('plans')
     })
   }
 
-  saveSubscriptionData = () => {
-    const { activeSubscription, subscriptionDuration } = this.state
-    const activeSubscriptionId = activeSubscription.get('id')
-    this.props.saveSubscriptionData({ activeSubscriptionId, subscriptionDuration })
-  }
-
   render() {
-
     const {
-      subscriptions,
-      selectSubscriptionDuration,
-      isStepCompleted
+      subscriptions
     } = this.props
-
     const {
-      activeSubscription,
-      subscriptionDuration
+      activeSubscriptionId,
+      activePlanId,
+      selectedSubscriptionPlans
     } = this.state
-
-    if (!subscriptions.size) {
+    if (!subscriptions.size || !selectedSubscriptionPlans) {
       return (
-        <div className={styles.preloader}>
-          <TailSpin size={50} />
-          <div className={styles.preloader__desc}>loading subscriptions...</div>
+        <div className={styles.loader}>
+          <TailSpinDotted />
         </div>
       )
     }
+    const activeSubscription = subscriptions.find(subscription => subscription.get('id') === activeSubscriptionId)
+    const activePlan = activeSubscription.get('plans').find(plan => plan.get('id') === activePlanId)
     return (
-      <div className={styles.component}>
-        <TitleDevider img={subscriptionImg} text='Select subscription plan' />
+      <div className={styles.wrapper}>
+        <TitleDevider img={stopWatchImg} text='select subscription' />
         <div className={styles.subscriptions}>
           {
-            activeSubscription && subscriptions.toList().map((subscription, index) =>
-              <InfoCard key={index}
-                isActive={activeSubscription.get('id') === subscription.get('id')}
-                onClick={() => this.setState({ activeSubscription: subscription})}
-                title={subscription.get('title')}
-                value={subscription.get('price')}
-              />
-            )
+            subscriptions.valueSeq().map((subscription, index) => {
+              const monthlyPlan = subscription.get('plans').find(plan => plan.get('nickname') === 'monthly')
+              return (
+                <SubscriptionCard
+                  key={index}
+                  title={subscription.get('name')}
+                  desc={`${subscription.getIn(['metadata', 'clients'])} clients`}
+                  price={monthlyPlan.get('amount') / 100}
+                  isActive={activeSubscriptionId === subscription.get('id')}
+                  onClick={() => this.changeSubscription(subscription)}
+                />
+              )
+            })
           }
         </div>
         {
-          activeSubscription && activeSubscription.get('title') !== 'free' && (
-            <div>
-              <TitleDevider img={stopwatchImg} text='Select subscription duration' />
-              <div className={styles.durationOptions}>
-                <DurationOption
-                  text='1 month'
-                  textAfter='0%'
-                  textAfterLabel='save'
-                  isActive={subscriptionDuration === 1}
-                  onClick={() => this.setState({ subscriptionDuration: 1 })}
-                />
-                <DurationOption
-                  text='3 month'
-                  textAfter='10%'
-                  textAfterLabel='save'
-                  isActive={subscriptionDuration === 3}
-                  onClick={() => this.setState({ subscriptionDuration: 3 })}
-                />
-                <DurationOption
-                  text='6 month'
-                  textAfter='20%'
-                  textAfterLabel='save'
-                  isActive={subscriptionDuration === 6}
-                  onClick={() => this.setState({ subscriptionDuration: 6 })}
-                />
-              </div>
-              <TitleDevider img={bargainImg} text='Billing info' />
+          activeSubscription.get('name') !== 'free' && (
+            <div className={styles.durations}>
+              <TitleDevider img={stopWatchImg} text='select subscription plan' />
+              {
+                selectedSubscriptionPlans.valueSeq().map((plan, index) => {
+                  const discount = plan.getIn(['metadata', 'discount'])
+                  const interval = plan.get('interval') === 'year' ? 12 : 1
+                  const nickname = plan.get('nickname')
+                  const price = plan.get('amount') / 100 / plan.get('interval_count') / interval
+                  const discountedPrice = price - price * discount
+                  const desc = ['monthly', 'yearly'].some(field => nickname === field)
+                    ? 'automatic billing'
+                    : 'stops when expired'
+
+                  return (
+                    <DurationCard
+                      key={index}
+                      title={plan.get('nickname')}
+                      desc={desc}
+                      price={discountedPrice}
+                      discount={discount}
+                      isActive={activePlanId === plan.get('id')}
+                      onClick={() => this.setActiveSubscriptionPlanId(plan.get('id'))}
+                    />
+                  )
+                })
+              }
+              <TitleDevider img={stopWatchImg} text='billing info' />
               <TotalPrice
-                originalPrice={activeSubscription.get('price')}
-                duration={subscriptionDuration}
+                originalPrice={activePlan.get('amount') / 100}
+                discount={activePlan.getIn(['metadata', 'discount'])}
               />
             </div>
           )
         }
         <div className={styles.buttonWrapper}>
           <Button
-            disabled={!activeSubscription}
-            onClick={this.saveSubscriptionData}
-            value={isStepCompleted ? 'update' : 'complete'}
+            onClick={() => console.log('OK')}
+            value={'complete'}
           />
         </div>
       </div>

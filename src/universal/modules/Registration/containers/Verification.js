@@ -2,6 +2,8 @@ import { connect } from 'react-redux'
 
 import Verification from '../components/Steps/Verification'
 
+import { actions } from '../actions'
+
 import {
   getFirstName,
   getLastName,
@@ -33,7 +35,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  // requestSubscriptions: () => dispatch(entitiesActions.requestSubscriptions.start())
+  verificateAndRegistrate: () => dispatch(actions.verificateAndRegistrate.start())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Verification)

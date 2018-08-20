@@ -1,0 +1,71 @@
+.duration {
+  display: flex;
+  flex: 1;
+  margin: 2px 0;
+  height: 32px;
+  padding: 4px;
+  border-radius: 4px;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  cursor: pointer;
+  &--active {
+    background-color: #f1f1f1;
+  }
+}
+
+.selected {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  opacity: 0.3;
+  left: 24px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  color: #303336;
+  margin-left: 60px;
+  &__title {
+    font-size: 13px;
+    font-weight: 500;
+  }
+  &__billing {
+    font-size: 11px;
+  }
+}
+
+.price {
+  margin-right: 120px;
+  color: #303336;
+  display: flex;
+  align-items: center;
+  &__sign {
+    padding-bottom: 10px;
+    margin-right: 2px;
+    font-size: 13px;
+  }
+  &__value {
+    font-size: 20px;
+  }
+  &__duration {
+    font-size: 11px;
+    padding-top: 7px;
+  }
+}
+
+.discount {
+  position: absolute;
+  right: 20px;
+  font-size: 9px;
+  font-weight: 500;
+  background-color: #f8ecbe;
+  padding: 5px 12px;
+  border-radius: 20px;
+  color: #4f555a;
+  text-transform: uppercase;
+  &--active {
+    background: none;
+  }
+}

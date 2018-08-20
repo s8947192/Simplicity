@@ -3,26 +3,31 @@ import { connect } from 'react-redux'
 import Subscription from '../components/Steps/Subscription'
 
 import { actions as entitiesActions } from 'universal/common/actions/entities'
-import { getSubscriptions } from 'universal/common/selectors/entities'
+import {
+  getOrderedSubscriptions,
+  getCurrentSubscriptionPlans
+} from 'universal/common/selectors/entities'
 
 import { actions } from '../actions'
 import {
-  getActiveSubscriptionId,
-  getActiveSubscription,
-  getSubscriptionDuration,
-  isStepCompleted
+  getSelectedSubscriptionId,
+  getSelectedSubscriptionPlanId,
+  getIsSelectedSubscriptionFree
 } from '../selectors'
 
+
 const mapStateToProps = state => ({
-  isStepCompleted: isStepCompleted(state, 1),
-  subscriptions: getSubscriptions(state),
-  activeSubscription: getActiveSubscription(state),
-  subscriptionDuration: getSubscriptionDuration(state)
+  subscriptions: getOrderedSubscriptions(state),
+  selectedSubscriptionId: getSelectedSubscriptionId(state),
+  selectedSubscriptionPlanId: getSelectedSubscriptionPlanId(state),
+  isSelectedSubscriptionFree: getIsSelectedSubscriptionFree(state),
+  selectedSubscriptionPlans: getCurrentSubscriptionPlans(state, getSelectedSubscriptionId(state))
 })
 
 const mapDispatchToProps = dispatch => ({
   requestSubscriptions: () => dispatch(entitiesActions.requestSubscriptions.start()),
-  saveSubscriptionData: data => dispatch(actions.saveSubscriptionData.start(data))
+  saveSubscriptionData: data => dispatch(actions.saveSubscriptionData.start(data)),
+  setActiveSubscriptionPlanId: id => dispatch(actions.setActiveSubscriptionPlanId(id))
 })
 
 

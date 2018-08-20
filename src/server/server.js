@@ -1,52 +1,59 @@
-import http    from 'http';
-import express from 'express';
-import colors  from 'colors';
-import path    from 'path';
+import https from 'https'
+import fs from 'fs'
+import express from 'express'
+import colors from 'colors'
+import path from 'path'
 
 // Server Side Rendering
 import {
   renderPage,
   renderDevPage
-} from './ssr.js';
+} from './ssr.js'
 
-const PROD = process.env.NODE_ENV === 'production';
+const certOptions = {
+  key: fs.readFileSync(path.resolve('src/server/ssl/localhost.key')),
+  cert: fs.readFileSync(path.resolve('src/server/ssl/localhost.crt')),
+  passphrase: '1234'
+}
 
-const app = express();
+const PROD = process.env.NODE_ENV === 'production'
+
+const app = express()
 
 if (PROD) {
-  app.use('/static', express.static('build'));
-  app.get('*', renderPage);
+  app.use('/static', express.static('build'))
+  app.get('*', renderPage)
 } else {
-  const HMR = require('./hmr.js');
+  const HMR = require('./hmr.js')
   // Hot Module Reloading
-  HMR(app);
-  app.get('*', renderDevPage);
+  HMR(app)
+  app.get('*', renderDevPage)
 }
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+  var err = new Error('Not Found')
+  err.status = 404
+  next(err)
+})
 
 // development error handler
 if (!PROD) {
   app.use(function(err, req, res, next) {
     console.error('error : ', err)
-    res.status(err.status || 500);
-  });
+    res.status(err.status || 500)
+  })
 }
 
 // production error handler
 app.use(function(err, req, res, next) {
   console.error('error : ', err.message)
-  res.status(err.status || 500);
-});
+  res.status(err.status || 500)
+})
 
-const server = http.createServer(app);
+const server = https.createServer(certOptions, app)
 
 server.listen(8080, function() {
-   const address = server.address();
-   console.log(`${'App listening on:'.gray} ${'localhost:'.magenta}${`${address.port}`.green}`);
- });
+   const address = server.address()
+   console.log(`${'App listening on:'.gray} ${'localhost:'.magenta}${`${address.port}`.green}`)
+ })

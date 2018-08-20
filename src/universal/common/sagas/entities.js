@@ -4,12 +4,18 @@ import { push } from 'react-router-redux'
 
 import * as schemas from 'universal/schemas'
 
-import { requestSubscriptions } from 'universal/api/subscriptions'
+import {
+  requestProducts,
+  requestPlans
+} from 'universal/api/stripe'
+
 import { types, actions } from '../actions/entities'
 
 function* requestSubscriptionsSaga() {
   try {
-    const { data: subscriptions } = yield call(requestSubscriptions)
+    const { data: { products } } = yield call(requestProducts)
+    const { data: { plans } } = yield call(requestPlans)
+    const subscriptions = products.reduce((c, n) => (c.push({ ...n, plans: plans.filter(p => p.product === n.id) }), c), [])
     const norm = yield call(normalize, subscriptions, [schemas.subscription])
     yield put(actions.requestSubscriptions.success(norm))
   } catch (err) {

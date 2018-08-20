@@ -50,13 +50,17 @@ const Navigation = ({
       isActive={activeStep === 1}
       onClick={() => setActiveStep(1)}
     />
-    <NavEl
-      text='Main Settings'
-      img={mainSettingsImg}
-      isDone={completedSteps.has(2)}
-      isActive={activeStep === 2}
-      onClick={() => setActiveStep(2)}
-    />
+    {
+      /*
+      <NavEl
+        text='Main Settings'
+        img={mainSettingsImg}
+        isDone={completedSteps.has(2)}
+        isActive={activeStep === 2}
+        onClick={() => setActiveStep(2)}
+      />
+      */
+    }
     <ReactTransitionGroup>
       {
         isPaymentMethodAvailable && (
@@ -71,18 +75,23 @@ const Navigation = ({
         )
       }
     </ReactTransitionGroup>
-    <NavEl
-      text='Verification'
-      img={verificationImg}
-      isDone={completedSteps.has(4)}
-      isActive={activeStep === 4}
-      onClick={() => setActiveStep(4)}
-    />
+    {
+      /*
+      <NavEl
+        text='Verification'
+        img={verificationImg}
+        isDone={completedSteps.has(4)}
+        isActive={activeStep === 4}
+        onClick={() => setActiveStep(4)}
+      />
+      */
+    }
     <NavEl
       text='Done'
       img={doneImg}
       isDone={completedSteps.has(5)}
       isActive={activeStep === 5}
+      isDisabled={!completedSteps.has(4)}
       onClick={() => setActiveStep(5)}
     />
   </div>

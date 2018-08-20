@@ -43,9 +43,9 @@ class Html extends Component {
           <meta charSet="utf-8"/>
           <title>{title}</title>
           {PROD && <link rel="stylesheet" href="/static/prerender.css" type="text/css" />}
+          <script id="stripe-js" src="https://js.stripe.com/v3/" async></script>
         </head>
         <body>
-          <script src="https://js.stripe.com/v3/"></script>
           <script dangerouslySetInnerHTML={{__html: initialState}} />
           {PROD ? <div id="root" dangerouslySetInnerHTML={{__html: root}}></div> : <div id="root"></div>}
           {PROD && <script dangerouslySetInnerHTML={{__html: manifest.text}}/>}

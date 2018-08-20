@@ -54,19 +54,12 @@ const Verification = ({
   systemCurrency,
   paymentMethod,
   savePaymentMethod,
-  completedSteps
+  completedSteps,
+  verificateAndRegistrate
 }) => {
   const prices = definePrices(subscription, subscriptionDuration)
   return (
     <form>
-      {
-        /*
-        { console.log(paymentMethod) }
-        { console.log(savePaymentMethod) }
-        { console.log(completedSteps) }
-        */
-      }
-      { console.log(paymentMethod && paymentMethod.getIn(['card', 'brand'])) }
       <Confirm isOpen={false}
         onClose={() => console.log('CLOSE')}
         onConfirm={() => console.log('CONFIRM')}
@@ -144,7 +137,7 @@ const Verification = ({
         </div>
       </div>
       <div className={styles.buttonWrapper}>
-        <Button value='complete' />
+        <Button value='complete' onClick={verificateAndRegistrate} />
       </div>
     </form>
   )

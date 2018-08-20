@@ -15,11 +15,22 @@ export const getPassword = state => state.getIn(['registration', 'password'])
 export const getCompletedSteps = state => state.getIn(['registration', 'completedSteps'])
 export const getActiveStep = state => state.getIn(['registration', 'activeStep'])
 
-export const getActiveSubscriptionId = state => state.getIn(['registration', 'activeSubscriptionId'])
+export const getSelectedSubscriptionId = state => state.getIn(['registration', 'activeSubscriptionId'])
+export const getSelectedSubscriptionPlanId = state => state.getIn(['registration', 'activeSubscriptionDurationId'])
+export const getActiveSubscriptionId = state => state.getIn(['registration', 'activeSubscriptionId']) // TODO remove
 export const getSubscriptionDuration = state => state.getIn(['registration', 'subscriptionDuration'])
 
-export const getSelectedLanguageId = state => state.getIn(['registration', 'systemLanguage'])
-export const getSelectedCurrencyId = state => state.getIn(['registration', 'systemCurrency'])
+export const getSelectedLanguageId = state => state.getIn(['registration', 'systemLanguage']) // TODO remove
+export const getSelectedCurrencyId = state => state.getIn(['registration', 'systemCurrency']) // TODO remove
+
+export const getIsSelectedSubscriptionFree = createSelector(
+  [getSelectedSubscriptionId, getSubscriptions],
+  (id, subscriptions) => {
+    if (!id || !subscriptions) return
+    const subscription = subscriptions.find(subscription => subscription.get('id') === id)
+    return subscription.get('name') === 'free'
+  }
+)
 
 export const getLanguage = createSelector(
   [getLanguages, getSelectedLanguageId],
@@ -27,7 +38,7 @@ export const getLanguage = createSelector(
     if (!languages || !id) return
     return languages.get(id)
   }
-)
+) // TODO remove
 
 export const getCurrency = createSelector(
   [getCurrencies, getSelectedCurrencyId],
@@ -35,7 +46,13 @@ export const getCurrency = createSelector(
     if (!currencies || !id) return
     return currencies.get(id)
   }
-)
+) // TODO remove
+
+
+
+
+
+
 
 export const getIsStripeTokenPending = state => state.getIn(['registration', 'isStripeTokenPending'])
 

@@ -7,7 +7,6 @@ import App from 'universal/layouts/App'
 
 export default class Routes extends Component {
   render () {
-    const { location } = this.props
     return (
       <App>
         <Switch>

@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Elements } from 'react-stripe-elements'
+
+import StripeAsyncProvider from 'universal/common/components/HOC/StripeAsyncProvider'
 
 import { actions } from '../actions'
 import { getIsStripeTokenPending } from '../selectors'
 
 import PaymentMethod from '../components/Steps/PaymentMethod'
 
-export class PaymentMethodContainer extends Component {
+class PaymentMethodContainer extends Component {
   render () {
     return (
-      <Elements>
+      <StripeAsyncProvider>
         <PaymentMethod {...this.props} />
-      </Elements>
+      </StripeAsyncProvider>
     )
   }
 }

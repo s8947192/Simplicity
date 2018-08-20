@@ -16,7 +16,7 @@
 .leftBar {
   display: flex;
   flex-direction: column;
-  width: 236px;
+  width: 200px;
   margin: 20px;
 }
 
@@ -25,7 +25,7 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  width: 387px;
+  width: 395px;
 }
 
 .title {
@@ -37,5 +37,5 @@
 .description {
   font-size: 11px;
   color: #8e9096;
-  margin: 10px 0;
+  padding: 7px 0 5px 0;
 }

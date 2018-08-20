@@ -6,10 +6,7 @@ import ValueCard from './ValueCard'
 
 import styles from './totalPrice.scss'
 
-const discountMap = Map({ 1: 0, 3: 0.1, 6: 0.2 })
-
-const TotalPrice = ({ originalPrice, duration }) => {
-  const discount = discountMap.get(duration.toString())
+const TotalPrice = ({ originalPrice, discount }) => {
   const price = parseFloat(originalPrice, 10)
   const totalSave = price * discount
   const totalBilled = (price - totalSave)
@@ -18,21 +15,21 @@ const TotalPrice = ({ originalPrice, duration }) => {
       <div className={styles.card}>
         <div>original price</div>
         <div className={styles.value}>
-          <ValueCard value={price * duration} label='$' />
+          <ValueCard value={price} label='$' />
         </div>
       </div>
       <div className={styles.devider} />
       <div className={styles.card}>
         <div>you save</div>
         <div className={cn(styles.value, styles['value--green'])}>
-          <ValueCard value={totalSave * duration} label='$' />
+          <ValueCard value={totalSave} label='$' />
         </div>
       </div>
       <div className={styles.devider} />
       <div className={styles.card}>
         <div>total billed</div>
         <div className={cn(styles.value, styles['value--green'])}>
-          <ValueCard value={totalBilled * duration} label='$' />
+          <ValueCard value={totalBilled} label='$' />
         </div>
       </div>
     </div>

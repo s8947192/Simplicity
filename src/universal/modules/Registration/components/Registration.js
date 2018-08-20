@@ -19,7 +19,6 @@ import styles from './registration.scss'
 const steps = List([
   Map({ title: 'Account', desc: 'Add your account info, so you can use this data to log in later', component: <Account /> }),
   Map({ title: 'Subscription', desc: 'Choose your subscription to be able to use certain functionality', component: <Subscription /> }),
-  Map({ title: 'Main Settings', desc: 'Choose your main settings, so we can configure your account properly', component: <MainSettings /> }),
   Map({ title: 'Payment Method', desc: 'Add your payment method, so we can charge you later', component: <PaymentMethod /> }),
   Map({ title: 'Verification', desc: 'After you successfully complete this step, you account will be created', component: <Verification /> }),
   Map({ title: 'Done', desc: 'You have successfully been registered', component: <Done /> })
