@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import cn from 'classnames'
 
-import TitleDevider from 'universal/common/components/TitleDevider'
 import TailSpinDotted from 'universal/common/components/Preloaders/TailSpinDotted'
 import Button from 'universal/common/components/Button'
 import SubscriptionCard from './SubscriptionCard'
@@ -14,8 +13,10 @@ import styles from './subscription.scss'
 
 export default class Subscriptions extends Component {
   componentWillMount() {
-    const { requestSubscriptions } = this.props
-    requestSubscriptions()
+    const { subscriptions, requestSubscriptions } = this.props
+    if (!subscriptions.size) {
+      requestSubscriptions()
+    }
   }
   componentWillReceiveProps(nextProps) {
     this.setState({
@@ -34,6 +35,11 @@ export default class Subscriptions extends Component {
   }
 
   setActiveSubscriptionPlanId = id => this.setState({ activePlanId: id })
+  saveSubscriptionData = () => {
+    const { activeSubscriptionId, activePlanId } = this.state
+    const { saveSubscriptionData } = this.props
+    saveSubscriptionData({ activeSubscriptionId, activePlanId })
+  }
   changeSubscription = subscription => {
     const defaultPlan = subscription.get('name') === 'free'
       ? subscription.getIn(['plans', 0])
@@ -47,7 +53,8 @@ export default class Subscriptions extends Component {
 
   render() {
     const {
-      subscriptions
+      subscriptions,
+      isStepCompleted
     } = this.props
     const {
       activeSubscriptionId,
@@ -65,7 +72,6 @@ export default class Subscriptions extends Component {
     const activePlan = activeSubscription.get('plans').find(plan => plan.get('id') === activePlanId)
     return (
       <div className={styles.wrapper}>
-        <TitleDevider img={stopWatchImg} text='select subscription' />
         <div className={styles.subscriptions}>
           {
             subscriptions.valueSeq().map((subscription, index) => {
@@ -86,7 +92,6 @@ export default class Subscriptions extends Component {
         {
           activeSubscription.get('name') !== 'free' && (
             <div className={styles.durations}>
-              <TitleDevider img={stopWatchImg} text='select subscription plan' />
               {
                 selectedSubscriptionPlans.valueSeq().map((plan, index) => {
                   const discount = plan.getIn(['metadata', 'discount'])
@@ -111,7 +116,6 @@ export default class Subscriptions extends Component {
                   )
                 })
               }
-              <TitleDevider img={stopWatchImg} text='billing info' />
               <TotalPrice
                 originalPrice={activePlan.get('amount') / 100}
                 discount={activePlan.getIn(['metadata', 'discount'])}
@@ -121,8 +125,8 @@ export default class Subscriptions extends Component {
         }
         <div className={styles.buttonWrapper}>
           <Button
-            onClick={() => console.log('OK')}
-            value={'complete'}
+            onClick={this.saveSubscriptionData}
+            value={isStepCompleted ? 'update' : 'complete'}
           />
         </div>
       </div>

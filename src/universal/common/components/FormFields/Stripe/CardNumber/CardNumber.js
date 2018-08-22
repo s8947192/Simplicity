@@ -12,7 +12,7 @@ const CardNumber = ({
   <CardNumberElement
     style={{ base: { fontSize: '12px' } }}
     placeholder={placeholder}
-    onChange={onChange}
+    onChange={data => onChange(data)}
   />
 )
 

@@ -1,6 +1,7 @@
 .wrapper {
   display: flex;
   background-color: #f8f8f8;
+  background-color: rgba(255, 255, 255, 0.91);
   border-radius: 0 0 4px 4px;
   transition: flex 0.5s;
 }
@@ -16,8 +17,11 @@
 .leftBar {
   display: flex;
   flex-direction: column;
-  width: 200px;
-  margin: 20px;
+  width: 230px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 0 0 0 4px;
+  border-right: 1px solid #ececec;
 }
 
 .rightBar {

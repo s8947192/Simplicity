@@ -10,7 +10,6 @@ const AuthLayout = ({ children }) => (
         <NavLink to='/login' className={styles.nav__el} activeClassName={styles['nav__el--active']}>sign in</NavLink>
         <NavLink to='/registration' className={styles.nav__el} activeClassName={styles['nav__el--active']}>sign up</NavLink>
       </div>
-      <div className={styles.devider} />
       { children }
     </div>
   </div>

@@ -1,41 +1,28 @@
 import { connect } from 'react-redux'
+import { formValueSelector } from 'redux-form/immutable'
 
 import Verification from '../components/Steps/Verification'
 
 import { actions } from '../actions'
-
 import {
-  getFirstName,
-  getLastName,
-  getNickName,
-  getEmail,
-  getPassword,
-  getActiveSubscription,
-  getSubscriptionDuration,
-  getLanguage,
-  getCurrency,
-  getPaymentMethod,
-  getIsSavePaymentMethod,
-  getCompletedSteps
+  isStepCompleted,
+  getIsPaymentMethodAvailable
 } from '../selectors'
 
-const mapStateToProps = state => ({
-  firstName: getFirstName(state),
-  lastName: getLastName(state),
-  nickName: getNickName(state),
-  email: getEmail(state),
-  password: getPassword(state),
-  subscription: getActiveSubscription(state),
-  subscriptionDuration: getSubscriptionDuration(state),
-  systemLanguage: getLanguage(state),
-  systemCurrency: getCurrency(state),
-  paymentMethod: getPaymentMethod(state),
-  savePaymentMethod: getIsSavePaymentMethod(state),
-  completedSteps: getCompletedSteps(state)
-})
+
+const mapStateToProps = state => {
+  const selector = formValueSelector('verification')
+  return ({
+    isAgreedWithTerms: selector(state, 'termsAndPolices'),
+    isStep0Completed: isStepCompleted(state, 0),
+    isStep1Completed: isStepCompleted(state, 1),
+    isStep2Completed: isStepCompleted(state, 2),
+    isPaymentMethodAvailable: getIsPaymentMethodAvailable(state),
+  })
+}
 
 const mapDispatchToProps = dispatch => ({
-  verificateAndRegistrate: () => dispatch(actions.verificateAndRegistrate.start())
+  registrate: () => dispatch(actions.registrate.start())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Verification)

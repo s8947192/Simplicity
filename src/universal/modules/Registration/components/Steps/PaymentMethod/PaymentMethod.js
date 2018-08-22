@@ -21,60 +21,57 @@ const onSubmit = ({ stripe, ...props }) => values => {
 const PaymentMethod = ({
   handleSubmit,
   isStripeTokenPending,
+  isCVCValid,
+  isExpirityValid,
+  isCardValid,
+  invalid,
   ...props
-}) => (
-  <div>
-    <TitleDevider
-      img={creditCardImg}
-      text='Available payment methods'
-    />
-    <AvailableMethods />
-    <form id='stripe-payment-form' onSubmit={handleSubmit(onSubmit(props))}>
-      <div className={styles.formWrapper}>
-        <Field
-          name='cardNumber'
-          label='Card Number'
-          component={CardNumber}
-        />
-        <Field
-          name='nameOnCard'
-          label='Name on card'
-          placeholder='Enter name on your card...'
-          component={Input}
-          validate={[
-            requiredCheck,
-            nameCheck
-          ]}
-        />
-        <div className={styles.fieldsWrapper}>
+}) => {
+  const isFormValid = isCVCValid && isExpirityValid && isCardValid && !invalid
+  return (
+    <div className={styles.container}>
+      <form id='stripe-payment-form'>
+        <div className={styles.formWrapper}>
           <Field
-            name='cvc'
-            label='CVC'
-            component={CardCVC}
-            className={styles.fieldWrapper}
+            name='cardNumber'
+            label='Card Number'
+            component={CardNumber}
+            validate={[
+              requiredCheck
+            ]}
           />
           <Field
-            name='expirity'
-            label='Expirity'
-            component={CardExpiry}
-            className={styles.fieldWrapper}
+            name='nameOnCard'
+            label='Name on card'
+            placeholder='Enter name on your card...'
+            component={Input}
+            validate={[
+              requiredCheck,
+              nameCheck
+            ]}
           />
+          <div className={styles.fieldsWrapper}>
+            <Field
+              name='cvc'
+              label='CVC'
+              component={CardCVC}
+              className={styles.fieldWrapper}
+            />
+            <Field
+              name='expirity'
+              label='Expirity'
+              component={CardExpiry}
+              className={styles.fieldWrapper}
+            />
+          </div>
+          <div className={styles.buttonWrapper}>
+            <Button disabled={!isFormValid} onClick={handleSubmit(onSubmit(props))} value='complete' />
+          </div>
         </div>
-        <div className={styles.rememberCard}>
-          <Field
-            name='rememberCard'
-            className={styles.inputWrapper}
-            component={Checkbox}
-          />
-          <div className={styles.rememberCard__text}>Do you want to remember this card?</div>
-        </div>
-        <div className={styles.buttonWrapper}>
-          <Button disabled={props.invalid || isStripeTokenPending} onClick={handleSubmit(onSubmit(props))} value='complete' />
-        </div>
-      </div>
-    </form>
-  </div>
-)
+      </form>
+    </div>
+  )
+}
 
 export default reduxForm({
   form: 'paymentMethod'

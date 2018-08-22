@@ -5,10 +5,11 @@ import { fromJS } from 'immutable'
 
 import * as schemas from 'universal/schemas'
 
-import { getSubscriptions } from 'universal/common/selectors/entities'
 import { types as entitiesTypes } from 'universal/common/actions/entities'
+import { getSubscriptions } from 'universal/common/selectors/entities'
 
 import { types, actions } from '../actions'
+import { getIsSelectedSubscriptionFree } from '../selectors'
 
 function* saveAccountDataSaga({ payload }) {
   yield put(batchActions([
@@ -29,28 +30,26 @@ function* setDefaultSubscriptionSaga({ payload }) {
 }
 
 function* saveSubscriptionDataSaga({ payload }) {
-  const { activeSubscriptionId, subscriptionDuration } = payload
+  const { activeSubscriptionId, activePlanId } = payload
   if (!activeSubscriptionId) return
+  const isSubscriptionFree = yield select(getIsSelectedSubscriptionFree, activeSubscriptionId)
+  const nextStep = isSubscriptionFree ? 3 : 2
   yield put(batchActions([
     actions.updateCompletedSteps(1),
-    actions.setActiveStep(2),
+    actions.setActiveStep(nextStep),
     actions.saveSubscriptionData.success(payload)
   ]))
 }
 
 function* savePaymentDataSaga({ payload }) {
-  yield put(actions.toggleStripeTokenPending(true))
   const cardData = { name: payload.values.get('nameOnCard') }
   const shouldRememberCard = payload.values.get('rememberCard') || false
   try {
     const paymentMethod = yield call(payload.stripe.createToken, cardData)
-    console.log(fromJS(paymentMethod))
     yield put(batchActions([
-      actions.updateCompletedSteps(3),
-      actions.setActiveStep(4),
-      actions.savePaymentData.success(fromJS(paymentMethod)),
-      actions.toggleStripeTokenPending(false),
-      actions.shouldRememberPaymentMethod(shouldRememberCard)
+      actions.updateCompletedSteps(2),
+      actions.setActiveStep(3),
+      actions.savePaymentData.success(fromJS(paymentMethod))
     ]))
   } catch (err) {
     console.log(err)

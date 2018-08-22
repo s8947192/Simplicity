@@ -16,19 +16,30 @@ export const getCompletedSteps = state => state.getIn(['registration', 'complete
 export const getActiveStep = state => state.getIn(['registration', 'activeStep'])
 
 export const getSelectedSubscriptionId = state => state.getIn(['registration', 'activeSubscriptionId'])
-export const getSelectedSubscriptionPlanId = state => state.getIn(['registration', 'activeSubscriptionDurationId'])
+export const getSelectedSubscriptionPlanId = state => state.getIn(['registration', 'activeSubscriptionPlanId'])
 export const getActiveSubscriptionId = state => state.getIn(['registration', 'activeSubscriptionId']) // TODO remove
 export const getSubscriptionDuration = state => state.getIn(['registration', 'subscriptionDuration'])
 
 export const getSelectedLanguageId = state => state.getIn(['registration', 'systemLanguage']) // TODO remove
 export const getSelectedCurrencyId = state => state.getIn(['registration', 'systemCurrency']) // TODO remove
 
+export const getIsAgreedWithTermsAndPolices = state => state.getIn(['registration', 'agreedWithTermsAndPolices'])
+
 export const getIsSelectedSubscriptionFree = createSelector(
-  [getSelectedSubscriptionId, getSubscriptions],
-  (id, subscriptions) => {
+  [getSubscriptions, ((_, subscriptionId) => subscriptionId)],
+  (subscriptions, id) => {
     if (!id || !subscriptions) return
     const subscription = subscriptions.find(subscription => subscription.get('id') === id)
     return subscription.get('name') === 'free'
+  }
+)
+
+export const getIsPaymentMethodAvailable = createSelector(
+  [getSubscriptions, getSelectedSubscriptionId],
+  (subscriptions, id) => {
+    if (!id || !subscriptions) return
+    const subscription = subscriptions.find(subscription => subscription.get('id') === id)
+    return subscription.get('name') !== 'free'
   }
 )
 
@@ -64,15 +75,6 @@ export const getActiveSubscription = createSelector(
   (subscriptions, id) => {
     if (!subscriptions.size || !id) return
     return subscriptions.find(subscription => subscription.get('id') === id)
-  }
-)
-
-export const getIsPaymentMethodAvailable = createSelector(
-  [getActiveSubscription],
-  (subscription, fields) => {
-    if (!subscription) return false
-    if (subscription.get('title') === 'free') return false
-    return true
   }
 )
 

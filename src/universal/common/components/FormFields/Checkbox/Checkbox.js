@@ -8,7 +8,7 @@ const styles = {
   root: {
     color: '#969696',
     '&$checked': {
-      color: '#48bb7a',
+      color: '#53aaea',
     },
   },
   checked: {},

@@ -12,11 +12,13 @@ import { actions } from '../actions'
 import {
   getSelectedSubscriptionId,
   getSelectedSubscriptionPlanId,
-  getIsSelectedSubscriptionFree
+  getIsSelectedSubscriptionFree,
+  isStepCompleted
 } from '../selectors'
 
 
 const mapStateToProps = state => ({
+  isStepCompleted: isStepCompleted(state, 1),
   subscriptions: getOrderedSubscriptions(state),
   selectedSubscriptionId: getSelectedSubscriptionId(state),
   selectedSubscriptionPlanId: getSelectedSubscriptionPlanId(state),

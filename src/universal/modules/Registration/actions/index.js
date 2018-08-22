@@ -9,7 +9,8 @@ export const types = createTypes([
 
   ...async('SAVE_SUBSCRIPTION_DATA'),
   ...async('SAVE_ACCOUNT_DATA'),
-  ...async('SAVE_PAYMENT_DATA')
+  ...async('SAVE_PAYMENT_DATA'),
+  ...async('REGISTRATE')
 ], 'REGISTRATION')
 
 export const actions = {
@@ -20,5 +21,6 @@ export const actions = {
 
   saveSubscriptionData: createRequestAction(types.SAVE_SUBSCRIPTION_DATA),
   saveAccountData: createRequestAction(types.SAVE_ACCOUNT_DATA),
-  savePaymentData: createRequestAction(types.SAVE_PAYMENT_DATA)
+  savePaymentData: createRequestAction(types.SAVE_PAYMENT_DATA),
+  registrate: createRequestAction(types.REGISTRATE)
 }

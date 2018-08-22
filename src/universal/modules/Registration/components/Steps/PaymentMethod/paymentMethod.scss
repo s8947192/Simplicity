@@ -1,3 +1,10 @@
+.container {
+  margin-top: 10px;
+  justify-content: space-evenly;
+  animation-name: duration-appear;
+  animation-duration: 0.3s;
+}
+
 .formWrapper {
   display: flex;
   flex-direction: column;
@@ -64,4 +71,13 @@
   display: flex;
   margin-top: 20px;
   justify-content: flex-end;
+}
+
+@keyframes duration-appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
