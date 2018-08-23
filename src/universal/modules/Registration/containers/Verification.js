@@ -5,6 +5,8 @@ import Verification from '../components/Steps/Verification'
 
 import { actions } from '../actions'
 import {
+  getIsPending,
+  getRegistrationError,
   isStepCompleted,
   getIsPaymentMethodAvailable
 } from '../selectors'
@@ -13,6 +15,8 @@ import {
 const mapStateToProps = state => {
   const selector = formValueSelector('verification')
   return ({
+    isPending: getIsPending(state),
+    registrationError: getRegistrationError(state),
     isAgreedWithTerms: selector(state, 'termsAndPolices'),
     isStep0Completed: isStepCompleted(state, 0),
     isStep1Completed: isStepCompleted(state, 1),

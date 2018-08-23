@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
+import ReactModal from 'react-modal'
 import { Field, reduxForm } from 'redux-form/immutable'
 import { List, Map } from 'immutable'
 
+import TailSpinDotted from 'universal/common/components/Preloaders/TailSpinDotted'
 import TermsOfService from 'universal/modules/Site/TermsOfService'
 
 import Checkbox from 'universal/common/components/FormFields/Checkbox'
@@ -12,6 +14,43 @@ import cancelImg from 'universal/assets/icons/common/cancel.svg'
 import walletImg from 'universal/assets/icons/common/wallet.svg'
 
 import styles from './verification.scss'
+
+const inlineStyles = {
+  overlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.298)',
+    zIndex: 1000,
+    display: 'flex',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  content: {
+    top: 'none',
+    left: 'none',
+    right: 'none',
+    bottom: 'none',
+    position: 'absolute',
+    border: 0,
+    width: 200,
+    padding: 20,
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    overflow: 'none',
+    WebkitOverflowScrolling: 'touch',
+    borderRadius: '4px',
+    outline: 'none',
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  }
+}
 
 const message = `
   Hey, Peter! You are about to buy "Business" subscription for 6 month, which will cost $128 for you. Press "AGREE" button,
@@ -36,6 +75,11 @@ class Verification extends Component {
     }
   }
 
+  onPaymentConfirm = () => {
+    this.toggleModal('paymentModalOpen')
+    this.props.registrate()
+  }
+
   onRegisterClick = () => {
     if (this.props.isPaymentMethodAvailable) {
       return this.toggleModal('paymentModalOpen')
@@ -46,6 +90,8 @@ class Verification extends Component {
 
   render() {
     const {
+      isPending,
+      registrationError,
       isAgreedWithTerms,
       isStep0Completed,
       isStep1Completed,
@@ -60,9 +106,17 @@ class Verification extends Component {
     const allStepsCompleted = isStep0Completed && isStep1Completed && (isStep2Completed || !isPaymentMethodAvailable)
     return (
       <form className={styles.container}>
+        <ReactModal
+          style={inlineStyles}
+          isOpen={isPending}
+          ariaHideApp={false}
+        >
+          <TailSpinDotted />
+          <div className={styles.spinnerText}>registrating new user...</div>
+        </ReactModal>
         <Confirm isOpen={paymentModalOpen}
           onClose={() => this.toggleModal('paymentModalOpen')}
-          onConfirm={() => registrate()}
+          onConfirm={() => this.onPaymentConfirm()}
           title='Subscription Buying Confirmation'
           img={walletImg}
           message={message}
@@ -70,37 +124,45 @@ class Verification extends Component {
         <Confirm isOpen={termsModalOpen} width={900}
           onClose={() => this.toggleModal('termsModalOpen')}
           onConfirm={() => this.onTermsConfirm()}
-        >
-          <TermsOfService />
-        </Confirm>
+        ><TermsOfService /></Confirm>
         {
-          !allStepsCompleted && (
-            <div className={styles.errors}>
+          (!allStepsCompleted || registrationError) && (
+            <div>
               <div className={styles.errors__header}>verification errors:</div>
-              {
-                !isStep0Completed && (
-                  <div className={styles.errors__error}>
-                    <img className={styles.errors__img} src={cancelImg} />
-                    <span>Account step is not completed</span>
-                  </div>
-                )
-              }
-              {
-                !isStep1Completed && (
-                  <div className={styles.errors__error}>
-                    <img className={styles.errors__img} src={cancelImg} />
-                    <span>Subscription step is not completed</span>
-                  </div>
-                )
-              }
-              {
-                !isStep2Completed && isPaymentMethodAvailable && (
-                  <div className={styles.errors__error}>
-                    <img className={styles.errors__img} src={cancelImg} />
-                    <span>Payment Method step is not completed</span>
-                  </div>
-                )
-              }
+              <div className={styles.errors}>
+                {
+                  registrationError && (
+                    <div className={styles.errors__error}>
+                      <img className={styles.errors__img} src={cancelImg} />
+                      <span>{ registrationError }</span>
+                    </div>
+                  )
+                }
+                {
+                  !isStep0Completed && (
+                    <div className={styles.errors__error}>
+                      <img className={styles.errors__img} src={cancelImg} />
+                      <span>Account step is not completed</span>
+                    </div>
+                  )
+                }
+                {
+                  !isStep1Completed && (
+                    <div className={styles.errors__error}>
+                      <img className={styles.errors__img} src={cancelImg} />
+                      <span>Subscription step is not completed</span>
+                    </div>
+                  )
+                }
+                {
+                  !isStep2Completed && isPaymentMethodAvailable && (
+                    <div className={styles.errors__error}>
+                      <img className={styles.errors__img} src={cancelImg} />
+                      <span>Payment Method step is not completed</span>
+                    </div>
+                  )
+                }
+              </div>
             </div>
           )
         }

@@ -6,11 +6,15 @@ import {
   getCurrencies
 } from 'universal/common/selectors/entities'
 
+export const getRegistrationReducer = state => state.get('registration')
+
 export const getFirstName = state => state.getIn(['registration', 'firstName'])
+export const getIsPending = state => state.getIn(['registration', 'isPending'])
 export const getLastName = state => state.getIn(['registration', 'lastName'])
 export const getNickName = state => state.getIn(['registration', 'nickName'])
 export const getEmail = state => state.getIn(['registration', 'email'])
 export const getPassword = state => state.getIn(['registration', 'password'])
+export const getRegistrationError = state => state.getIn(['registration', 'registrationError'])
 
 export const getCompletedSteps = state => state.getIn(['registration', 'completedSteps'])
 export const getActiveStep = state => state.getIn(['registration', 'activeStep'])

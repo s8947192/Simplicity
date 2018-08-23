@@ -13,12 +13,24 @@ const initialState = fromJS({
   password: null,
   activeSubscriptionId: null,
   activeSubscriptionPlanId: null,
-  paymentMethod: null
+  paymentMethod: null,
+  isPending: false,
+  registrationError: null
 })
 
 export default typeToReducer({
   [types.UPDATE_COMPLETED_STEPS]: (state, { payload }) => state
     .updateIn(['completedSteps'], completedSteps => completedSteps.add(payload.completedStep)),
+
+  [types.REGISTRATE]: state => state
+    .set('isPending', true),
+
+  [types.REGISTRATE_SUCCESS]: state => state
+    .set('isPending', false),
+
+  [types.REGISTRATE_FAIL]: (state, { payload }) => state
+    .set('isPending', false)
+    .set('registrationError', payload),
 
   [types.SET_ACTIVE_STEP]: (state, { payload }) => state
     .set('activeStep', payload.activeStep),

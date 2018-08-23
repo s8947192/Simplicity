@@ -3,13 +3,18 @@ import { batchActions } from 'redux-batched-actions'
 import { normalize } from 'normalizr'
 import { fromJS } from 'immutable'
 
+import { createUser } from 'universal/api/auth'
+
 import * as schemas from 'universal/schemas'
 
 import { types as entitiesTypes } from 'universal/common/actions/entities'
 import { getSubscriptions } from 'universal/common/selectors/entities'
 
 import { types, actions } from '../actions'
-import { getIsSelectedSubscriptionFree } from '../selectors'
+import {
+  getIsSelectedSubscriptionFree,
+  getRegistrationReducer
+} from '../selectors'
 
 function* saveAccountDataSaga({ payload }) {
   yield put(batchActions([
@@ -56,13 +61,34 @@ function* savePaymentDataSaga({ payload }) {
   }
 }
 
-function* verificateAndRegistrateSaga() {
-  console.log('VVV')
+function* registrateSaga() {
+  const registration = yield select(getRegistrationReducer)
+  const data = {
+    email: registration.get('email'),
+    password: registration.get('password'),
+    username: registration.get('nickName'),
+    firstname: registration.get('firstName'),
+    lastname: registration.get('lastName'),
+    token: registration.getIn(['paymentMethod', 'id']),
+    pricing_plan: registration.get('activeSubscriptionPlanId')
+  }
+  try {
+    yield call(createUser, data)
+    yield put(batchActions([
+      actions.registrate.success(),
+      actions.updateCompletedSteps(3),
+      actions.setActiveStep(4)
+    ]))
+  } catch (err) {
+    const error = err.data.error.message
+    yield put(actions.registrate.failure(error))
+  }
 }
 
 export default function* watchRegistration() {
   yield takeLatest(types.SAVE_ACCOUNT_DATA, saveAccountDataSaga)
   yield takeLatest(types.SAVE_SUBSCRIPTION_DATA, saveSubscriptionDataSaga)
   yield takeLatest(types.SAVE_PAYMENT_DATA, savePaymentDataSaga)
+  yield takeLatest(types.REGISTRATE, registrateSaga)
   yield takeLatest(entitiesTypes.REQUEST_SUBSCRIPTIONS_SUCCESS, setDefaultSubscriptionSaga)
 }

@@ -12,3 +12,9 @@ fetch.interceptors.request.use(config => {
   }
   return config
 })
+
+fetch.interceptors.response.use((response) => {
+  return response
+}, function (error) {
+  return Promise.reject(error.response)
+})
