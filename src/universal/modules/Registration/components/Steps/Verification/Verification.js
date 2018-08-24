@@ -36,7 +36,6 @@ const inlineStyles = {
     bottom: 'none',
     position: 'absolute',
     border: 0,
-    width: 200,
     padding: 20,
     display: 'flex',
     alignItems: 'center',
@@ -98,6 +97,7 @@ class Verification extends Component {
       isStep2Completed,
       isPaymentMethodAvailable,
       registrate,
+      pendingMessage
     } = this.props
     const {
       termsModalOpen,
@@ -112,7 +112,7 @@ class Verification extends Component {
           ariaHideApp={false}
         >
           <TailSpinDotted />
-          <div className={styles.spinnerText}>registrating new user...</div>
+          <div className={styles.spinnerText}>{ pendingMessage }</div>
         </ReactModal>
         <Confirm isOpen={paymentModalOpen}
           onClose={() => this.toggleModal('paymentModalOpen')}

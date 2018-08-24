@@ -15,6 +15,7 @@ export const getNickName = state => state.getIn(['registration', 'nickName'])
 export const getEmail = state => state.getIn(['registration', 'email'])
 export const getPassword = state => state.getIn(['registration', 'password'])
 export const getRegistrationError = state => state.getIn(['registration', 'registrationError'])
+export const getPendingMessage = state => state.getIn(['registration', 'pendingMessage'])
 
 export const getCompletedSteps = state => state.getIn(['registration', 'completedSteps'])
 export const getActiveStep = state => state.getIn(['registration', 'activeStep'])

@@ -8,7 +8,8 @@ import {
   getIsPending,
   getRegistrationError,
   isStepCompleted,
-  getIsPaymentMethodAvailable
+  getIsPaymentMethodAvailable,
+  getPendingMessage
 } from '../selectors'
 
 
@@ -16,6 +17,7 @@ const mapStateToProps = state => {
   const selector = formValueSelector('verification')
   return ({
     isPending: getIsPending(state),
+    pendingMessage: getPendingMessage(state),
     registrationError: getRegistrationError(state),
     isAgreedWithTerms: selector(state, 'termsAndPolices'),
     isStep0Completed: isStepCompleted(state, 0),

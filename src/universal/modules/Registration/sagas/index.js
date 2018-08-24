@@ -1,4 +1,4 @@
-import { takeLatest, call, put, select, fork } from 'redux-saga/effects'
+import { takeLatest, call, put, select, fork, apply, take } from 'redux-saga/effects'
 import { batchActions } from 'redux-batched-actions'
 import { normalize } from 'normalizr'
 import { fromJS } from 'immutable'
@@ -15,6 +15,10 @@ import {
   getIsSelectedSubscriptionFree,
   getRegistrationReducer
 } from '../selectors'
+
+import Socket from 'universal/utils/socket'
+
+const socket = new Socket('registration')
 
 function* saveAccountDataSaga({ payload }) {
   yield put(batchActions([
@@ -85,10 +89,31 @@ function* registrateSaga() {
   }
 }
 
+function* watchSocket() {
+  yield apply(socket, socket.connect)
+  try {
+    const channel = yield apply(socket, socket.createChannel)
+    while (true) {
+      const action = yield take(channel)
+      yield put(action)
+    }
+  } finally {
+    console.info('connection closed')
+  }
+}
+
+function* activeStepSaga({ payload }) {
+  if (payload.activeStep === 3) {
+    yield fork(watchSocket)
+  }
+}
+
 export default function* watchRegistration() {
   yield takeLatest(types.SAVE_ACCOUNT_DATA, saveAccountDataSaga)
   yield takeLatest(types.SAVE_SUBSCRIPTION_DATA, saveSubscriptionDataSaga)
   yield takeLatest(types.SAVE_PAYMENT_DATA, savePaymentDataSaga)
   yield takeLatest(types.REGISTRATE, registrateSaga)
+  yield takeLatest(types.SET_ACTIVE_STEP, activeStepSaga)
+  yield takeLatest(entitiesTypes.REQUEST_SUBSCRIPTIONS_SUCCESS, watchSocket),
   yield takeLatest(entitiesTypes.REQUEST_SUBSCRIPTIONS_SUCCESS, setDefaultSubscriptionSaga)
 }

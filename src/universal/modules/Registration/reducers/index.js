@@ -15,7 +15,8 @@ const initialState = fromJS({
   activeSubscriptionPlanId: null,
   paymentMethod: null,
   isPending: false,
-  registrationError: null
+  registrationError: null,
+  pendingMessage: null
 })
 
 export default typeToReducer({
@@ -24,6 +25,9 @@ export default typeToReducer({
 
   [types.REGISTRATE]: state => state
     .set('isPending', true),
+
+  [types.SHOW_PENDING_MESSAGE]: (state, { payload }) => state
+    .set('pendingMessage', payload.message),
 
   [types.REGISTRATE_SUCCESS]: state => state
     .set('isPending', false),

@@ -6,6 +6,7 @@ export const types = createTypes([
   'SET_ACTIVE_STEP',
   'SET_ACTIVE_SUBSCRIPTION_ID',
   'SET_ACTIVE_SUBSCRIPTION_PLAN_ID',
+  'SHOW_PENDING_MESSAGE',
 
   ...async('SAVE_SUBSCRIPTION_DATA'),
   ...async('SAVE_ACCOUNT_DATA'),
@@ -18,6 +19,7 @@ export const actions = {
   setActiveStep: actionCreator(types.SET_ACTIVE_STEP, 'activeStep'),
   setActiveSubscriptionId: actionCreator(types.SET_ACTIVE_SUBSCRIPTION_ID, 'subscriptionId'),
   setActiveSubscriptionPlanId: actionCreator(types.SET_ACTIVE_SUBSCRIPTION_PLAN_ID, 'planId'),
+  showPendingMessage: actionCreator(types.SHOW_PENDING_MESSAGE, 'message'),
 
   saveSubscriptionData: createRequestAction(types.SAVE_SUBSCRIPTION_DATA),
   saveAccountData: createRequestAction(types.SAVE_ACCOUNT_DATA),
