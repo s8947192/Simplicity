@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import ReactModal from 'react-modal'
 import { Field, reduxForm } from 'redux-form/immutable'
-import { List, Map } from 'immutable'
 
 import TailSpinDotted from 'universal/common/components/Preloaders/TailSpinDotted'
 import TermsOfService from 'universal/modules/Site/TermsOfService'
@@ -96,7 +95,6 @@ class Verification extends Component {
       isStep1Completed,
       isStep2Completed,
       isPaymentMethodAvailable,
-      registrate,
       pendingMessage
     } = this.props
     const {

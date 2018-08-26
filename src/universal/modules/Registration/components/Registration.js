@@ -1,6 +1,5 @@
 import React from 'react'
 import { List, Map } from 'immutable'
-import { Field, reduxForm, OrderedSet } from 'redux-form/immutable'
 
 import Auth from 'universal/layouts/Auth'
 
