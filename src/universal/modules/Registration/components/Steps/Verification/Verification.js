@@ -56,37 +56,40 @@ const message = `
 `
 
 class Verification extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      termsModalOpen: false,
-      paymentModalOpen: false
-    }
-  }
+   constructor(props) {
+      super(props)
+      this.state = {
+         termsModalOpen: false,
+         paymentModalOpen: false
+      }
+   }
 
-  toggleModal = field => this.setState({ [field]: !this.state[field] })
+   toggleModal = field => this.setState(state => ({ [field]: !state[field] }))
 
-  onTermsConfirm = () => {
-    this.toggleModal('termsModalOpen')
-    if (!this.props.isAgreedWithTerms) {
-      this.props.change('termsAndPolices', true)
-    }
-  }
+   onTermsConfirm = () => {
+      const { isAgreedWithTerms, change } = this.props
+      this.toggleModal('termsModalOpen')
+      if (!isAgreedWithTerms) {
+         change('termsAndPolices', true)
+      }
+   }
 
-  onPaymentConfirm = () => {
-    this.toggleModal('paymentModalOpen')
-    this.props.registrate()
-  }
+   onPaymentConfirm = () => {
+      const { registrate } = this.props
+      this.toggleModal('paymentModalOpen')
+      registrate()
+   }
 
-  onRegisterClick = () => {
-    if (this.props.isPaymentMethodAvailable) {
-      return this.toggleModal('paymentModalOpen')
-    } else {
-      this.props.registrate()
-    }
-  }
+   onRegisterClick = () => {
+      const { isPaymentMethodAvailable, registrate } = this.props
+      if (isPaymentMethodAvailable) {
+         this.toggleModal('paymentModalOpen')
+      } else {
+         registrate()
+      }
+   }
 
-  render() {
+   render() {
     const {
       isPending,
       registrationError,
